@@ -56,11 +56,24 @@
             this.addClipToLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceClipInLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.monitorsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.camera1ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.camera2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.camera3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.camera4ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.otherVideoSource1ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.otherVideoSource2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentGraphicToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.clipSuperStillToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.previewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.programToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.freezeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.utilitiesDagnosticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setupWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.registerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.setupWizardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.loadMeetingAtStartupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetCamerasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vIdeoSourcesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,9 +99,20 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.createOpeningButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createShotGraphicButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createShotButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createGraphicButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createExternalVideoSourceButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createClipSuperStillButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createCreditsButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createFadeToBlackButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.addBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.createStreamingButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createRecordingButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog2 = new System.Windows.Forms.OpenFileDialog();
             this.button1 = new System.Windows.Forms.Button();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -101,36 +125,10 @@
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.buttonSetup = new System.Windows.Forms.Button();
             this.buttonsData = new System.Windows.Forms.DataGridView();
-//            this.camerasData = new System.Windows.Forms.DataGridView();
-            this.monitorsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.camera1ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.camera2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.camera3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.camera4ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.otherVideoSource1ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.otherVideoSource2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.currentGraphicToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.clipSuperStillToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.previewToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.programToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.createShotGraphicButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createShotButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createGraphicButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createClipSuperStillButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createCreditsButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createOpeningButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createFadeToBlackButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createRecordingButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createStreamingButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.freezeWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.createExternalVideoSourceButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonsData)).BeginInit();
-//            ((System.ComponentModel.ISupportInitialize)(this.camerasData)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -344,6 +342,107 @@
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // monitorsToolStripMenuItem1
+            // 
+            this.monitorsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.camera1ToolStripMenuItem1,
+            this.camera2ToolStripMenuItem1,
+            this.camera3ToolStripMenuItem,
+            this.camera4ToolStripMenuItem1,
+            this.otherVideoSource1ToolStripMenuItem1,
+            this.otherVideoSource2ToolStripMenuItem1,
+            this.currentGraphicToolStripMenuItem1,
+            this.clipSuperStillToolStripMenuItem1,
+            this.previewToolStripMenuItem1,
+            this.programToolStripMenuItem1,
+            this.toolStripSeparator12,
+            this.freezeWindowsToolStripMenuItem});
+            this.monitorsToolStripMenuItem1.Name = "monitorsToolStripMenuItem1";
+            this.monitorsToolStripMenuItem1.Size = new System.Drawing.Size(67, 20);
+            this.monitorsToolStripMenuItem1.Text = "Monitors";
+            // 
+            // camera1ToolStripMenuItem1
+            // 
+            this.camera1ToolStripMenuItem1.Name = "camera1ToolStripMenuItem1";
+            this.camera1ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.camera1ToolStripMenuItem1.Text = "Camera 1";
+            this.camera1ToolStripMenuItem1.Click += new System.EventHandler(this.camera1ToolStripMenuItem1_Click);
+            // 
+            // camera2ToolStripMenuItem1
+            // 
+            this.camera2ToolStripMenuItem1.Name = "camera2ToolStripMenuItem1";
+            this.camera2ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.camera2ToolStripMenuItem1.Text = "Camera 2";
+            this.camera2ToolStripMenuItem1.Click += new System.EventHandler(this.camera2ToolStripMenuItem1_Click);
+            // 
+            // camera3ToolStripMenuItem
+            // 
+            this.camera3ToolStripMenuItem.Name = "camera3ToolStripMenuItem";
+            this.camera3ToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.camera3ToolStripMenuItem.Text = "Camera 3";
+            this.camera3ToolStripMenuItem.Click += new System.EventHandler(this.camera3ToolStripMenuItem_Click);
+            // 
+            // camera4ToolStripMenuItem1
+            // 
+            this.camera4ToolStripMenuItem1.Name = "camera4ToolStripMenuItem1";
+            this.camera4ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.camera4ToolStripMenuItem1.Text = "Camera 4";
+            this.camera4ToolStripMenuItem1.Click += new System.EventHandler(this.camera4ToolStripMenuItem1_Click);
+            // 
+            // otherVideoSource1ToolStripMenuItem1
+            // 
+            this.otherVideoSource1ToolStripMenuItem1.Name = "otherVideoSource1ToolStripMenuItem1";
+            this.otherVideoSource1ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.otherVideoSource1ToolStripMenuItem1.Text = "Other Video Source 1";
+            this.otherVideoSource1ToolStripMenuItem1.Click += new System.EventHandler(this.otherVideoSource1ToolStripMenuItem1_Click);
+            // 
+            // otherVideoSource2ToolStripMenuItem1
+            // 
+            this.otherVideoSource2ToolStripMenuItem1.Name = "otherVideoSource2ToolStripMenuItem1";
+            this.otherVideoSource2ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.otherVideoSource2ToolStripMenuItem1.Text = "Other Video Source 2";
+            this.otherVideoSource2ToolStripMenuItem1.Click += new System.EventHandler(this.otherVideoSource2ToolStripMenuItem1_Click);
+            // 
+            // currentGraphicToolStripMenuItem1
+            // 
+            this.currentGraphicToolStripMenuItem1.Name = "currentGraphicToolStripMenuItem1";
+            this.currentGraphicToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.currentGraphicToolStripMenuItem1.Text = "Current Graphic";
+            this.currentGraphicToolStripMenuItem1.Click += new System.EventHandler(this.currentGraphicToolStripMenuItem1_Click);
+            // 
+            // clipSuperStillToolStripMenuItem1
+            // 
+            this.clipSuperStillToolStripMenuItem1.Name = "clipSuperStillToolStripMenuItem1";
+            this.clipSuperStillToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.clipSuperStillToolStripMenuItem1.Text = "Clip/Super/Still";
+            this.clipSuperStillToolStripMenuItem1.Click += new System.EventHandler(this.clipSuperStillToolStripMenuItem1_Click);
+            // 
+            // previewToolStripMenuItem1
+            // 
+            this.previewToolStripMenuItem1.Name = "previewToolStripMenuItem1";
+            this.previewToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.previewToolStripMenuItem1.Text = "Preview";
+            this.previewToolStripMenuItem1.Click += new System.EventHandler(this.previewToolStripMenuItem1_Click);
+            // 
+            // programToolStripMenuItem1
+            // 
+            this.programToolStripMenuItem1.Name = "programToolStripMenuItem1";
+            this.programToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
+            this.programToolStripMenuItem1.Text = "Program";
+            this.programToolStripMenuItem1.Click += new System.EventHandler(this.programToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(182, 6);
+            // 
+            // freezeWindowsToolStripMenuItem
+            // 
+            this.freezeWindowsToolStripMenuItem.Name = "freezeWindowsToolStripMenuItem";
+            this.freezeWindowsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.freezeWindowsToolStripMenuItem.Text = "Freeze Window";
+            this.freezeWindowsToolStripMenuItem.Click += new System.EventHandler(this.freezeWindowsToolStripMenuItem_Click);
+            // 
             // utilitiesDagnosticsToolStripMenuItem
             // 
             this.utilitiesDagnosticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -366,18 +465,6 @@
             this.utilitiesDagnosticsToolStripMenuItem.Size = new System.Drawing.Size(115, 20);
             this.utilitiesDagnosticsToolStripMenuItem.Text = "Setup/Diagnostics";
             // 
-            // setupWizardToolStripMenuItem
-            // 
-            this.setupWizardToolStripMenuItem.Name = "setupWizardToolStripMenuItem";
-            this.setupWizardToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.setupWizardToolStripMenuItem.Text = "Setup Wizard";
-            this.setupWizardToolStripMenuItem.Click += new System.EventHandler(this.setupWizardToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(172, 6);
-            // 
             // registerToolStripMenuItem
             // 
             this.registerToolStripMenuItem.Name = "registerToolStripMenuItem";
@@ -389,6 +476,18 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(172, 6);
+            // 
+            // setupWizardToolStripMenuItem
+            // 
+            this.setupWizardToolStripMenuItem.Name = "setupWizardToolStripMenuItem";
+            this.setupWizardToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.setupWizardToolStripMenuItem.Text = "Setup Wizard";
+            this.setupWizardToolStripMenuItem.Click += new System.EventHandler(this.setupWizardToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(172, 6);
             // 
             // loadMeetingAtStartupToolStripMenuItem
             // 
@@ -579,26 +678,99 @@
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(227, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(260, 6);
+            // 
+            // createOpeningButtonToolStripMenuItem
+            // 
+            this.createOpeningButtonToolStripMenuItem.Name = "createOpeningButtonToolStripMenuItem";
+            this.createOpeningButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createOpeningButtonToolStripMenuItem.Text = "Create Opening Button";
+            this.createOpeningButtonToolStripMenuItem.Click += new System.EventHandler(this.createOpeningButtonToolStripMenuItem_Click);
+            // 
+            // createShotGraphicButtonToolStripMenuItem
+            // 
+            this.createShotGraphicButtonToolStripMenuItem.Name = "createShotGraphicButtonToolStripMenuItem";
+            this.createShotGraphicButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createShotGraphicButtonToolStripMenuItem.Text = "Create Shot/Graphic Button";
+            this.createShotGraphicButtonToolStripMenuItem.Click += new System.EventHandler(this.createShotGraphicButtonToolStripMenuItem_Click);
+            // 
+            // createShotButtonToolStripMenuItem
+            // 
+            this.createShotButtonToolStripMenuItem.Name = "createShotButtonToolStripMenuItem";
+            this.createShotButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createShotButtonToolStripMenuItem.Text = "Create Shot Button";
+            this.createShotButtonToolStripMenuItem.Click += new System.EventHandler(this.createShotButtonToolStripMenuItem_Click);
+            // 
+            // createGraphicButtonToolStripMenuItem
+            // 
+            this.createGraphicButtonToolStripMenuItem.Name = "createGraphicButtonToolStripMenuItem";
+            this.createGraphicButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createGraphicButtonToolStripMenuItem.Text = "Create Graphic Button";
+            this.createGraphicButtonToolStripMenuItem.Click += new System.EventHandler(this.createGraphicButtonToolStripMenuItem_Click);
+            // 
+            // createExternalVideoSourceButtonToolStripMenuItem
+            // 
+            this.createExternalVideoSourceButtonToolStripMenuItem.Name = "createExternalVideoSourceButtonToolStripMenuItem";
+            this.createExternalVideoSourceButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createExternalVideoSourceButtonToolStripMenuItem.Text = "Create External Video Source Button";
+            this.createExternalVideoSourceButtonToolStripMenuItem.Click += new System.EventHandler(this.createExternalVideoSourceButtonToolStripMenuItem_Click);
+            // 
+            // createClipSuperStillButtonToolStripMenuItem
+            // 
+            this.createClipSuperStillButtonToolStripMenuItem.Name = "createClipSuperStillButtonToolStripMenuItem";
+            this.createClipSuperStillButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createClipSuperStillButtonToolStripMenuItem.Text = "Create Clip/Super/Still Button";
+            this.createClipSuperStillButtonToolStripMenuItem.Click += new System.EventHandler(this.createClipSuperStillButtonToolStripMenuItem_Click);
+            // 
+            // createCreditsButtonToolStripMenuItem
+            // 
+            this.createCreditsButtonToolStripMenuItem.Name = "createCreditsButtonToolStripMenuItem";
+            this.createCreditsButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createCreditsButtonToolStripMenuItem.Text = "Create Credits Button";
+            this.createCreditsButtonToolStripMenuItem.Click += new System.EventHandler(this.createCreditsButtonToolStripMenuItem_Click);
+            // 
+            // createFadeToBlackButtonToolStripMenuItem
+            // 
+            this.createFadeToBlackButtonToolStripMenuItem.Name = "createFadeToBlackButtonToolStripMenuItem";
+            this.createFadeToBlackButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createFadeToBlackButtonToolStripMenuItem.Text = "Create Fade to Black Button";
+            this.createFadeToBlackButtonToolStripMenuItem.Click += new System.EventHandler(this.createFadeToBlackButtonToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(260, 6);
             // 
             // addBackgroundToolStripMenuItem
             // 
             this.addBackgroundToolStripMenuItem.Name = "addBackgroundToolStripMenuItem";
-            this.addBackgroundToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.addBackgroundToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.addBackgroundToolStripMenuItem.Text = "Change Background";
             this.addBackgroundToolStripMenuItem.Click += new System.EventHandler(this.addBackgroundToolStripMenuItem_Click);
             // 
             // removeBackgroundToolStripMenuItem
             // 
             this.removeBackgroundToolStripMenuItem.Name = "removeBackgroundToolStripMenuItem";
-            this.removeBackgroundToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.removeBackgroundToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.removeBackgroundToolStripMenuItem.Text = "Remove Background";
             this.removeBackgroundToolStripMenuItem.Click += new System.EventHandler(this.removeBackgroundToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(227, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(260, 6);
+            // 
+            // createStreamingButtonToolStripMenuItem
+            // 
+            this.createStreamingButtonToolStripMenuItem.Name = "createStreamingButtonToolStripMenuItem";
+            this.createStreamingButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createStreamingButtonToolStripMenuItem.Text = "Create Streaming Start/Stop Button";
+            // 
+            // createRecordingButtonToolStripMenuItem
+            // 
+            this.createRecordingButtonToolStripMenuItem.Name = "createRecordingButtonToolStripMenuItem";
+            this.createRecordingButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
+            this.createRecordingButtonToolStripMenuItem.Text = "Create Recording Start/Stop Button";
             // 
             // openFileDialog2
             // 
@@ -676,7 +848,7 @@
             // 
             this.openFileDialog3.FileName = "Opening.mov";
             this.openFileDialog3.Filter = "Clips. Supers and Stills files (*.mov, *.mp4, *.jpg, *.png, *.bmp)|*.mov;*.mp4;*." +
-    "jpg;*.png;*.bmp";
+                "jpg;*.png;*.bmp";
             this.openFileDialog3.Title = "Import Clip/Super/Still";
             // 
             // buttonSetup
@@ -696,200 +868,16 @@
             this.buttonSetup.UseVisualStyleBackColor = false;
             this.buttonSetup.Visible = false;
             // 
-            // dataGridView1
+            // buttonsData
             // 
             this.buttonsData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.buttonsData.Location = new System.Drawing.Point(12, 48);
-            this.buttonsData.Name = "dataGridView1";
+            this.buttonsData.Name = "buttonsData";
             this.buttonsData.Size = new System.Drawing.Size(282, 292);
             this.buttonsData.TabIndex = 7;
             this.buttonsData.Visible = false;
             // 
-            // dataGridView2
-            // 
-/*            this.camerasData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.camerasData.Location = new System.Drawing.Point(438, 48);
-            this.camerasData.Name = "dataGridView2";
-            this.camerasData.Size = new System.Drawing.Size(282, 292);
-            this.camerasData.TabIndex = 8;
-            this.camerasData.Visible = false;
-*/
-            // 
-            // monitorsToolStripMenuItem1
-            // 
-            this.monitorsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.camera1ToolStripMenuItem1,
-            this.camera2ToolStripMenuItem1,
-            this.camera3ToolStripMenuItem,
-            this.camera4ToolStripMenuItem1,
-            this.otherVideoSource1ToolStripMenuItem1,
-            this.otherVideoSource2ToolStripMenuItem1,
-            this.currentGraphicToolStripMenuItem1,
-            this.clipSuperStillToolStripMenuItem1,
-            this.previewToolStripMenuItem1,
-            this.programToolStripMenuItem1,
-            this.toolStripSeparator12,
-            this.freezeWindowsToolStripMenuItem});
-            this.monitorsToolStripMenuItem1.Name = "monitorsToolStripMenuItem1";
-            this.monitorsToolStripMenuItem1.Size = new System.Drawing.Size(67, 20);
-            this.monitorsToolStripMenuItem1.Text = "Monitors";
-            // 
-            // camera1ToolStripMenuItem1
-            // 
-            this.camera1ToolStripMenuItem1.Name = "camera1ToolStripMenuItem1";
-            this.camera1ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.camera1ToolStripMenuItem1.Text = "Camera 1";
-            this.camera1ToolStripMenuItem1.Click += new System.EventHandler(this.camera1ToolStripMenuItem1_Click);
-            // 
-            // camera2ToolStripMenuItem1
-            // 
-            this.camera2ToolStripMenuItem1.Name = "camera2ToolStripMenuItem1";
-            this.camera2ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.camera2ToolStripMenuItem1.Text = "Camera 2";
-            this.camera2ToolStripMenuItem1.Click += new System.EventHandler(this.camera2ToolStripMenuItem1_Click);
-            // 
-            // camera3ToolStripMenuItem
-            // 
-            this.camera3ToolStripMenuItem.Name = "camera3ToolStripMenuItem";
-            this.camera3ToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.camera3ToolStripMenuItem.Text = "Camera 3";
-            this.camera3ToolStripMenuItem.Click += new System.EventHandler(this.camera3ToolStripMenuItem_Click);
-            // 
-            // camera4ToolStripMenuItem1
-            // 
-            this.camera4ToolStripMenuItem1.Name = "camera4ToolStripMenuItem1";
-            this.camera4ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.camera4ToolStripMenuItem1.Text = "Camera 4";
-            this.camera4ToolStripMenuItem1.Click += new System.EventHandler(this.camera4ToolStripMenuItem1_Click);
-            // 
-            // otherVideoSource1ToolStripMenuItem1
-            // 
-            this.otherVideoSource1ToolStripMenuItem1.Name = "otherVideoSource1ToolStripMenuItem1";
-            this.otherVideoSource1ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.otherVideoSource1ToolStripMenuItem1.Text = "Other Video Source 1";
-            this.otherVideoSource1ToolStripMenuItem1.Click += new System.EventHandler(this.otherVideoSource1ToolStripMenuItem1_Click);
-            // 
-            // otherVideoSource2ToolStripMenuItem1
-            // 
-            this.otherVideoSource2ToolStripMenuItem1.Name = "otherVideoSource2ToolStripMenuItem1";
-            this.otherVideoSource2ToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.otherVideoSource2ToolStripMenuItem1.Text = "Other Video Source 2";
-            this.otherVideoSource2ToolStripMenuItem1.Click += new System.EventHandler(this.otherVideoSource2ToolStripMenuItem1_Click);
-            // 
-            // currentGraphicToolStripMenuItem1
-            // 
-            this.currentGraphicToolStripMenuItem1.Name = "currentGraphicToolStripMenuItem1";
-            this.currentGraphicToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.currentGraphicToolStripMenuItem1.Text = "Current Graphic";
-            this.currentGraphicToolStripMenuItem1.Click += new System.EventHandler(this.currentGraphicToolStripMenuItem1_Click);
-            // 
-            // clipSuperStillToolStripMenuItem1
-            // 
-            this.clipSuperStillToolStripMenuItem1.Name = "clipSuperStillToolStripMenuItem1";
-            this.clipSuperStillToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.clipSuperStillToolStripMenuItem1.Text = "Clip/Super/Still";
-            this.clipSuperStillToolStripMenuItem1.Click += new System.EventHandler(this.clipSuperStillToolStripMenuItem1_Click);
-            // 
-            // previewToolStripMenuItem1
-            // 
-            this.previewToolStripMenuItem1.Name = "previewToolStripMenuItem1";
-            this.previewToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.previewToolStripMenuItem1.Text = "Preview";
-            this.previewToolStripMenuItem1.Click += new System.EventHandler(this.previewToolStripMenuItem1_Click);
-            // 
-            // programToolStripMenuItem1
-            // 
-            this.programToolStripMenuItem1.Name = "programToolStripMenuItem1";
-            this.programToolStripMenuItem1.Size = new System.Drawing.Size(185, 22);
-            this.programToolStripMenuItem1.Text = "Program";
-            this.programToolStripMenuItem1.Click += new System.EventHandler(this.programToolStripMenuItem1_Click);
-            // 
-            // createShotGraphicButtonToolStripMenuItem
-            // 
-            this.createShotGraphicButtonToolStripMenuItem.Name = "createShotGraphicButtonToolStripMenuItem";
-            this.createShotGraphicButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createShotGraphicButtonToolStripMenuItem.Text = "Create Shot/Graphic Button";
-            this.createShotGraphicButtonToolStripMenuItem.Click += new System.EventHandler(this.createShotGraphicButtonToolStripMenuItem_Click);
-            // 
-            // createShotButtonToolStripMenuItem
-            // 
-            this.createShotButtonToolStripMenuItem.Name = "createShotButtonToolStripMenuItem";
-            this.createShotButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createShotButtonToolStripMenuItem.Text = "Create Shot Button";
-            this.createShotButtonToolStripMenuItem.Click += new System.EventHandler(this.createShotButtonToolStripMenuItem_Click);
-            // 
-            // createGraphicButtonToolStripMenuItem
-            // 
-            this.createGraphicButtonToolStripMenuItem.Name = "createGraphicButtonToolStripMenuItem";
-            this.createGraphicButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createGraphicButtonToolStripMenuItem.Text = "Create Graphic Button";
-            this.createGraphicButtonToolStripMenuItem.Click += new System.EventHandler(this.createGraphicButtonToolStripMenuItem_Click);
-            // 
-            // createClipSuperStillButtonToolStripMenuItem
-            // 
-            this.createClipSuperStillButtonToolStripMenuItem.Name = "createClipSuperStillButtonToolStripMenuItem";
-            this.createClipSuperStillButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createClipSuperStillButtonToolStripMenuItem.Text = "Create Clip/Super/Still Button";
-            this.createClipSuperStillButtonToolStripMenuItem.Click += new System.EventHandler(this.createClipSuperStillButtonToolStripMenuItem_Click);
-            // 
-            // createCreditsButtonToolStripMenuItem
-            // 
-            this.createCreditsButtonToolStripMenuItem.Name = "createCreditsButtonToolStripMenuItem";
-            this.createCreditsButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createCreditsButtonToolStripMenuItem.Text = "Create Credits Button";
-            this.createCreditsButtonToolStripMenuItem.Click += new System.EventHandler(this.createCreditsButtonToolStripMenuItem_Click);
-            // 
-            // createOpeningButtonToolStripMenuItem
-            // 
-            this.createOpeningButtonToolStripMenuItem.Name = "createOpeningButtonToolStripMenuItem";
-            this.createOpeningButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createOpeningButtonToolStripMenuItem.Text = "Create Opening Button";
-            this.createOpeningButtonToolStripMenuItem.Click += new System.EventHandler(this.createOpeningButtonToolStripMenuItem_Click);
-            // 
-            // createFadeToBlackButtonToolStripMenuItem
-            // 
-            this.createFadeToBlackButtonToolStripMenuItem.Name = "createFadeToBlackButtonToolStripMenuItem";
-            this.createFadeToBlackButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createFadeToBlackButtonToolStripMenuItem.Text = "Create Fade to Black Button";
-            this.createFadeToBlackButtonToolStripMenuItem.Click += new System.EventHandler(this.createFadeToBlackButtonToolStripMenuItem_Click);
-            // 
-            // createRecordingButtonToolStripMenuItem
-            // 
-            this.createRecordingButtonToolStripMenuItem.Name = "createRecordingButtonToolStripMenuItem";
-            this.createRecordingButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createRecordingButtonToolStripMenuItem.Text = "Create Recording Start/Stop Button";
-            // 
-            // createStreamingButtonToolStripMenuItem
-            // 
-            this.createStreamingButtonToolStripMenuItem.Name = "createStreamingButtonToolStripMenuItem";
-            this.createStreamingButtonToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
-            this.createStreamingButtonToolStripMenuItem.Text = "Create Streaming Start/Stop Button";
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(227, 6);
-            // 
-            // freezeWindowsToolStripMenuItem
-            // 
-            this.freezeWindowsToolStripMenuItem.Name = "freezeWindowsToolStripMenuItem";
-            this.freezeWindowsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.freezeWindowsToolStripMenuItem.Text = "Freeze Window";
-            this.freezeWindowsToolStripMenuItem.Click += new System.EventHandler(this.freezeWindowsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(182, 6);
-            // 
-            // createExternalVideoSourceButtonToolStripMenuItem
-            // 
-            this.createExternalVideoSourceButtonToolStripMenuItem.Name = "createExternalVideoSourceButtonToolStripMenuItem";
-            this.createExternalVideoSourceButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.createExternalVideoSourceButtonToolStripMenuItem.Text = "Create External Video Source Button";
-            this.createExternalVideoSourceButtonToolStripMenuItem.Click += new System.EventHandler(this.createExternalVideoSourceButtonToolStripMenuItem_Click);
-            // 
-            // Form1
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -898,14 +886,14 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.ContextMenuStrip = this.contextMenuStrip1;
-//            this.Controls.Add(this.camerasData);
             this.Controls.Add(this.buttonSetup);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.buttonsData);
             this.DoubleBuffered = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainWindow";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VGV 1000 Multicamera Meeting Coverage System";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -913,7 +901,6 @@
             this.contextMenuStrip1.ResumeLayout(false);
             this.contextMenuStrip2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.buttonsData)).EndInit();
-//            ((System.ComponentModel.ISupportInitialize)(this.camerasData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
