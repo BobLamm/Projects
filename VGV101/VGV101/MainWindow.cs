@@ -588,7 +588,6 @@ namespace VGV101
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value = "Yes";
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Type"].Index].Value = "Shot";
                     /*
-                     * 
                     <Button_Type>Shot</Button_Type>
                     <Button_Name>New Button</Button_Name>
                     <Name_From_Graphic>No</Name_From_Graphic>
