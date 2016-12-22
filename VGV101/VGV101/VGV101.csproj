@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{54960B03-DBDD-4BEC-AC65-FE4817943832}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VGV101</RootNamespace>
+    <AssemblyName>VGV101</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AxisCameraUtility.cs" />
+    <Compile Include="BobsButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CameraObject.cs" />
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgProgramMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgProgramMonitor.Designer.cs">
+      <DependentUpon>DlgProgramMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgListEditor.Designer.cs">
+      <DependentUpon>DlgListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgSystemSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgSystemSettings.Designer.cs">
+      <DependentUpon>DlgSystemSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgStartupSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgStartupSettings.Designer.cs">
+      <DependentUpon>DlgStartupSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgActiveUserMedia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgActiveUserMedia.Designer.cs">
+      <DependentUpon>DlgActiveUserMedia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgRegistrationPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgRegistrationPage.Designer.cs">
+      <DependentUpon>DlgRegistrationPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgAboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgAboutBox.Designer.cs">
+      <DependentUpon>DlgAboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgMonitorSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgMonitorSettings.Designer.cs">
+      <DependentUpon>DlgMonitorSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OldCameraAimingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OldCameraAimingForm.Designer.cs">
+      <DependentUpon>OldCameraAimingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgSetupWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgSetupWizard.Designer.cs">
+      <DependentUpon>DlgSetupWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgShotGraphicButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgShotGraphicButton.Designer.cs">
+      <DependentUpon>DlgShotGraphicButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgClipTemplateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgClipTemplateEditor.Designer.cs">
+      <DependentUpon>DlgClipTemplateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgButtonSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgButtonSettings.Designer.cs">
+      <DependentUpon>DlgButtonSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OldTextSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OldTextSelector.Designer.cs">
+      <DependentUpon>OldTextSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgDeviceData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgDeviceData.Designer.cs">
+      <DependentUpon>DlgDeviceData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgSetCameraHome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgSetCameraHome.Designer.cs">
+      <DependentUpon>DlgSetCameraHome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgStartupSettingsEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgStartupSettingsEntry.Designer.cs">
+      <DependentUpon>DlgStartupSettingsEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgGraphicsTemplateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgGraphicsTemplateEditor.Designer.cs">
+      <DependentUpon>DlgGraphicsTemplateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgSourceMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgSourceMonitor.Designer.cs">
+      <DependentUpon>DlgSourceMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OldListEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OldListEditor.Designer.cs">
+      <DependentUpon>OldListEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgCameraSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgCameraSettings.Designer.cs">
+      <DependentUpon>DlgCameraSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgGraphicButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgGraphicButton.Designer.cs">
+      <DependentUpon>DlgGraphicButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DlgExternalVideoSourceButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgExternalVideoSourceButton.Designer.cs">
+      <DependentUpon>DlgExternalVideoSourceButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalConfig.cs" />
+    <Compile Include="ModifyRegistry.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BobsButton.resx">
+      <DependentUpon>BobsButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgProgramMonitor.resx">
+      <DependentUpon>DlgProgramMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgListEditor.resx">
+      <DependentUpon>DlgListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgSystemSettings.resx">
+      <DependentUpon>DlgSystemSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgStartupSettings.resx">
+      <DependentUpon>DlgStartupSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgActiveUserMedia.resx">
+      <DependentUpon>DlgActiveUserMedia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgRegistrationPage.resx">
+      <DependentUpon>DlgRegistrationPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgAboutBox.resx">
+      <DependentUpon>DlgAboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgMonitorSettings.resx">
+      <DependentUpon>DlgMonitorSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldCameraAimingForm.resx">
+      <DependentUpon>OldCameraAimingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgSetupWizard.resx">
+      <DependentUpon>DlgSetupWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgShotGraphicButton.resx">
+      <DependentUpon>DlgShotGraphicButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgClipTemplateEditor.resx">
+      <DependentUpon>DlgClipTemplateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgButtonSettings.resx">
+      <DependentUpon>DlgButtonSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldTextSelector.resx">
+      <DependentUpon>OldTextSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgDeviceData.resx">
+      <DependentUpon>DlgDeviceData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgSetCameraHome.resx">
+      <DependentUpon>DlgSetCameraHome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgStartupSettingsEntry.resx">
+      <DependentUpon>DlgStartupSettingsEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgGraphicsTemplateEditor.resx">
+      <DependentUpon>DlgGraphicsTemplateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgSourceMonitor.resx">
+      <DependentUpon>DlgSourceMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OldListEditor.resx">
+      <DependentUpon>OldListEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgCameraSettings.resx">
+      <DependentUpon>DlgCameraSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgGraphicButton.resx">
+      <DependentUpon>DlgGraphicButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgExternalVideoSourceButton.resx">
+      <DependentUpon>DlgExternalVideoSourceButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxAXISMEDIACONTROLLib">
+      <Guid>{A48F4EE0-B408-4376-B4C9-BC9CF6E16EBC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AXISMEDIACONTROLLib">
+      <Guid>{A48F4EE0-B408-4376-B4C9-BC9CF6E16EBC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
