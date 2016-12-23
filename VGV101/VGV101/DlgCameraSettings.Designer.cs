@@ -318,8 +318,8 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "DlgCameraSettings";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Camera Setup and Diagnostics";
-            this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.camerasData)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AMC)).EndInit();
             this.ResumeLayout(false);
