@@ -1,4 +1,24 @@
-﻿using System;
+﻿/**
+ * File: BobsButton.cs
+ * 
+ *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *
+ *	$Id: /BobsButton.cs,v $
+ */
+/**
+*	Makes and controls the user-creatable buttons.
+*	
+*	Author:			Fred Koschara and Bob Lamm
+*	Creation Date:	December tenth, 2016
+*	Last Modified:	December 23, 2016 @ 11:17 am
+*
+*	Revision History:
+*	   Date		  by		Description
+*	2016/12/23	blamm	original development
+*	
+*	TO DO:  Update documentation to reflect removal of DataGridView					
+*/
+using System;
 using System.Windows.Forms;
 using System.Data;
 using System.Drawing;
@@ -116,34 +136,13 @@ namespace VGV101
             {   GlobalConfig cfg = GlobalConfig.Instance;
 
                 Button btn = (Button)sender;
-                string cameraNumber = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Numberr"].Index].Value.ToString();
+                string cameraNumber = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value.ToString();
                 string pan = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Pan_Preset"].Index].Value.ToString();
                 string tilt = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Tilt_Preset"].Index].Value.ToString();
                 string zoom = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Zoom_Preset"].Index].Value.ToString();
-                // MessageBox.Show("BobsButton " + btn.Tag + " Clicked. Reading Button file:\n\nCamera Number is: " + cameraNumber + "\n\n Coordinates are:\n\n Pan: " + pan + "\n  Tilt: " + tilt + "\n  Zoom: " +zoom);
 
-                int camNumber = Int32.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Numberr"].Index].Value.ToString());  // get camera number from button file
+                int camNumber = Int32.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value.ToString());  // get camera number from button file
                 cfg.Camera(camNumber).GoTo(pan, tilt, zoom);
-/*
-                // Read Camera Settings from Camera_Settings.xml file into dataGridView2 - needed to get IP address for camera and whatever latest settings are
-                if (!cfg.GetCurrentXml("Camera_Settings", camerasData)) // we can't proceed from here
-                {
-                    MessageBox.Show("Camera data not available in button class","ERROR");
-                    return;
-                }
-
-                //  Send command to go to position
-                int camNumber = Int32.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Numberr"].Index].Value.ToString());  // get camera number from button file
-                // MessageBox.Show("Camera Number From Button File Is: " + camNumber + " and the name is: " + dataGridView2.Rows[camNumber].Cells[dataGridView2.Columns["Camera_Name"].Index].Value.ToString());
-                string userName = camerasData.Rows[camNumber].Cells[camerasData.Columns["User_Name"].Index].Value.ToString();  // get camera user name from camera file
-                // MessageBox.Show("User Name From Camera File is " + userName);
-                string password = camerasData.Rows[camNumber].Cells[camerasData.Columns["Password"].Index].Value.ToString();  // get camera password from camera file
-                // MessageBox.Show("Password From Camera File Is " + password);
-                string cameraIPAddress = camerasData.Rows[camNumber].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString();  // get camera IP address from camera file
-                // MessageBox.Show("IP Address From Camera File Is " + cameraIPAddress);
-                var client = new WebClient { Credentials = new NetworkCredential(userName, password) };  // put username and password into credentials
-                var response = client.DownloadString("http://" + cameraIPAddress + "/axis-cgi/com/ptz.cgi?pan=" + pan + "&tilt=" + tilt + "&zoom=" + zoom);  // make up webrequest to camera
-*/
             }
         }
 
@@ -202,27 +201,10 @@ namespace VGV101
 
         private void buttonDeleteToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Delete User button
         {
-            MessageBox.Show("Delete function: " + this.Text);
+            MessageBox.Show("Delete button: " + this.Text);
             this.Hide();
         }
-/*
-        private void InitializeComponent()
-        {
-            this.cameraDataGridViewer = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.cameraDataGridViewer)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // cameraDataGridViewer
-            // 
-            this.cameraDataGridViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.cameraDataGridViewer.Location = new System.Drawing.Point(0, 0);
-            this.cameraDataGridViewer.Name = "cameraDataGridViewer";
-            this.cameraDataGridViewer.Size = new System.Drawing.Size(240, 150);
-            this.cameraDataGridViewer.TabIndex = 0;
-//            this.cameraDataGridViewer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CameraDataGridViewer_CellContentClick);
-            ((System.ComponentModel.ISupportInitialize)(this.cameraDataGridViewer)).EndInit();
-            this.ResumeLayout(false);
-        }
-*/
     }
 }
+//
+// EOF: BobsButton.cs

@@ -17,6 +17,8 @@
 *	2016/12/13	wfredk	original development
 *		|						|
 *	2016/12/10	wfredk	original development
+*	
+*   TO DO:  Put the path for configuration information into an XML file.  Media path should be absolute - users will put it all over the place.	
 */
 using System;
 using System.Data;

@@ -1,4 +1,24 @@
-﻿using System;
+﻿/**
+ * File: DlgShotGraphicButton.cs
+ * 
+ *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *
+ *	$Id: /DlgShotGraphicButton.cs,v $
+ */
+/**
+*	Provides an interface to set camera shots and graphic text that a user button calls up
+*	
+*	Author:			Fred Koschara and Bob Lamm
+*	Creation Date:	December tenth, 2016
+*	Last Modified:	December 23, 2016 @ 11:17 am
+*
+*	Revision History:
+*	   Date		  by		Description
+*	2016/12/23	blamm	original development
+*	
+*	TO DO:  Remove temporary items.  Figure out how to refresh after a name or text source change.	|					
+*/
+using System;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -46,24 +66,11 @@ namespace VGV101
                 checkBox5.Checked = true;
                 button4.Enabled = false;
             }
-/*
-            // Read Camera Settings from Camera_Settings.xml file into camerasData...
-            if (!cfg.GetCurrentXml("Camera_Settings", camerasData)) // we can't proceed from here
-            {
-                MessageBox.Show("Camera data not available", "ERROR");
-                this.Close();
-                return;
-            }
-*/
+
             // Enter camera names into camera selector combobox            
             for (int cnt = 0, nLim = cfg.NumCameras; cnt < nLim; cnt++)
                 comboBox1.Items[cnt] = cfg.Camera(cnt).cameraName;
-/*
-            comboBox1.Items[0] = camerasData.Rows[0].Cells[camerasData.Columns["Camera_Name"].Index].Value.ToString();
-            comboBox1.Items[1] = camerasData.Rows[1].Cells[camerasData.Columns["Camera_Name"].Index].Value.ToString();
-            comboBox1.Items[2] = camerasData.Rows[2].Cells[camerasData.Columns["Camera_Name"].Index].Value.ToString();
-            comboBox1.Items[3] = camerasData.Rows[3].Cells[camerasData.Columns["Camera_Name"].Index].Value.ToString();
-*/
+
 
             // FILL IN GRAPHICS INFO - Get from buttonsData - only the first TextLine1Source is used for the entire 3-line block of text.
 
@@ -177,7 +184,7 @@ namespace VGV101
                     // MessageBox.Show("If statement:  lineOneText Source was 'text'");
                     textBox2.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1"].Index].Value.ToString();
                     textBox3.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_2"].Index].Value.ToString();
-                    textBox4.Text = "On Activation, not from list: " + buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_3"].Index].Value.ToString();
+                    textBox4.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_3"].Index].Value.ToString();
                     // MessageBox.Show("Finished the TEXT side of 'if' statement");
                 }
                 else  // Or if the text comes from one of the lists...
@@ -221,7 +228,7 @@ namespace VGV101
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Button_Name"].Index].Value = textBox1.Text;  // Update button name in buttonsData
             cfg.WriteCurrentXml("Buttons",buttonsData);   // Update Buttons file from info in buttonsData
             // ApplicationRestart? (See Form 1) or just read updated text?
-            // xxx // btnArray[nRow].Text = textBox1.Text;
+            // btnArray[nRow].Text = textBox1.Text;
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)  // Checkbox (is the button name coming from the graphic) changed.
@@ -275,12 +282,6 @@ namespace VGV101
 
             // Put up camera information and status for user to see
             txtCamStatus.Text = camera.manufacturer + " " + camera.model + " camera at " + camera.ipAddrPort + "\n" + camera.status;
-/*
-            txtCamStatus.Text = (camerasData.Rows[comboBox1.SelectedIndex].Cells[camerasData.Columns["Manufacturer"].Index].Value.ToString()
-                + " " + camerasData.Rows[comboBox1.SelectedIndex].Cells[camerasData.Columns["Model"].Index].Value.ToString()
-                + " camera at " + camerasData.Rows[comboBox1.SelectedIndex].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString() + "\n"
-                + camerasData.Rows[comboBox1.SelectedIndex].Cells[camerasData.Columns["Status"].Index].Value.ToString());  // Put up Manufacturer, Model, IP Address and status...
-*/
             txtCamStatus.Visible = true;
             //            if (camerasData.Rows[camNumber].Cells[camerasData.Columns["Status"].Index].Value.ToString() != "Full Communication") txtCamStatus.BackColor = Color.Red;
             //            if (camerasData.Rows[camNumber].Cells[camerasData.Columns["Status"].Index].Value.ToString() == "Full Communication") txtCamStatus.BackColor = Color.LawnGreen;
@@ -338,7 +339,7 @@ namespace VGV101
             }
 
             // Write Position Data into buttonsData
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Numberr"].Index].Value = camNumber;
+            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Number"].Index].Value = camNumber;
             buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Pan_Preset"].Index].Value = pan;
             buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Tilt_Preset"].Index].Value = tilt;
             buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Zoom_Preset"].Index].Value = zoom;
@@ -371,7 +372,7 @@ namespace VGV101
 
         private void button10_Click(object sender, EventArgs e)  // Save Secondary Shot
         {
-            if (camNumber == int.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Numberr"].Index].Value.ToString()))
+            if (camNumber == int.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value.ToString()))
                 MessageBox.Show("Secondary Camera has to be different from the one used for the Primary Shot");
             else SaveCameraShot("Secondary");
         }
@@ -452,9 +453,6 @@ namespace VGV101
             // Update Buttons file from info in buttonsData
             GlobalConfig cfg = GlobalConfig.Instance;
             cfg.WriteCurrentXml("Buttons", buttonsData);
-
-            // MessageBox.Show("Graphic Repeat Time Of " + numericUpDown7.Value.ToString() + " Seconds Entered.");
-            // buttonsData.Rows[nRow].Cells[buttonsData.Columns["Repeat_Graphic_Seconds"].Index].Value.ToString() == "Yes"
         }
 
         private void numericUpDown8_ValueChanged(object sender, EventArgs e)  // Leave Graphic Up For X seconds up/Down Validated
@@ -465,8 +463,6 @@ namespace VGV101
 
             // Update Buttons file from info in buttonsData
             cfg.WriteCurrentXml("Buttons", buttonsData);
-
-            // MessageBox.Show("Graphic Duration Time Of " + numericUpDown8.Value.ToString() + " Seconds Entered.");
         }
 
         private void button13_Click(object sender, EventArgs e)  // Focus button pressed...
@@ -474,8 +470,6 @@ namespace VGV101
             GlobalConfig cfg = GlobalConfig.Instance;
 
             AMC.FocusWindowURL = "http://" + cfg.Camera(camNumber).ipAddrPort + "/axis-cgi/autofocus/focuswindow/"; // Path for focus commands
-//            string cameraIPAddress = camerasData.Rows[camNumber].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString();  // get camera IP address
-//            AMC.FocusWindowURL = "http://" + cameraIPAddress + "/axis-cgi/autofocus/focuswindow/"; // Path for focus commands
 
             if (button13.BackColor == SystemColors.Control)
             {
@@ -527,15 +521,6 @@ namespace VGV101
         private void button15_Click(object sender, EventArgs e)  // Iris down button
         {
             AdjustIris(-10);    //  Send command to close iris
-/*
-            GlobalConfig cfg = GlobalConfig.Instance;
-
-            //  Send command to close iris
-            int irisStepValue = Convert.ToInt32(irisSteps.Value) * (-10);
-
-            SendCommandToCamera(camerasData, camNumber, "ptz.cgi?riris=" + irisStepValue);
-            MessageBox.Show("ptz.cgi?riris =" + irisStepValue);
-*/
         }
 
 
@@ -545,31 +530,8 @@ namespace VGV101
         private void AMC_OnError(object sender, AxAXISMEDIACONTROLLib._IAxisMediaControlEvents_OnErrorEvent e)  // On AMC error
         {
             MessageBox.Show("Error with AMC viewer on Shot/Graphic Settings Menu ");
-/*
-            camerasData.Rows[comboBox1.SelectedIndex].Cells[14].Value = "Error!";
-            txtCamStatus.BackColor = Color.Red;
-            txtCamStatus.Text = (camerasData.Rows[comboBox1.SelectedIndex].Cells[3].Value.ToString()
-                + " " + camerasData.Rows[comboBox1.SelectedIndex].Cells[4].Value.ToString()
-                + " camera at " + camerasData.Rows[comboBox1.SelectedIndex].Cells[1].Value.ToString() + "\n"
-                + camerasData.Rows[comboBox1.SelectedIndex].Cells[14].Value.ToString());  // Put up Manufacturer, Model, IP Address and status...
-*/
         }
-/*
-        private string SendCommandToCamera(DataGridView dataGridView1, int camNumber, string command)  // Send a command to a camera - cmmand does not have api name so it can change
-        {
-            GlobalConfig cfg = GlobalConfig.Instance;
-            string response = cfg.Camera(camNumber).CamCommand(command);
-/*
-            string userName = dataGridView1.Rows[camNumber].Cells[dataGridView1.Columns["User_Name"].Index].Value.ToString();  // Get camera username from dataGridView1
-            string password = dataGridView1.Rows[camNumber].Cells[dataGridView1.Columns["Password"].Index].Value.ToString();  // Get camera password from camera dataGridView1
-            string cameraIPAddress = dataGridView1.Rows[camNumber].Cells[dataGridView1.Columns["IP_Address"].Index].Value.ToString();  // Get IP Address from camera dataGridView1
-            var client = new WebClient { Credentials = new NetworkCredential(userName, password) };
-            string response = client.DownloadString("http://" + cameraIPAddress + "/axis-cgi/com/" + command);  // 'response' has the position data
-*//*
-            MessageBox.Show("Camera response is:\n\n" + response);  // TEMPORARY
-            return response;
-        }
-*/
+
 
         // TEMPORARY BUTTONS
 
@@ -578,11 +540,6 @@ namespace VGV101
             GlobalConfig cfg = GlobalConfig.Instance;
             string pan = "-10";
             string response = cfg.Camera(camNumber).Pan(pan);
-/*
-            var client = new WebClient { Credentials = new NetworkCredential("root", "root") };
-            string cameraIPAddress = camerasData.Rows[camNumber].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString();  // Get IP Address from File
-            var response = client.DownloadString("http://" + cameraIPAddress + "/axis-cgi/com/ptz.cgi?rpan=-10");
-*/
             response = "Move Left";
             textBox5.Text = response;
         }
@@ -592,11 +549,6 @@ namespace VGV101
             GlobalConfig cfg = GlobalConfig.Instance;
             string pan = "10";
             string response = cfg.Camera(camNumber).Pan(pan);
-/*
-            var client = new WebClient { Credentials = new NetworkCredential("root", "root") };
-            string cameraIPAddress = camerasData.Rows[camNumber].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString();  // Get IP Address from File
-            var response = client.DownloadString("http://" + cameraIPAddress + "/axis-cgi/com/ptz.cgi?rpan=10");
-*/
             response = "Move Right";
             textBox5.Text = response;
         }
@@ -605,11 +557,6 @@ namespace VGV101
         {
             GlobalConfig cfg = GlobalConfig.Instance;
             string response = cfg.Camera(camNumber).GetPosition();
-/*
-            var client = new WebClient { Credentials = new NetworkCredential("root", "root") };
-            string cameraIPAddress = camerasData.Rows[camNumber].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString();  // Get IP Address from File
-            var response = client.DownloadString("http://" + cameraIPAddress + "/axis-cgi/com/ptz.cgi?query=position");
-*/
             textBox5.Text = response;
 
             string pan = "0";
@@ -624,7 +571,6 @@ namespace VGV101
                 do
                 {
                     line = reader.ReadLine();
-                    // MessageBox.Show("Enter Loop");
                     if (line != null)
                     {
                         // MessageBox.Show("Line is: " + line);
@@ -635,7 +581,6 @@ namespace VGV101
                     }
                 } while (line != null);
             }
-            // MessageBox.Show("Pan is: " + pan + "\n" + "Tilt is: " + tilt + "\n " + "Zoom is: " + zoom);
         }
 
         private void button8_Click(object sender, EventArgs e)  // Temporary Go To Position
@@ -645,14 +590,8 @@ namespace VGV101
             string tilt = "0";
             string zoom = "5000";
             textBox5.Text = cfg.Camera(camNumber).GoTo(pan, tilt, zoom);
-/*
-            string userName = camerasData.Rows[camNumber].Cells[camerasData.Columns["User_Name"].Index].Value.ToString();  // get camera user name
-            string password = camerasData.Rows[camNumber].Cells[camerasData.Columns["Password"].Index].Value.ToString();  // get camera password
-            string cameraIPAddress = camerasData.Rows[camNumber].Cells[camerasData.Columns["IP_Address"].Index].Value.ToString();  // get camera IP address
-            var client = new WebClient { Credentials = new NetworkCredential(userName, password) };
-            var response = client.DownloadString("http://" + cameraIPAddress + "/axis-cgi/com/ptz.cgi?pan=0&tilt=0&zoom=5000");
-            textBox5.Text = response;
-*/
         }
     }    
 }
+//
+// EOF: DlgShotGraphicButton.cs

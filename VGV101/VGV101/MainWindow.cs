@@ -1,4 +1,23 @@
-﻿// insert file header here
+﻿/**
+ * File: MainWindow.cs
+ * 
+ *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *
+ *	$Id: /MainWindow.cs,v $
+ */
+/**
+*	Main control interface for users - carries the controls with which the user creates a show.
+*	
+*	Author:			Fred Koschara and Bob Lamm
+*	Creation Date:	December tenth, 2016
+*	Last Modified:	December 23, 2016 @ 11:17 am
+*
+*	Revision History:
+*	   Date		  by		Description
+*	2016/12/23	blamm	original development
+*	
+*	TO DO:  Figure out how to refresh after a name or text source change.	|					
+*/
 
 using System;
 //using System.Collections.Generic;
@@ -41,7 +60,7 @@ namespace VGV101
         private bool isDragging = false;
         private bool isScaling = false;
 
-        Button[] btnArray = new BobsButton[14];  // Declare button array = 100 buttons
+        Button[] btnArray = new BobsButton[100];  // Declare button array = 100 buttons
 
         public MainWindow()
         {
@@ -57,14 +76,7 @@ namespace VGV101
                 return;
             }
 
-/*            // Read Camera Settings from Camera_Settings.xml file into camerasData...
-            if (!cfg.GetCurrentXml("Camera_Settings", camerasData)) // we can't proceed from here
-            {
-                MessageBox.Show("Camera data not available","FATAL ERROR");
-                this.Close();
-                return;
-            }
-*/
+
             // Set Background, if any
             if (buttonsData.Rows[0].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")     // buttonDataGridView.Rows[nRow].Cells[buttonDataGridView.Columns["Name_From_Graphic"].Index].Value.ToString()
             {
@@ -115,7 +127,7 @@ namespace VGV101
             int blue = 0;
 
             int n = 2;
-            while (n < 14)  //  Set parameters for each button....
+            while (n < 100)  //  Set parameters for each button....
             {
                 xPos = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Location_X"].Index].Value.ToString());  //  X Position of button
                 yPos = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Location_Y"].Index].Value.ToString());  //  Y Position of button
@@ -422,38 +434,6 @@ namespace VGV101
         {
             DlgSetupWizard frm19 = new DlgSetupWizard();
             frm19.Show();
-
-
-
-
-            /*
-            // ManualResetEvent showNext = new ManualResetEvent(false);
-
-            Form7 frm1 = new Form7();  // Camera Menu
-            frm1.Show();
-            // Form19 frm2 = new Form19("Fill in camera information and save. \n \nThen press 'Continue Setup' or 'Abandon Setup'.",showNext);
-            // frm2.Show();
-            /* showNext.WaitOne();  // THIS DID NOT WORK - need to come back to this...
-            // if (frm2.resultCode == Form19.resultType.CONTINUE)
-            // {
-                showNext.Reset();  
- 
-                // frm1.Close();
-                MessageBox.Show("Sensed Continue Result");
-                Form7 frm3 = new Form7();  // Video Sources Menu
-                frm3.Show();
-                MessageBox.Show("About to put up Message menu");
-                Form19 frm4 = new Form19("Fill in video sources information and save. (I've put in the camera menu as a placeholder.)  \n \nThen press 'Continue Setup' or 'Abandon Setup'.",showNext);
-                frm4.Show();
-                if (frm2.resultCode == Form19.resultType.CONTINUE)
-                {
-                    // display next form
-                } 
-            }
-            else
-            {
-                MessageBox.Show("This did not Continue");
-            } */
         }
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)  //  Strip Menu Item:  Setup/Utilities Menu:  User Information
@@ -555,7 +535,7 @@ namespace VGV101
 
         private void createShotGraphicButtonToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu1 Item:  Create Shot/Graphic Button
         {
-            int theRow = 1;
+            int theRow = 1;  // This is actually the start button.  If this doesn't get changed below, it means no inactive button was found.
             int n = 0;
 
             while (n < 100)  // Search for an inactive button...
@@ -568,149 +548,83 @@ namespace VGV101
                 {
                     MessageBox.Show("Button Number " + n + " is available");
 
-                    theRow = n;
-
-                    btnArray[n].Visible = true;  // Button is visible (active)
-                    buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value = "Yes";
+                    theRow = n;  // Button n is available.
+                    
+                    btnArray[n].Visible = true;  // Make button visible (active
+                    btnArray[n].Left = 100;
+                    btnArray[n].Top = 100;
                     btnArray[n].Height = 100;  // Button is 100 pixels square
-                    buttonsData.Rows[n].Cells[buttonsData.Columns["Height"].Index].Value = 100;
-
                     btnArray[n].Width = 100;
-                    btnArray[n].BackColor = Color.FromArgb(128, 128, 128);  // Button background color
+                    btnArray[n].BackColor = Color.FromArgb(100, 100, 100);  // Button background color
                     btnArray[n].Text = "New Button";  // Button Name
                     btnArray[n].ForeColor = Color.FromArgb(0, 0, 255);  // Button Text is Black
+
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value = "Yes";  // Set button file properties to defaults
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Type"].Index].Value = "Shot";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Name"].Index].Value = "New Button";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value = "No";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Location_X"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Location_Y"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Width"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Height"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Uses_Text"].Index].Value = "No";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Red"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Green"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Blue"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Image"].Index].Value = "No";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Camera_Thumbnail"].Index].Value = "No";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value = " ";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Transparency"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Proportion_Lock"].Index].Value = "Lock";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value = 1;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Pan_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Tilt_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Zoom_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Focus_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Iris_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_White_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Gain_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Backlight_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_Focus_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_Iris_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_White_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_Gain_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_Backlight_Preset"].Index].Value = "Off";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Number"].Index].Value = 2;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Pan_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Tilt_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Zoom_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Focus_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Iris_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_White_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Gain_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Backlight_Preset"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Auto_Focus_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Auto_Iris_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Auto_White_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Auto_Gain_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Auto_Backlight_Preset"].Index].Value = "On";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_1_Source"].Index].Value = "Text";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_1"].Index].Value = "Line 1 should be empty";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_2_Source"].Index].Value = "Text";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_2"].Index].Value = "Line 2 should be empty";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_3_Source"].Index].Value = "Text";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_3"].Index].Value = "Line 3 should be empty";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Bring_Graphic_Up_Second_Click"].Index].Value = "Yes";
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Repeat_Graphic_Seconds"].Index].Value = 5;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Leave_Graphic_Seconds"].Index].Value = 6;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Template"].Index].Value = "Default";
 
                     // Update the Button.xml file
                     GlobalConfig cfg = GlobalConfig.Instance;
                     cfg.WriteCurrentXml("Buttons", buttonsData);
-
-                    /*
-                        <Button_Number>0</Button_Number>
-                    */
-                    buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value = "Yes";
-                    buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Type"].Index].Value = "Shot";
-                    /*
-                    <Button_Type>Shot</Button_Type>
-                    <Button_Name>New Button</Button_Name>
-                    <Name_From_Graphic>No</Name_From_Graphic>
-                    <Location_X>100</Location_X>
-                    <Location_Y>100</Location_Y>
-                    <Width>100</Width>
-                    <Height>100</Height>
-                    <Uses_Text>No</Uses_Text>
-                    <Red>128</Red>
-                    <Green>128</Green>
-                    <Blue>128</Blue>
-                    <Image>No</Image>
-                    <Camera_Thumbnail>No</Camera_Thumbnail>
-                    <Image_Path>" "</Image_Path>
-                    <Image_Transparency>0</Image_Transparency>
-                    <Proportion_Lock>Lock</Proportion_Lock>
-                    <Primary_Camera_Numberr>1</Primary_Camera_Numberr>
-                    <Primary_Camera_Pan_Preset>0</Primary_Camera_Pan_Preset>
-                    <Primary_Camera_Tilt_Preset>0</Primary_Camera_Tilt_Preset>
-                    <Primary_Camera_Zoom_Preset>0</Primary_Camera_Zoom_Preset>
-                    <Primary_Camera_Focus_Preset>0</Primary_Camera_Focus_Preset>
-                    <Primary_Camera_Iris_Preset>0</Primary_Camera_Iris_Preset>
-                    <Primary_Camera_White_Preset>0</Primary_Camera_White_Preset>
-                    <Primary_Camera_Gain_Preset>0</Primary_Camera_Gain_Preset>
-                    <Primary_Camera_Backlight_Preset>0</Primary_Camera_Backlight_Preset>
-                    <Primary_Camera_Auto_Focus_Preset>On</Primary_Camera_Auto_Focus_Preset>
-                    <Primary_Camera_Auto_Iris_Preset>On</Primary_Camera_Auto_Iris_Preset>
-                    <Primary_Camera_Auto_White_Preset>On</Primary_Camera_Auto_White_Preset>
-                    <Primary_Camera_Auto_Gain_Preset>On</Primary_Camera_Auto_Gain_Preset>
-                    <Primary_Camera_Auto_Backlight_Preset>On</Primary_Camera_Auto_Backlight_Preset>
-                    <Secondary_Camera_Number>0</Secondary_Camera_Number>
-                    <Secondary_Camera_Pan_Preset>0</Secondary_Camera_Pan_Preset>
-                    <Secondary_Camera_Tilt_Preset>0</Secondary_Camera_Tilt_Preset>
-                    <Secondary_Camera_Zoom_Preset>0</Secondary_Camera_Zoom_Preset>
-                    <Secondary_Camera_Focus_Preset>0</Secondary_Camera_Focus_Preset>
-                    <Secondary_Camera_Iris_Preset>0</Secondary_Camera_Iris_Preset>
-                    <Secondary_Camera_White_Preset>0</Secondary_Camera_White_Preset>
-                    <Secondary_Camera_Gain_Preset>0</Secondary_Camera_Gain_Preset>
-                    <Secondary_Camera_Backlight_Preset>0</Secondary_Camera_Backlight_Preset>
-                    <Secondary_Camera_Auto_Focus_Preset>On</Secondary_Camera_Auto_Focus_Preset>
-                    <Secondary_Camera_Auto_Iris_Preset>On</Secondary_Camera_Auto_Iris_Preset>
-                    <Secondary_Camera_Auto_White_Preset>On</Secondary_Camera_Auto_White_Preset>
-                    <Secondary_Camera_Auto_Gain_Preset>On</Secondary_Camera_Auto_Gain_Preset>
-                    <Secondary_Camera_Auto_Backlight_Preset>On</Secondary_Camera_Auto_Backlight_Preset>
-                    <Text_Line_1_Source>Text</Text_Line_1_Source>
-                    <Text_Line_1>"Line 1 should be empty"</Text_Line_1>
-                    <Text_Line_2_Source>Text</Text_Line_2_Source>
-                    <Text_Line_2>"Line 2 should be empty"</Text_Line_2>
-                    <Text_Line_3_Source>Text</Text_Line_3_Source>
-                    <Text_Line_3>"Line 3 should be empty"</Text_Line_3>
-                    <Bring_Graphic_Up_Second_Click>Yes</Bring_Graphic_Up_Second_Click>
-                    <Repeat_Graphic_Seconds>5</Repeat_Graphic_Seconds>
-                    <Leave_Graphic_Seconds>6</Leave_Graphic_Seconds>
-                    <Template>Acme Number One</Template>
-
-
-
-
-                btnArray[n].Active = "Yes";
-                btnArray[n].Button_Type = "Shot";
-                btnArray[n].Button_Name = "New Button";
-                btnArray[n].Name_From_Graphic = "No";
-                btnArray[n].Location_X = 10;
-                btnArray[n].Location_Y = 10;
-                btnArray[n].Width = 100;
-                btnArray[n].Height = 100;
-                btnArray[n].Uses_Text = "No";
-                btnArray[n].Red = 128;
-                btnArray[n].Green = 128;
-                btnArray[n].Blue = 128;
-                btnArray[n].Image = "No";
-                btnArray[n].Camera_Thumbnail = "No ";
-                btnArray[n].Image_Transparency = 0;
-                btnArray[n].Proportion_Lock = "Lock";
-                btnArray[n].Primary_Camera_Numberr = 1; 
-                btnArray[n].Primary_Camera_Pan_Preset = 0;
-                btnArray[n].Primary_Camera_Tilt_Preset = 0; 
-                btnArray[n].Primary_Camera_Zoom_Preset = 0; 
-                btnArray[n].Primary_Camera_Focus_Preset = 0; 
-                btnArray[n].Primary_Camera_Iris_Preset = 0; 
-                btnArray[n].Primary_Camera_White_Preset = 0; 
-                btnArray[n].Primary_Camera_Gain_Preset = 0; 
-                btnArray[n].Primary_Camera_Backlight_Preset = 0; 
-                btnArray[n].Primary_Camera_Auto_Focus_Preset = "On"; 
-                btnArray[n].Primary_Camera_Auto_Iris_Preset = "On"; 
-                btnArray[n].Primary_Camera_Auto_White_Preset = "On"; 
-                btnArray[n].Primary_Camera_Auto_Gain_Preset = "On"; 
-                btnArray[n].Primary_Camera_Auto_Backlight_Preset = "On"; 
-                btnArray[n].Secondary_Camera_Number = 0; 
-                btnArray[n].Secondary_Camera_Pan_Preset = 0; 
-                btnArray[n].Secondary_Camera_Tilt_Preset = 0; 
-                btnArray[n].Secondary_Camera_Zoom_Preset = 0; 
-                btnArray[n].Secondary_Camera_Focus_Preset = 0; 
-                btnArray[n].Secondary_Camera_Iris_Preset = 0; 
-                btnArray[n].Secondary_Camera_White_Preset = 0; 
-                btnArray[n].Secondary_Camera_Gain_Preset = 0; 
-                btnArray[n].Secondary_Camera_Backlight_Preset = 0; 
-                btnArray[n].Secondary_Camera_Auto_Focus_Preset = "On"; 
-                btnArray[n].Secondary_Camera_Auto_Iris_Preset = "On"; 
-                btnArray[n].Secondary_Camera_Auto_White_Preset = "On"; 
-                btnArray[n].Secondary_Camera_Auto_Gain_Preset = "On"; 
-                btnArray[n].Secondary_Camera_Auto_Backlight_Preset = "On"; 
-                btnArray[n].Text_Line_1_Source = "Text"; 
-                btnArray[n].Text_Line_1 = "Line 1 should be empty";
-                btnArray[n].Text_Line_2_Source = "Text"; 
-                btnArray[n].Text_Line_2 = "Line two should be empty"; 
-                btnArray[n].Text_Line_3_Source = "Text"; 
-                btnArray[n].Text_Line_3 = "Line 3 should be empty"; 
-                btnArray[n].Bring_Graphic_Up_Second_Click = "Yes";
-                btnArray[n].Repeat_Graphic_Seconds = 5;
-                btnArray[n].Leave_Graphic_Seconds = 6;
-                btnArray[n].Template ="Default";
-                */
-
 
                     break;
                 }
                 n++;
             }
 
-            if (theRow == 1)  // Testing to see if any inactive buttons were found...
+            if (theRow == 1)  // Testing to see that an inactive button was actually found...
             {
                 MessageBox.Show("All 100 buttons in use!  Delete some!");  // No inactive buttons found...
             }
@@ -720,12 +634,11 @@ namespace VGV101
                 frm.Show();
             }
 
-
         }
 
         private void createShotButtonToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu1 Item:  Create Shot Button
         {
-            MessageBox.Show("Same as Shot Button but no graphics capability");
+            MessageBox.Show("Same as Shot Button but no graphics capability");  // Don't bother with this? - get rid of...
         }
 
         private void createGraphicButtonToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu1 Item:  Create Graphic Button
@@ -758,9 +671,9 @@ namespace VGV101
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
                 // pictureBox1.Image = Image.FromFile(openFileDialog2.FileName);  // Alternative way that doesn't trim picture on top?
-                this.BackgroundImage = Image.FromFile(openFileDialog2.FileName);                                  
-                buttonsData.Rows[0].Cells[13].Value = "Yes";
-                buttonsData.Rows[0].Cells[15].Value = openFileDialog2.FileName;
+                this.BackgroundImage = Image.FromFile(openFileDialog2.FileName);
+                buttonsData.Rows[0].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
+                buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName;
                                                                             
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
@@ -771,8 +684,8 @@ namespace VGV101
         private void removeBackgroundToolStripMenuItem_Click(object sender, EventArgs e)  // ContextMenu1 Item: Remove Background Image
         {
             this.BackgroundImage = null;
-            buttonsData.Rows[0].Cells[13].Value = "No";  // "Image"
-            buttonsData.Rows[0].Cells[15].Value = " ";  // "Image_Path"
+            buttonsData.Rows[0].Cells[buttonsData.Columns["Image"].Index].Value = "No";
+            buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value = " ";
 
             // Update the Button.xml file
             GlobalConfig cfg = GlobalConfig.Instance;
@@ -810,10 +723,11 @@ namespace VGV101
                 button1.BackColor = colorDialog1.Color;
                 button1.ForeColor = Color.FromArgb(0, 0, 0);  // Button text is black
                 button1.TextAlign = ContentAlignment.MiddleCenter;  // Type is centered
-                buttonsData.Rows[1].Cells[10].Value = button1.BackColor.R;  // Button RGB Color
-                buttonsData.Rows[1].Cells[11].Value = button1.BackColor.G;
-                buttonsData.Rows[1].Cells[12].Value = button1.BackColor.B;
-                buttonsData.Rows[1].Cells[13].Value = "No";
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Red"].Index].Value = button1.BackColor.R;  // Button RGB Color
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Green"].Index].Value = button1.BackColor.G;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Blue"].Index].Value = button1.BackColor.B;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value = "No";
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value = " ";
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
@@ -827,12 +741,15 @@ namespace VGV101
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
                 button1.BackgroundImage = Image.FromFile(openFileDialog2.FileName);
-                buttonsData.Rows[1].Cells[13].Value = "Yes";
-                buttonsData.Rows[1].Cells[15].Value = openFileDialog2.FileName;
                 button1.Width = button1.BackgroundImage.Width;
                 button1.Height = button1.BackgroundImage.Height;
                 button1.ForeColor = Color.FromArgb(255, 255, 255);  // Type is white
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Type is pushed to bottom
+
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Width"].Index].Value = button1.Width;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Height"].Index].Value = button1.Height;
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
@@ -882,10 +799,11 @@ namespace VGV101
         private void button1_MouseUp(object sender, MouseEventArgs e)
         {
             isDragging = isScaling = false;
-            buttonsData.Rows[1].Cells[5].Value = button1.Left;
-            buttonsData.Rows[1].Cells[6].Value = button1.Top;
-            buttonsData.Rows[1].Cells[7].Value = button1.Width;
-            buttonsData.Rows[1].Cells[8].Value = button1.Height;
+
+            buttonsData.Rows[1].Cells[buttonsData.Columns["Location_X"].Index].Value = button1.Left;
+            buttonsData.Rows[1].Cells[buttonsData.Columns["Location_Y"].Index].Value = button1.Top;
+            buttonsData.Rows[1].Cells[buttonsData.Columns["Width"].Index].Value = button1.Width;
+            buttonsData.Rows[1].Cells[buttonsData.Columns["Height"].Index].Value = button1.Height;
 
             // Update Buttons file and info in buttonsData
             GlobalConfig cfg = GlobalConfig.Instance;
@@ -906,3 +824,5 @@ namespace VGV101
         }
     }
 }
+//
+// EOF: MainWindow.cs

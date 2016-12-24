@@ -266,7 +266,7 @@
             "Camera 4 Name"});
             this.comboBox1.Location = new System.Drawing.Point(6, 22);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(605, 28);
+            this.comboBox1.Size = new System.Drawing.Size(725, 28);
             this.comboBox1.TabIndex = 51;
             this.comboBox1.Text = "Select Camera...";
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
@@ -297,7 +297,7 @@
             this.txtCamStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCamStatus.Location = new System.Drawing.Point(6, 55);
             this.txtCamStatus.Name = "txtCamStatus";
-            this.txtCamStatus.Size = new System.Drawing.Size(605, 33);
+            this.txtCamStatus.Size = new System.Drawing.Size(725, 33);
             this.txtCamStatus.TabIndex = 26;
             this.txtCamStatus.Text = "Status";
             this.txtCamStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -520,50 +520,55 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(746, 60);
+            this.button8.Location = new System.Drawing.Point(776, 66);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(59, 20);
+            this.button8.Size = new System.Drawing.Size(30, 20);
             this.button8.TabIndex = 83;
             this.button8.Text = "Go To";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Visible = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(746, 34);
+            this.button7.Location = new System.Drawing.Point(746, 66);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(59, 20);
+            this.button7.Size = new System.Drawing.Size(26, 20);
             this.button7.TabIndex = 82;
             this.button7.Text = "Query";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click_1);
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(617, 39);
+            this.textBox5.Location = new System.Drawing.Point(746, 13);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(123, 47);
+            this.textBox5.Size = new System.Drawing.Size(60, 22);
             this.textBox5.TabIndex = 81;
+            this.textBox5.Visible = false;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(681, 15);
+            this.button3.Location = new System.Drawing.Point(776, 41);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(59, 20);
+            this.button3.Size = new System.Drawing.Size(30, 20);
             this.button3.TabIndex = 80;
             this.button3.Text = "Right";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(617, 15);
+            this.button2.Location = new System.Drawing.Point(746, 41);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(59, 20);
+            this.button2.Size = new System.Drawing.Size(26, 20);
             this.button2.TabIndex = 79;
             this.button2.Text = "Left";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // label3
@@ -808,24 +813,26 @@
             // displayedListData
             // 
             this.displayedListData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.displayedListData.Location = new System.Drawing.Point(378, 895);
+            this.displayedListData.Location = new System.Drawing.Point(378, 884);
             this.displayedListData.Name = "displayedListData";
-            this.displayedListData.Size = new System.Drawing.Size(375, 148);
+            this.displayedListData.Size = new System.Drawing.Size(58, 21);
             this.displayedListData.TabIndex = 52;
+            this.displayedListData.Visible = false;
             // 
             // activeRowData
             // 
             this.activeRowData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.activeRowData.Location = new System.Drawing.Point(759, 895);
+            this.activeRowData.Location = new System.Drawing.Point(759, 884);
             this.activeRowData.Name = "activeRowData";
-            this.activeRowData.Size = new System.Drawing.Size(278, 148);
+            this.activeRowData.Size = new System.Drawing.Size(42, 21);
             this.activeRowData.TabIndex = 53;
+            this.activeRowData.Visible = false;
             // 
             // DlgShotGraphicButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 1055);
+            this.ClientSize = new System.Drawing.Size(1049, 908);
             this.Controls.Add(this.activeRowData);
             this.Controls.Add(this.displayedListData);
             this.Controls.Add(this.groupBox3);
