@@ -18,7 +18,7 @@
 *		|						|
 *	2016/12/10	wfredk	original development
 *	
-*   TO DO:  Put the path for configuration information into an XML file.  Media path should be absolute - users will put them all over the place.	
+*   TO DO:  Put the path for configuration information into an XML file.  Media path should be absolute - users will put them all over the place.	CfgRoot should be typed in this form.
 */
 using System;
 using System.Data;

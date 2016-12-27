@@ -101,7 +101,6 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.createOpeningButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createShotGraphicButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createShotButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createGraphicButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createExternalVideoSourceButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createClipSuperStillButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,12 +119,12 @@
             this.moveUttonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizeButtonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setButtonTextColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.buttonSetup = new System.Windows.Forms.Button();
             this.buttonsData = new System.Windows.Forms.DataGridView();
-            this.setButtonTextColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
@@ -342,6 +341,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(784, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // monitorsToolStripMenuItem1
             // 
@@ -660,7 +660,6 @@
             this.toolStripSeparator9,
             this.createOpeningButtonToolStripMenuItem,
             this.createShotGraphicButtonToolStripMenuItem,
-            this.createShotButtonToolStripMenuItem,
             this.createGraphicButtonToolStripMenuItem,
             this.createExternalVideoSourceButtonToolStripMenuItem,
             this.createClipSuperStillButtonToolStripMenuItem,
@@ -694,13 +693,6 @@
             this.createShotGraphicButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
             this.createShotGraphicButtonToolStripMenuItem.Text = "Create Shot/Graphic Button";
             this.createShotGraphicButtonToolStripMenuItem.Click += new System.EventHandler(this.createShotGraphicButtonToolStripMenuItem_Click);
-            // 
-            // createShotButtonToolStripMenuItem
-            // 
-            this.createShotButtonToolStripMenuItem.Name = "createShotButtonToolStripMenuItem";
-            this.createShotButtonToolStripMenuItem.Size = new System.Drawing.Size(263, 22);
-            this.createShotButtonToolStripMenuItem.Text = "Create Shot Button";
-            this.createShotButtonToolStripMenuItem.Click += new System.EventHandler(this.createShotButtonToolStripMenuItem_Click);
             // 
             // createGraphicButtonToolStripMenuItem
             // 
@@ -808,7 +800,7 @@
             this.setButtonTextColorToolStripMenuItem,
             this.buttonImageToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(189, 158);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(189, 136);
             this.contextMenuStrip2.Text = "Start Button";
             // 
             // editButtonToolStripMenuItem
@@ -838,6 +830,13 @@
             this.buttonColorToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
             this.buttonColorToolStripMenuItem.Text = "Set Button Color";
             this.buttonColorToolStripMenuItem.Click += new System.EventHandler(this.buttonColorToolStripMenuItem_Click);
+            // 
+            // setButtonTextColorToolStripMenuItem
+            // 
+            this.setButtonTextColorToolStripMenuItem.Name = "setButtonTextColorToolStripMenuItem";
+            this.setButtonTextColorToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.setButtonTextColorToolStripMenuItem.Text = "Set Button Text Color";
+            this.setButtonTextColorToolStripMenuItem.Click += new System.EventHandler(this.setButtonTextColorToolStripMenuItem_Click);
             // 
             // buttonImageToolStripMenuItem
             // 
@@ -878,13 +877,6 @@
             this.buttonsData.Size = new System.Drawing.Size(282, 292);
             this.buttonsData.TabIndex = 7;
             this.buttonsData.Visible = false;
-            // 
-            // setButtonTextColorToolStripMenuItem
-            // 
-            this.setButtonTextColorToolStripMenuItem.Name = "setButtonTextColorToolStripMenuItem";
-            this.setButtonTextColorToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
-            this.setButtonTextColorToolStripMenuItem.Text = "Set Button Text Color";
-            this.setButtonTextColorToolStripMenuItem.Click += new System.EventHandler(this.setButtonTextColorToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1003,7 +995,6 @@
         private System.Windows.Forms.ToolStripMenuItem programToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem createOpeningButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createShotGraphicButtonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem createShotButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createGraphicButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createClipSuperStillButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createCreditsButtonToolStripMenuItem;

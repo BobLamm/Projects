@@ -83,7 +83,8 @@ namespace VGV101
             // Set Main Window Background, if any
             if (buttonsData.Rows[0].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")     // buttonDataGridView.Rows[nRow].Cells[buttonDataGridView.Columns["Name_From_Graphic"].Index].Value.ToString()
             {
-                this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
+             // this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
+                this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());
             }
             else
             {
@@ -105,7 +106,8 @@ namespace VGV101
             button1.ForeColor = Color.FromArgb(textRed, textGreen, textBlue);  // Start Button text color
             if (buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")
             {
-                button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
+                // button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
+                button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
             }
             else
@@ -113,14 +115,12 @@ namespace VGV101
                 button1.BackgroundImage = null;
                 button1.TextAlign = ContentAlignment.MiddleCenter;  // Button text is centered
             }
-
             button1.Text = buttonsData.Rows[1].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();  // Get button name
             button1.Tag = "Start";    // Put numbers or 'Start' text into tags so we can identify them
         }
 
 
         // MAKE USER BUTTONS
-
         private void Form1_Load(object sender, EventArgs e)
         {
             GlobalConfig cfg = GlobalConfig.Instance;
@@ -153,7 +153,8 @@ namespace VGV101
                 btnArray[n].BackgroundImageLayout = BackgroundImageLayout = ImageLayout.Stretch;
                 if (buttonsData.Rows[n].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")  // buttonsData.Rows[n].Cells[13].Value.ToString()
                 {
-                    btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));  // works   
+                    // btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));  // works
+                    btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());  // works    
                     btnArray[n].TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
                 }
                 else
@@ -179,7 +180,7 @@ namespace VGV101
                 {
                     btnArray[n].Visible = false;    // Button is not visible (inactive)
                 }
-                
+               
                 this.Controls.Add(btnArray[n]); // Add button to form 
 
                 n++;
@@ -339,8 +340,7 @@ namespace VGV101
             if (openFileDialog3.ShowDialog() == DialogResult.OK)
             {
                 GlobalConfig cfg = GlobalConfig.Instance;
-
-                // Copies media to the customer media folder at cfg.MediaRoot+"Customer Media"
+                // Delete?
             }
         }
 
@@ -348,7 +348,7 @@ namespace VGV101
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            MessageBox.Show("Opens Windows Explorer Meeting Media folder so user can see media in it and delete it.");
+            MessageBox.Show("Opens Windows Explorer Meeting Media folder so user can see media in it and delete it.  - Delete?");
             Process.Start(cfg.MediaRoot+"Media");
         }
 
@@ -792,7 +792,6 @@ namespace VGV101
                 button1.BackgroundImage = Image.FromFile(openFileDialog2.FileName);
                 button1.Width = button1.BackgroundImage.Width;
                 button1.Height = button1.BackgroundImage.Height;
-                // button1.ForeColor = Color.FromArgb(255, 255, 255);  // Type is white
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Type is pushed to bottom
 
                 buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
@@ -870,6 +869,11 @@ namespace VGV101
             {
                 MessageBox.Show("Check Media and Execute Startup Sequence.");
             }
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
