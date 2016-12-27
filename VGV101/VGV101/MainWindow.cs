@@ -18,7 +18,7 @@
 *	     |
 *	2016/12/26  blamm   added button text coloring and fixed button problem
 *	
-*	TO DO:  Figure out how to refresh buttons (or entire display) after a name or text source change.	|					
+*	TO DO:  Figure out how to refresh buttons (or entire display) after a name or text source change.  Background image vs. image|					
 */
 
 using System;
@@ -80,7 +80,7 @@ namespace VGV101
             }
 
 
-            // Set Background, if any
+            // Set Main Window Background, if any
             if (buttonsData.Rows[0].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")     // buttonDataGridView.Rows[nRow].Cells[buttonDataGridView.Columns["Name_From_Graphic"].Index].Value.ToString()
             {
                 this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
@@ -91,7 +91,6 @@ namespace VGV101
             }
 
             // Set Start button (Button 1) location, size, color, etc.
-
             button1.Left = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Location_X"].Index].Value.ToString());
             button1.Top = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Location_Y"].Index].Value.ToString());
             button1.Width = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Width"].Index].Value.ToString());
@@ -104,15 +103,14 @@ namespace VGV101
             int textGreen = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
             int textBlue = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
             button1.ForeColor = Color.FromArgb(textRed, textGreen, textBlue);  // Start Button text color
-                        if (buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")
+            if (buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")
             {
                 button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
-                // button1.ForeColor = Color.FromArgb(255, 255, 255);  // Button Text is White
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
             }
             else
             {
-                // button1.ForeColor = Color.FromArgb(0, 0, 0);  // Button text is black
+                button1.BackgroundImage = null;
                 button1.TextAlign = ContentAlignment.MiddleCenter;  // Button text is centered
             }
 
@@ -156,11 +154,15 @@ namespace VGV101
                 if (buttonsData.Rows[n].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")  // buttonsData.Rows[n].Cells[13].Value.ToString()
                 {
                     btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));  // works   
-                    btnArray[n].ForeColor = Color.FromArgb(255, 255, 255);  // Button Text is White
                     btnArray[n].TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
                 }
+                else
+                {
+                    btnArray[n].BackgroundImage = null;
+                    btnArray[n].TextAlign = ContentAlignment.MiddleCenter;  // Button text is centered
+                }
                 // btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();  // Get button name
-                if(buttonsData.Rows[n].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value.ToString() == "Yes")  //Is button name from first line of graphic?
+                if (buttonsData.Rows[n].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value.ToString() == "Yes")  //Is button name from first line of graphic?
                 {
                     btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_1"].Index].Value.ToString();
                 }
@@ -572,14 +574,15 @@ namespace VGV101
 
                     theRow = n;  // Button n is available.
                     
-                    btnArray[n].Visible = true;  // Make button visible (active
+                    btnArray[n].Visible = true;  // Make button visible (active)
                     btnArray[n].Left = 100;
                     btnArray[n].Top = 100;
                     btnArray[n].Height = 100;  // Button is 100 pixels square
                     btnArray[n].Width = 100;
-                    btnArray[n].BackColor = Color.FromArgb(100, 100, 100);  // Button background color
+                    btnArray[n].BackColor = Color.FromArgb(155, 155, 155);  // Button background color is gray
+                    btnArray[n].Image = null;
                     btnArray[n].Text = "New Button";  // Button Name
-                    btnArray[n].ForeColor = Color.FromArgb(0, 0, 255);  // Button Text is Black
+                    btnArray[n].ForeColor = Color.FromArgb(0, 0, 0);  // Button Text is Black
 
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value = "Yes";  // Set button file properties to defaults
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Type"].Index].Value = "Shot";
@@ -743,7 +746,7 @@ namespace VGV101
             // MessageBox.Show("Start Button Ready To Scale!");
         }
 
-        private void buttonColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Set Start Button Color and update current Button.xml file
+        private void buttonColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Change Start Button Color and update current Button.xml file
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -764,7 +767,7 @@ namespace VGV101
             }
         }
 
-        private void setButtonTextColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Set Start Button Text Color and update current Button.xml file
+        private void setButtonTextColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Change Start Button Text Color and update current Button.xml file
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -782,7 +785,7 @@ namespace VGV101
             }
         }
 
-        private void buttonImageToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Set Start Button Image - also saves to buttonsData and Buttons.xml file
+        private void buttonImageToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Set/Change Start Button Image - also saves to buttonsData and Buttons.xml file
         {
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {

@@ -219,7 +219,6 @@ namespace VGV101
                 Height = BackgroundImage.Height;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;
-                // ForeColor = Color.FromArgb(255, 255, 255);  // Button text is white
                 TextAlign = ContentAlignment.BottomCenter;  // Button text is pushed to bottom
 
                 cfg.WriteXMLFile(buttonsData, "Buttons.xml");
