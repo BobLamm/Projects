@@ -125,6 +125,7 @@
             this.openFileDialog3 = new System.Windows.Forms.OpenFileDialog();
             this.buttonSetup = new System.Windows.Forms.Button();
             this.buttonsData = new System.Windows.Forms.DataGridView();
+            this.setButtonTextColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
@@ -804,9 +805,10 @@
             this.moveUttonToolStripMenuItem,
             this.resizeButtonToolStripMenuItem,
             this.buttonColorToolStripMenuItem,
+            this.setButtonTextColorToolStripMenuItem,
             this.buttonImageToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(189, 114);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(189, 158);
             this.contextMenuStrip2.Text = "Start Button";
             // 
             // editButtonToolStripMenuItem
@@ -848,7 +850,7 @@
             // 
             this.openFileDialog3.FileName = "Opening.mov";
             this.openFileDialog3.Filter = "Clips. Supers and Stills files (*.mov, *.mp4, *.jpg, *.png, *.bmp)|*.mov;*.mp4;*." +
-                "jpg;*.png;*.bmp";
+    "jpg;*.png;*.bmp";
             this.openFileDialog3.Title = "Import Clip/Super/Still";
             // 
             // buttonSetup
@@ -876,6 +878,13 @@
             this.buttonsData.Size = new System.Drawing.Size(282, 292);
             this.buttonsData.TabIndex = 7;
             this.buttonsData.Visible = false;
+            // 
+            // setButtonTextColorToolStripMenuItem
+            // 
+            this.setButtonTextColorToolStripMenuItem.Name = "setButtonTextColorToolStripMenuItem";
+            this.setButtonTextColorToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.setButtonTextColorToolStripMenuItem.Text = "Set Button Text Color";
+            this.setButtonTextColorToolStripMenuItem.Click += new System.EventHandler(this.setButtonTextColorToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -1005,6 +1014,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem freezeWindowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createExternalVideoSourceButtonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setButtonTextColorToolStripMenuItem;
     }
 }
 

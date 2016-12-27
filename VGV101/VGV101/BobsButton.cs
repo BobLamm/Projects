@@ -15,8 +15,10 @@
 *	Revision History:
 *	   Date		  by		Description
 *	2016/12/23	blamm	original development
+*	     |
+*	2016/12/26  blamm   added text coloring and fixed button image problem
 *	
-*	TO DO:  Update documentation to reflect removal of DataGridView					
+*	TO DO:  Update documentation to reflect removal of DataGridView, is this.hide a better way to delete button?			
 */
 using System;
 using System.Windows.Forms;
@@ -74,6 +76,8 @@ namespace VGV101
             scaler.Click += new EventHandler(resizeButtonToolStripMenuItem_Click);
             ToolStripItem colorer = this.ContextMenuStrip.Items.Add("Set Button Color");
             colorer.Click += new EventHandler(buttonColorToolStripMenuItem_Click);
+            ToolStripItem textColorer = this.ContextMenuStrip.Items.Add("Set Text Color");
+            textColorer.Click += new EventHandler(buttonTextColorToolStripMenuItem_Click);
             ToolStripItem imager = this.ContextMenuStrip.Items.Add("Set Button Image");
             imager.Click += new EventHandler(buttonImageToolStripMenuItem_Click);
             ToolStripItem deleter = this.ContextMenuStrip.Items.Add("Delete Button");
@@ -115,22 +119,6 @@ namespace VGV101
             }
         }
 
-        // User Button dragging/scaling is completed
-        private void BobsButtonMouseUp(object sender, MouseEventArgs e)
-        {   GlobalConfig cfg = GlobalConfig.Instance;
-
-            moveButton = isDragging = scaleButton = isScaling = false;
-
-            // MessageBox.Show("BobsButton Move/Scale Completed: " + btn.Text);
-
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Location_X"].Index].Value = Left;  // buttonsData.Rows[nRow].Cells[5  buttonsData.Columns["Location_X"].Index].Value = Left;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Location_Y"].Index].Value = Top;  // buttonsData.Rows[nRow].Cells[6  buttonsData.Columns["Location_Y"].Index].Value = Top;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;  // buttonsData.Rows[nRow].Cells[7  buttonsData.Columns["Width"].Index].Value = Width;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;  // buttonsData.Rows[nRow].Cells[8  buttonsData.Columns["Height"].Index].Value = Height;
-
-            cfg.WriteCurrentXml("Buttons", buttonsData);
-        }
-
         private void BobsButtonClick(object sender, EventArgs e)  // Click on User Button
         {   if (!moveButton && !scaleButton)
             {   GlobalConfig cfg = GlobalConfig.Instance;
@@ -166,19 +154,54 @@ namespace VGV101
             // MessageBox.Show("User Button Ready To Scale!");
         }
 
+        // User Button dragging/scaling is completed
+        private void BobsButtonMouseUp(object sender, MouseEventArgs e)
+        {
+            GlobalConfig cfg = GlobalConfig.Instance;
+
+            moveButton = isDragging = scaleButton = isScaling = false;
+
+            // MessageBox.Show("BobsButton Move/Scale Completed: " + btn.Text);
+
+            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Location_X"].Index].Value = Left;  // buttonsData.Rows[nRow].Cells[5  buttonsData.Columns["Location_X"].Index].Value = Left;
+            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Location_Y"].Index].Value = Top;  // buttonsData.Rows[nRow].Cells[6  buttonsData.Columns["Location_Y"].Index].Value = Top;
+            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;  // buttonsData.Rows[nRow].Cells[7  buttonsData.Columns["Width"].Index].Value = Width;
+            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;  // buttonsData.Rows[nRow].Cells[8  buttonsData.Columns["Height"].Index].Value = Height;
+
+            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+        }
+
         private void buttonColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Set User Button Color
         {
             System.Windows.Forms.ColorDialog colorDialog1 = new ColorDialog();
             if (colorDialog1.ShowDialog() == DialogResult.OK)
-            {
+            {   GlobalConfig cfg = GlobalConfig.Instance;
+                
                 BackgroundImage = null;
                 BackColor = colorDialog1.Color;
-                ForeColor = Color.FromArgb(0, 0, 0);  // Button Text is black
                 TextAlign = ContentAlignment.MiddleCenter;  // Text on Button is Centered
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Red"].Index].Value = BackColor.R;  // Button RGB Color  //  buttonsData.Rows[nRow].Cells[10].Value = BackColor.R;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Green"].Index].Value = BackColor.G;  // buttonsData.Rows[nRow].Cells[11].Value = BackColor.G;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Blue"].Index].Value = BackColor.B;  // buttonsData.Rows[nRow].Cells[12].Value = BackColor.B;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image"].Index].Value = "No";  // No Image  // buttonsData.Rows[nRow].Cells[13].Value = "No";
+
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            }
+        }
+
+        private void buttonTextColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Set User Button Text Color
+        {
+            System.Windows.Forms.ColorDialog colorDialog1 = new ColorDialog();
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                GlobalConfig cfg = GlobalConfig.Instance;
+
+                ForeColor = colorDialog1.Color;
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextRed"].Index].Value = ForeColor.R;  // Button RGB Color  //  buttonsData.Rows[nRow].Cells[10].Value = BackColor.R;
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextGreen"].Index].Value = ForeColor.G;  // buttonsData.Rows[nRow].Cells[11].Value = BackColor.G;
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextBlue"].Index].Value = ForeColor.B;  // buttonsData.Rows[nRow].Cells[12].Value = BackColor.B;
+
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -191,20 +214,45 @@ namespace VGV101
 
                 BackgroundImage = Image.FromFile(openFileDialog2.FileName);
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName.Replace(cfg.MediaRoot,"%MEDIA_ROOT%");
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName; // openFileDialog2.FileName;  openFileDialog2.FileName.Replace(cfg.MediaRoot,"%MEDIA_ROOT%")
+                Width = BackgroundImage.Width;
+                Height = BackgroundImage.Height;
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;
+                // ForeColor = Color.FromArgb(255, 255, 255);  // Button text is white
+                TextAlign = ContentAlignment.BottomCenter;  // Button text is pushed to bottom
+
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            }
+        }
+
+        private void buttonDeleteToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Delete User button
+        {   GlobalConfig cfg = GlobalConfig.Instance;
+
+            MessageBox.Show("Delete button: " + this.Text);
+            this.Visible = false;  // Hide button
+            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Active"].Index].Value = "No";  // Turns this button off in the XML file
+                                                                                             // this.Hide();  // Alternate way of hiding button?
+            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+        }
+    }
+}
+
+/*
+        private void buttonImageToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Set User Button Image
+        {
+            System.Windows.Forms.OpenFileDialog openFileDialog2 = new OpenFileDialog();
+            if (openFileDialog2.ShowDialog() == DialogResult.OK)
+            {
+                BackgroundImage = Image.FromFile(openFileDialog2.FileName);
+                dataGridView1.Rows[nRow].Cells[dataGridView1.Columns["Image"].Index].Value = "Yes";
+                dataGridView1.Rows[nRow].Cells[dataGridView1.Columns["Image_Path"].Index].Value = openFileDialog2.FileName;
                 Width = BackgroundImage.Width;
                 Height = BackgroundImage.Height;
                 ForeColor = Color.FromArgb(255, 255, 255);  // Button text is white
                 TextAlign = ContentAlignment.BottomCenter;  // Button text is pushed to bottom
             }
         }
-
-        private void buttonDeleteToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Delete User button
-        {
-            MessageBox.Show("Delete button: " + this.Text);
-            this.Hide();
-        }
-    }
-}
+*/
 //
 // EOF: BobsButton.cs

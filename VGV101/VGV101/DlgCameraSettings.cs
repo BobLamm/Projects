@@ -311,7 +311,8 @@ namespace VGV101
 
             // Update Camera Settings file from info in camerasData
             if (cfg.WriteCurrentXml("Camera_Settings", camerasData))
-            {   cfg.ResetCameraConfig();
+            {
+                cfg.ResetCameraConfig();
                 // MessageBox.Show("Updated Camera Settings Temp File");
             }
 

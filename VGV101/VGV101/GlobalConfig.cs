@@ -18,7 +18,7 @@
 *		|						|
 *	2016/12/10	wfredk	original development
 *	
-*   TO DO:  Put the path for configuration information into an XML file.  Media path should be absolute - users will put it all over the place.	
+*   TO DO:  Put the path for configuration information into an XML file.  Media path should be absolute - users will put them all over the place.	
 */
 using System;
 using System.Data;
@@ -126,15 +126,44 @@ namespace VGV101
             return retVal;
         }
 
+
+        //2ND VERSION
+        public bool ReadXMLFile(string fileName, DataGridView dataGridView)  // Reads an XML file in Current configuration folder into the dataGridView that is passed
+        {
+            bool retVal = true;
+            DataSet ds;
+            XmlReader xmlFile = null;
+
+            try  // Read appropriate XML file into dataGridView
+            {
+                xmlFile = XmlReader.Create(@"C:\VGV Software\Configuration\Current\" + fileName, xmlReaderSettings);
+                ds = new DataSet();
+                ds.ReadXml(xmlFile);
+                dataGridView.DataSource = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not read " + fileName + " XML File into memory from GlobalConfig ReadXML subroutine:  " + ex.ToString(), "GetCurrentXml Exception");
+                retVal = false;
+            }
+
+            if (xmlFile != null)
+                xmlFile.Close();
+
+            return retVal;
+        }
+
+
         // Writes an XML file in Current configuration folder from the dataGridView that is passed
         public bool WriteCurrentXml(string fileName,DataGridView dataGridView)
         {
             bool retVal = true;
 
-            try
+            try 
             {
-                DataTable dt = new DataTable("Record");
+                DataTable dt = new DataTable();
                 dt = (DataTable)dataGridView.DataSource;
+
                 dt.WriteXml(cfgRoot + "Current\\" + fileName + ".xml", true);
             }
             catch (Exception ex)
@@ -147,6 +176,30 @@ namespace VGV101
             return retVal;
         }
 
+
+        // 2ND VERSION       
+        public bool WriteXMLFile(DataGridView dataGridView1, string fileName)  // Writes an XML file in Current configuration folder from the dataGridView that is passed
+        {
+            bool retVal = true;
+
+            try  /// Write appropriate XML file from dataGridView 
+            {
+                DataTable dt = new DataTable();
+                dt = (DataTable)dataGridView1.DataSource;
+
+                dt.WriteXml(@"C:\VGV Software\Configuration\Current\" + fileName, true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not write " + fileName + " XML File from memory using GlobalConfig WriteXML subroutine:  " + ex.ToString(), "ReadCurrentXml Exception");
+
+                retVal = false;
+             }
+        
+            return retVal;
+        }
+
+ 
         // --------------------------------------------------------------------
 
         private CameraObject[] Cameras=null;

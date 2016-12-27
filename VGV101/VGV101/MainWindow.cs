@@ -15,8 +15,10 @@
 *	Revision History:
 *	   Date		  by		Description
 *	2016/12/23	blamm	original development
+*	     |
+*	2016/12/26  blamm   added button text coloring and fixed button problem
 *	
-*	TO DO:  Figure out how to refresh after a name or text source change.	|					
+*	TO DO:  Figure out how to refresh buttons (or entire display) after a name or text source change.	|					
 */
 
 using System;
@@ -69,7 +71,8 @@ namespace VGV101
             InitializeComponent();
 
             // Open Buttons File...
-            if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
+            // if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
+            if (!cfg.ReadXMLFile("Buttons.xml", buttonsData)) // we can't proceed from here
             {
                 MessageBox.Show("Button data not available","FATAL ERROR");
                 this.Close();
@@ -97,15 +100,19 @@ namespace VGV101
             int green = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Green"].Index].Value.ToString());
             int blue = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Blue"].Index].Value.ToString());
             button1.BackColor = Color.FromArgb(red, green, blue);  // Start Button background color
-            if (buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")
+            int textRed = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextRed"].Index].Value.ToString());  // Variables to hold Start Button text color values
+            int textGreen = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
+            int textBlue = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
+            button1.ForeColor = Color.FromArgb(textRed, textGreen, textBlue);  // Start Button text color
+                        if (buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")
             {
                 button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
-                button1.ForeColor = Color.FromArgb(255, 255, 255);  // Button Text is White
+                // button1.ForeColor = Color.FromArgb(255, 255, 255);  // Button Text is White
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
             }
             else
             {
-                button1.ForeColor = Color.FromArgb(0, 0, 0);  // Button text is black
+                // button1.ForeColor = Color.FromArgb(0, 0, 0);  // Button text is black
                 button1.TextAlign = ContentAlignment.MiddleCenter;  // Button text is centered
             }
 
@@ -125,6 +132,9 @@ namespace VGV101
             int red = 0;  // Declare RGB Button Background Color Variables
             int green = 0;
             int blue = 0;
+            int textRed = 0;  // Declare RGB Button Background Color Variables
+            int textGreen = 0;
+            int textBlue= 0;
 
             int n = 2;
             while (n < 100)  //  Set parameters for each button....
@@ -138,14 +148,26 @@ namespace VGV101
                 green = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Green"].Index].Value.ToString());
                 blue = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Blue"].Index].Value.ToString());
                 btnArray[n].BackColor = Color.FromArgb(red, green, blue);  // Button background color
+                textRed = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextRed"].Index].Value.ToString());  // Variables to hold text color values
+                textGreen = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
+                textBlue = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
+                btnArray[n].ForeColor = Color.FromArgb(textRed, textGreen, textBlue);  // Button text color
                 btnArray[n].BackgroundImageLayout = BackgroundImageLayout = ImageLayout.Stretch;
-                if (buttonsData.Rows[n].Cells[13].Value.ToString() == "Yes")
+                if (buttonsData.Rows[n].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")  // buttonsData.Rows[n].Cells[13].Value.ToString()
                 {
                     btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));  // works   
                     btnArray[n].ForeColor = Color.FromArgb(255, 255, 255);  // Button Text is White
                     btnArray[n].TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
                 }
-                btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();  // Get button name
+                // btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();  // Get button name
+                if(buttonsData.Rows[n].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value.ToString() == "Yes")  //Is button name from first line of graphic?
+                {
+                    btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Text_Line_1"].Index].Value.ToString();
+                }
+                else  // or is button name the actual button name
+                {
+                    btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();
+                }
                 btnArray[n].Tag = n.ToString();   // Put numbers into tags so we can identify them
                 if (buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value.ToString() == "Yes")  //Is button active (visible)?
                 {
@@ -571,6 +593,9 @@ namespace VGV101
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Red"].Index].Value = 100;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Green"].Index].Value = 100;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Blue"].Index].Value = 100;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["TextRed"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["TextGreen"].Index].Value = 0;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["TextBlue"].Index].Value = 0;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Image"].Index].Value = "No";
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Camera_Thumbnail"].Index].Value = "No";
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value = " ";
@@ -617,7 +642,8 @@ namespace VGV101
 
                     // Update the Button.xml file
                     GlobalConfig cfg = GlobalConfig.Instance;
-                    cfg.WriteCurrentXml("Buttons", buttonsData);
+                    // cfg.WriteCurrentXml("Buttons", buttonsData);
+                    cfg.WriteXMLFile(buttonsData, "Buttons.xml");
 
                     break;
                 }
@@ -677,7 +703,8 @@ namespace VGV101
                                                                             
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // cfg.WriteCurrentXml("Buttons", buttonsData);
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -689,7 +716,8 @@ namespace VGV101
 
             // Update the Button.xml file
             GlobalConfig cfg = GlobalConfig.Instance;
-            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // cfg.WriteCurrentXml("Buttons", buttonsData);
+            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
 
 
@@ -721,7 +749,7 @@ namespace VGV101
             {
                 button1.BackgroundImage = null;
                 button1.BackColor = colorDialog1.Color;
-                button1.ForeColor = Color.FromArgb(0, 0, 0);  // Button text is black
+                // button1.ForeColor = Color.FromArgb(0, 0, 0);  // Button text is black
                 button1.TextAlign = ContentAlignment.MiddleCenter;  // Type is centered
                 buttonsData.Rows[1].Cells[buttonsData.Columns["Red"].Index].Value = button1.BackColor.R;  // Button RGB Color
                 buttonsData.Rows[1].Cells[buttonsData.Columns["Green"].Index].Value = button1.BackColor.G;
@@ -731,19 +759,37 @@ namespace VGV101
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // cfg.WriteCurrentXml("Buttons", buttonsData);
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
-        // Context Menu 2 Item:  Set Start Button Image - also saves to buttonsData and Buttons.xml file
-        private void buttonImageToolStripMenuItem_Click(object sender, EventArgs e)
+        private void setButtonTextColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Set Start Button Text Color and update current Button.xml file
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                button1.ForeColor = colorDialog1.Color;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["TextRed"].Index].Value = button1.ForeColor.R;  // Button Text RGB Color
+                buttonsData.Rows[1].Cells[buttonsData.Columns["TextGreen"].Index].Value = button1.ForeColor.G;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["TextBlue"].Index].Value = button1.ForeColor.B;
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value = "No";
+                buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value = " ";
+
+                // Update the Button.xml file
+                GlobalConfig cfg = GlobalConfig.Instance;
+                // cfg.WriteCurrentXml("Buttons", buttonsData);
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            }
+        }
+
+        private void buttonImageToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu 2 Item:  Set Start Button Image - also saves to buttonsData and Buttons.xml file
         {
             if (openFileDialog2.ShowDialog() == DialogResult.OK)
             {
                 button1.BackgroundImage = Image.FromFile(openFileDialog2.FileName);
                 button1.Width = button1.BackgroundImage.Width;
                 button1.Height = button1.BackgroundImage.Height;
-                button1.ForeColor = Color.FromArgb(255, 255, 255);  // Type is white
+                // button1.ForeColor = Color.FromArgb(255, 255, 255);  // Type is white
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Type is pushed to bottom
 
                 buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
@@ -753,7 +799,8 @@ namespace VGV101
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // cfg.WriteCurrentXml("Buttons", buttonsData);
+                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -807,9 +854,8 @@ namespace VGV101
 
             // Update Buttons file and info in buttonsData
             GlobalConfig cfg = GlobalConfig.Instance;
-            cfg.WriteCurrentXml("Buttons", buttonsData);
-
-            // MessageBox.Show("Updated Buttons Temp File");
+            // cfg.WriteCurrentXml("Buttons", buttonsData);
+            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
 
 

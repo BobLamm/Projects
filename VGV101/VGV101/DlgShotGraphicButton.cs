@@ -16,7 +16,7 @@
 *	   Date		  by		Description
 *	2016/12/23	blamm	original development
 *	
-*	TO DO:  Remove temporary items.  Figure out how to refresh after a name or text source change.	|					
+*	TO DO:  Remove temporary items.  Figure out how to refresh button display after a name or text source change.	|					
 */
 using System;
 using System.Data;
@@ -90,7 +90,6 @@ namespace VGV101
                 button5.BackColor = Color.Yellow;  // Highlight the button and have it display where the text is coming from.
                 button5.Font = new Font(button5.Font, FontStyle.Bold);
                 button5.Text = "Text from " + lineOneTextSource;
-                // MessageBox.Show("Initialization lineOneTextSource: " + lineOneTextSource);
 
                 // Read appropriate list file into displayedListData
                 // Read current active list entries file into activeRowData to see which row in list is active
@@ -213,7 +212,7 @@ namespace VGV101
 
                     textBox2.Text = displayedListData.Rows[lineNumber].Cells[0].Value.ToString();  // textBox2.Text = "Text from " + listFileName + ", Line #: " + lineNumber + ", :" + displayedListData.Rows[lineNumber].Cells[0].Value.ToString();
                     textBox3.Text = displayedListData.Rows[lineNumber].Cells[1].Value.ToString();
-                    textBox4.Text = "On Activation, from list: " + displayedListData.Rows[lineNumber].Cells[2].Value.ToString();
+                    textBox4.Text = displayedListData.Rows[lineNumber].Cells[2].Value.ToString();
                     // MessageBox.Show("Finished the LIST side of 'if' statement - Text was from list was true");
                 }
                 // MessageBox.Show("Reached end of total if statement - - formFocustBack was true");
