@@ -9,15 +9,16 @@
 *	FUNCTION
 *
 *	Author:			Fred Koschara
-*	Creation Date:	December tenth, 2016
-*	Creation Date:	December 10, 2016
-*	Last Modified:	December 10, 2016 @ 2:56 pm
+*	Proto Created:	December tenth, 2016
+*	Creation Date:	December twenty-ninth, 2016
+*	Creation Date:	December 29, 2016
+*	Last Modified:	December 29, 2016 @ 4:43 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2016/12/10	wfredk	original development
+*	2016/12/29	wfredk	original development
 *		|						|
-*	2016/12/10	wfredk	original development
+*	2016/12/29	wfredk	original development
 *	2016/12/10	wfredk	original prototype development
 */
 using System;
