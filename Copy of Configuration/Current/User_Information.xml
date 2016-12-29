@@ -1,0 +1,92 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <Field>First Name(s)</Field>
+    <Data>Johnny</Data>
+  </Record>
+  <Record>
+    <Field>Last Name</Field>
+    <Data>Smith</Data>
+  </Record>
+  <Record>
+    <Field>Company/Orgnization</Field>
+    <Data>The Smith Company, Ltd.</Data>
+  </Record>
+  <Record>
+    <Field>Street Address 1</Field>
+    <Data>111 Main St.</Data>
+  </Record>
+  <Record>
+    <Field>Street Address 2</Field>
+  </Record>
+  <Record>
+    <Field>Suite/Office/Unit</Field>
+    <Data>Suite 100</Data>
+  </Record>
+  <Record>
+    <Field>City/Town</Field>
+    <Data>Peoria</Data>
+  </Record>
+  <Record>
+    <Field>State/Province</Field>
+    <Data>IA</Data>
+  </Record>
+  <Record>
+    <Field>Country</Field>
+    <Data>USA</Data>
+  </Record>
+  <Record>
+    <Field>Postal Code</Field>
+    <Data>01111</Data>
+  </Record>
+  <Record>
+    <Field>Telephone</Field>
+    <Data>617-967-1000</Data>
+  </Record>
+  <Record>
+    <Field>Email</Field>
+    <Data>John@smithcorp.com</Data>
+  </Record>
+  <Record />
+  <Record>
+    <Field>TECHNICAL CONTACT</Field>
+  </Record>
+  <Record>
+    <Field>First Name(s)</Field>
+    <Data>Fred</Data>
+  </Record>
+  <Record>
+    <Field>Last Name</Field>
+    <Data>Jones</Data>
+  </Record>
+  <Record>
+    <Field>Company/Orgnization</Field>
+  </Record>
+  <Record>
+    <Field>Street Address 1</Field>
+  </Record>
+  <Record>
+    <Field>Street Address 2</Field>
+  </Record>
+  <Record>
+    <Field>Suite/Office/Unit</Field>
+  </Record>
+  <Record>
+    <Field>City/Town</Field>
+  </Record>
+  <Record>
+    <Field>State/Province</Field>
+  </Record>
+  <Record>
+    <Field>Country</Field>
+  </Record>
+  <Record>
+    <Field>Postal Code</Field>
+  </Record>
+  <Record>
+    <Field>Telephone</Field>
+  </Record>
+  <Record>
+    <Field>Email</Field>
+  </Record>
+</xml>

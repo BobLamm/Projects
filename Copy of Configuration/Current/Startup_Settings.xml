@@ -1,0 +1,51 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <Field>Turn on Cameras?</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Put up Camera Monitors?</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Set Cameras To Home Positions?</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Load Graphics?</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Put up Graphics Monitor?</Field>
+    <Data>No</Data>
+  </Record>
+  <Record>
+    <Field>Put up Video Source 1 Monitor?</Field>
+    <Data>No</Data>
+  </Record>
+  <Record>
+    <Field>Put up Video Source 2 Monitor?</Field>
+    <Data>No</Data>
+  </Record>
+  <Record>
+    <Field>Put up Clips/Supers/Stills Monitor?</Field>
+    <Data>No</Data>
+  </Record>
+  <Record>
+    <Field>Set Program</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Put up Program Monitor?</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Set Preview?</Field>
+    <Data>Yes</Data>
+  </Record>
+  <Record>
+    <Field>Put up Preview Monitor?</Field>
+    <Data>Yes</Data>
+  </Record>
+</xml>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Record>
+		<Device>Motherboard</Device>
+		<Manufacturer>Asus</Manufacturer>
+		<Model>AA 1200</Model>
+		<Serial_Number>1234567</Serial_Number>
+	</Record>
+	<Record>
+		<Device>Hard Drive</Device>
+		<Manufacturer>Western Digital</Manufacturer>
+		<Model>1200RPM</Model>
+		<Serial_Number>7654321</Serial_Number>
+	</Record>
+	<Record>
+		<Device>NIC</Device>
+		<Manufacturer>Adaptec</Manufacturer>
+		<Model>ET7600</Model>
+		<Serial_Number>12121212</Serial_Number>
+	</Record>
+</xml>
