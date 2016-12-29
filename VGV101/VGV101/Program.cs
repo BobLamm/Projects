@@ -1,6 +1,24 @@
-﻿using System;
+﻿/**
+ * File: Program.cs
+ * 
+ *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *
+ *	$Id: /Program.cs,v $
+ */
+/**
+*	FUNCTION
+*
+*	Author:			Visual Studio, Fred Koschara
+*	Creation Date:	prior to September, 2016
+*	Last Modified:	December 29, 2016 @ 4:54 pm
+*
+*	Revision History:
+*	   Date		  by		Description
+*	2016/12/29	wfredk	GlobalConfig.Init() reads Registry, not this module
+*	2016/12/29	wfredk	added documentation header
+*/
+using System;
 using System.Windows.Forms;
-using Utility.ModifyRegistry;
 
 namespace VGV101
 {
@@ -11,14 +29,8 @@ namespace VGV101
         /// </summary>
         [STAThread]
         static void Main()
-        {
-            ModifyRegistry regData = new ModifyRegistry();
-            // MessageBox.Show(regData.SubKey);    // "SOFTWARE\VGV101"
-            String cfgRoot = regData.ReadString("CfgRoot", @"C:\VGV Software\Configuration\");
-            String logRoot = regData.ReadString("LogRoot", @"C:\VGV Software\Logs\");
-            String mediaRoot = regData.ReadString("MediaRoot", @"C:\VGV Customer Media\");
-            GlobalConfig cfg = GlobalConfig.Instance;
-            cfg.Init(cfgRoot, mediaRoot, logRoot);
+        {   GlobalConfig cfg = GlobalConfig.Instance;
+            cfg.Init();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -31,3 +43,5 @@ namespace VGV101
         }
     }
 }
+//
+// EOF: Program.cs
