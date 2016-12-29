@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
+//using System.Collections.Generic;
+//using System.ComponentModel;
+//using System.Data;
+//using System.Drawing;
+//using System.Text;
+//using System.Threading;
 using System.Windows.Forms;
 
 namespace VGV101
@@ -23,8 +22,8 @@ namespace VGV101
                 "The 'List' button will print out an exhaustive list of all camera parameters in case the camera's behavior is still unexplained.  " +
                 "If you click and drag inside the monitor menu on the right, the cameras should move.  " +
                 "\n \nThen close the Camera Settings form and press 'Continue Setup' or 'Abandon Setup'.";
-            DlgCameraSettings frm7 = new DlgCameraSettings();
-            frm7.Show();
+            DlgCameraSettings frm = new DlgCameraSettings();
+            frm.Show();
             nextFormNumber = 2;
         }
 
@@ -36,7 +35,8 @@ namespace VGV101
                     "\n \nThen press 'Continue Setup' or 'Abandon Setup'.";
             }
             if (nextFormNumber == 3) {
-                DlgButtonSettings frm21 = new DlgButtonSettings(); frm21.Show();
+                DlgButtonSettings frm = new DlgButtonSettings();
+                frm.Show();
                 label1.Text = "Form = 3 Put up Form 21.  Right-click in the main menu and make a couple of shot buttons.  " + 
                     "Position them so they correspond to where people set.  Then right-click on the buttons and choose two camera shots for each person - " + 
                     "a primary shot and a secondary shot from a different camera." +
