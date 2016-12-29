@@ -46,8 +46,9 @@ namespace VGV101
             // BUTTONS PAGE
 
             // Read Button Settings from File
-            // if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
-            if (!cfg.ReadXMLFile("Buttons.xml", buttonsData)) // we can't proceed from here
+            if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //if (!cfg.ReadXMLFile("Buttons.xml", buttonsData)) // we can't proceed from here
                 {
                 MessageBox.Show("Button data not available", "ERROR");
                 this.Close();
@@ -71,10 +72,10 @@ namespace VGV101
             // Update Startup Settings file from info in buttonsData
 
             GlobalConfig cfg = GlobalConfig.Instance;
-
-            // if (cfg.WriteCurrentXml("Buttons", buttonsData))
-            if (cfg.WriteXMLFile(buttonsData, "Buttons.xml"))
-                MessageBox.Show("Updated Buttons Settings");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //if (cfg.WriteXMLFile(buttonsData, "Buttons.xml"))
+            MessageBox.Show("Updated Buttons Settings");
         }
     }
 }

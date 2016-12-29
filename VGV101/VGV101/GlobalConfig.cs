@@ -127,6 +127,11 @@ namespace VGV101
         }
 
 
+        /*
+         *  DO NOT use this function:
+         *      a: hard-coded paths are EVIL
+         *      b: EXACTLY the same functionality is provided by the GetCurrentXml() method above, just don't add ".xml" to the end of the filename
+         *      
         //2ND VERSION
         public bool ReadXMLFile(string fileName, DataGridView dataGridView)  // Reads an XML file in Current configuration folder into the dataGridView that is passed
         {
@@ -152,6 +157,7 @@ namespace VGV101
 
             return retVal;
         }
+        */
 
 
         // Writes an XML file in Current configuration folder from the dataGridView that is passed
@@ -177,6 +183,11 @@ namespace VGV101
         }
 
 
+        /*
+         *  DO NOT use this function:
+         *      a: hard-coded paths are EVIL
+         *      b: EXACTLY the same functionality is provided by the WriteCurrentXml() method above, just don't add ".xml" to the end of the filename
+         *      
         // 2ND VERSION       
         public bool WriteXMLFile(DataGridView dataGridView1, string fileName)  // Writes an XML file in Current configuration folder from the dataGridView that is passed
         {
@@ -198,6 +209,7 @@ namespace VGV101
         
             return retVal;
         }
+        */
 
  
         // --------------------------------------------------------------------

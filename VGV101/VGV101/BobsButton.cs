@@ -168,7 +168,9 @@ namespace VGV101
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;  // buttonsData.Rows[nRow].Cells[7  buttonsData.Columns["Width"].Index].Value = Width;
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;  // buttonsData.Rows[nRow].Cells[8  buttonsData.Columns["Height"].Index].Value = Height;
 
-            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
 
         private void buttonColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Set User Button Color
@@ -185,7 +187,9 @@ namespace VGV101
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Blue"].Index].Value = BackColor.B;  // buttonsData.Rows[nRow].Cells[12].Value = BackColor.B;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image"].Index].Value = "No";  // No Image  // buttonsData.Rows[nRow].Cells[13].Value = "No";
 
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -201,7 +205,9 @@ namespace VGV101
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextGreen"].Index].Value = ForeColor.G;  // buttonsData.Rows[nRow].Cells[11].Value = BackColor.G;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextBlue"].Index].Value = ForeColor.B;  // buttonsData.Rows[nRow].Cells[12].Value = BackColor.B;
 
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -214,14 +220,19 @@ namespace VGV101
 
                 BackgroundImage = Image.FromFile(openFileDialog2.FileName);
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName; // openFileDialog2.FileName;  openFileDialog2.FileName.Replace(cfg.MediaRoot,"%MEDIA_ROOT%")
+                // the %MEDIA_ROOT% replacement is *REQUIRED*
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName.Replace(cfg.MediaRoot, "%MEDIA_ROOT%");
+                // this may work on *YOUR* machine, but it does NOT work on mine
+                //buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName; // openFileDialog2.FileName;  openFileDialog2.FileName.Replace(cfg.MediaRoot,"%MEDIA_ROOT%")
                 Width = BackgroundImage.Width;
                 Height = BackgroundImage.Height;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;
                 TextAlign = ContentAlignment.BottomCenter;  // Button text is pushed to bottom
 
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -232,7 +243,9 @@ namespace VGV101
             this.Visible = false;  // Hide button
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Active"].Index].Value = "No";  // Turns this button off in the XML file
                                                                                              // this.Hide();  // Alternate way of hiding button?
-            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
     }
 }
