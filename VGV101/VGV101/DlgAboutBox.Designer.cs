@@ -37,6 +37,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnOpenCfgRoot = new System.Windows.Forms.Button();
+            this.btnOpenLogRoot = new System.Windows.Forms.Button();
+            this.btnOpenMediaRoot = new System.Windows.Forms.Button();
+            this.txtCfgRoot = new System.Windows.Forms.Label();
+            this.txtLogRoot = new System.Windows.Forms.Label();
+            this.txtMediaRoot = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,11 +133,101 @@
             this.label3.TabIndex = 89;
             this.label3.Text = "153263A234987DF56";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(68, 242);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(66, 13);
+            this.label4.TabIndex = 90;
+            this.label4.Text = "Config Root:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(71, 300);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(54, 13);
+            this.label6.TabIndex = 91;
+            this.label6.Text = "Log Root:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(71, 271);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(65, 13);
+            this.label8.TabIndex = 92;
+            this.label8.Text = "Media Root:";
+            // 
+            // btnOpenCfgRoot
+            // 
+            this.btnOpenCfgRoot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenCfgRoot.Location = new System.Drawing.Point(151, 237);
+            this.btnOpenCfgRoot.Name = "btnOpenCfgRoot";
+            this.btnOpenCfgRoot.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenCfgRoot.TabIndex = 93;
+            this.btnOpenCfgRoot.Text = "Open";
+            this.btnOpenCfgRoot.UseVisualStyleBackColor = true;
+            this.btnOpenCfgRoot.Click += new System.EventHandler(this.btnOpenCfgRoot_Click);
+            // 
+            // btnOpenLogRoot
+            // 
+            this.btnOpenLogRoot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenLogRoot.Location = new System.Drawing.Point(151, 295);
+            this.btnOpenLogRoot.Name = "btnOpenLogRoot";
+            this.btnOpenLogRoot.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenLogRoot.TabIndex = 94;
+            this.btnOpenLogRoot.Text = "Open";
+            this.btnOpenLogRoot.UseVisualStyleBackColor = true;
+            this.btnOpenLogRoot.Click += new System.EventHandler(this.btnOpenLogRoot_Click);
+            // 
+            // btnOpenMediaRoot
+            // 
+            this.btnOpenMediaRoot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenMediaRoot.Location = new System.Drawing.Point(151, 266);
+            this.btnOpenMediaRoot.Name = "btnOpenMediaRoot";
+            this.btnOpenMediaRoot.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenMediaRoot.TabIndex = 95;
+            this.btnOpenMediaRoot.Text = "Open";
+            this.btnOpenMediaRoot.UseVisualStyleBackColor = true;
+            this.btnOpenMediaRoot.Click += new System.EventHandler(this.btnOpenMediaRoot_Click);
+            // 
+            // txtCfgRoot
+            // 
+            this.txtCfgRoot.Location = new System.Drawing.Point(241, 242);
+            this.txtCfgRoot.Name = "txtCfgRoot";
+            this.txtCfgRoot.Size = new System.Drawing.Size(460, 13);
+            this.txtCfgRoot.TabIndex = 96;
+            // 
+            // txtLogRoot
+            // 
+            this.txtLogRoot.Location = new System.Drawing.Point(241, 299);
+            this.txtLogRoot.Name = "txtLogRoot";
+            this.txtLogRoot.Size = new System.Drawing.Size(469, 14);
+            this.txtLogRoot.TabIndex = 97;
+            // 
+            // txtMediaRoot
+            // 
+            this.txtMediaRoot.Location = new System.Drawing.Point(241, 271);
+            this.txtMediaRoot.Name = "txtMediaRoot";
+            this.txtMediaRoot.Size = new System.Drawing.Size(457, 13);
+            this.txtMediaRoot.TabIndex = 98;
+            // 
             // DlgAboutBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 263);
+            this.ClientSize = new System.Drawing.Size(744, 335);
+            this.Controls.Add(this.txtMediaRoot);
+            this.Controls.Add(this.txtLogRoot);
+            this.Controls.Add(this.txtCfgRoot);
+            this.Controls.Add(this.btnOpenMediaRoot);
+            this.Controls.Add(this.btnOpenLogRoot);
+            this.Controls.Add(this.btnOpenCfgRoot);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
@@ -156,5 +255,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnOpenCfgRoot;
+        private System.Windows.Forms.Button btnOpenLogRoot;
+        private System.Windows.Forms.Button btnOpenMediaRoot;
+        private System.Windows.Forms.Label txtCfgRoot;
+        private System.Windows.Forms.Label txtLogRoot;
+        private System.Windows.Forms.Label txtMediaRoot;
     }
 }
