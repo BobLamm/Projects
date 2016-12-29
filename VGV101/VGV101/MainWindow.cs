@@ -14,10 +14,11 @@
 *	
 *	Author:			Bob Lamm and Fred Koschara
 *	Creation Date:	prior to September, 2016
-*	Last Modified:	December 29, 2016 @ 7:57 am
+*	Last Modified:	December 29, 2016 @ 4:14 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2016/12/29  wfredk  change dialogs to modal
 *	2016/12/29  wfredk  documentation updates
 *	2016/12/28  wfredk  restore use of cfg.GetCurrentXml() and cfg.WriteCurrentXml()
 *                       restore replacement of %MEDIA_ROOT% when reading config. files
@@ -30,9 +31,8 @@
 using System;
 //using System.Collections.Generic;
 //using System.ComponentModel;
-using System.Data;
+//using System.Data;
 using System.Drawing;
-//using System.Linq;
 //using System.Text;
 //using System.Threading;
 using System.Windows.Forms;
@@ -330,7 +330,7 @@ namespace VGV101
         private void createTemplateToolStripMenuItem1_Click(object sender, EventArgs e)  // Strip Menu Item:  Graphics/Templates Menu:  Create Template
         {
             DlgGraphicsTemplateEditor frm = new DlgGraphicsTemplateEditor();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void deleteTemplateToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Graphics/Templates Menu:  Delete Template
@@ -345,7 +345,7 @@ namespace VGV101
             int category = 0;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void addItemToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  People/Items Menu:  Add/Edit Agenda Item
@@ -353,7 +353,7 @@ namespace VGV101
             int category = 1;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void addNewCategoryToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  People/Items Menu:  Add/Edit Notice
@@ -361,7 +361,7 @@ namespace VGV101
             int category = 2;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void addOtherItemToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  People/Items Menu:  Add/Edit Other Item
@@ -369,7 +369,7 @@ namespace VGV101
             int category = 3;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         // Strip Menu Items Continued:  Clips/Supers/Stills Menu
@@ -496,26 +496,26 @@ namespace VGV101
 
         private void setupWizardToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Setup Wizard
         {
-            DlgSetupWizard frm19 = new DlgSetupWizard();
-            frm19.Show();
+            DlgSetupWizard frm = new DlgSetupWizard();
+            frm.ShowDialog(this);
         }
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)  //  Strip Menu Item:  Setup/Utilities Menu:  User Information
         {
              DlgRegistrationPage frm = new DlgRegistrationPage();
-             frm.Show();
+             frm.ShowDialog(this);
          }
 
         private void loadMeetingAtStartupToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Startup Settings
         {
             DlgStartupSettings frm = new DlgStartupSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void resetCamerasToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Setup Cameras
         {
             DlgCameraSettings frm = new DlgCameraSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void vIdeoSourcesToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Video Sources
@@ -526,7 +526,7 @@ namespace VGV101
         private void customerMediaToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  User Media
         {
             DlgActiveUserMedia frm = new DlgActiveUserMedia();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void graphicTemplateMediaToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Graphic Template Media
@@ -537,13 +537,13 @@ namespace VGV101
         private void buttonsToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Buttons
         {
             DlgButtonSettings frm = new DlgButtonSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void monitorsToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Monitors
         {
             DlgMonitorSettings frm = new DlgMonitorSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void streamingToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Streaming
@@ -586,7 +586,7 @@ namespace VGV101
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Help Menu:  : About
         {
             DlgAboutBox frm = new DlgAboutBox();
-            frm.Show();
+            frm.ShowDialog(this);
         }
         
 
@@ -701,7 +701,7 @@ namespace VGV101
             else
             {
                 DlgShotGraphicButton frm = new DlgShotGraphicButton(buttonsData, theRow);  // Inactive button found - open menu...
-                frm.Show();
+                frm.ShowDialog(this);
             }
 
         }
@@ -772,7 +772,7 @@ namespace VGV101
         private void editButtonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu2 Item:  Edit Start Settings
         {
             DlgStartupSettingsEntry frm = new DlgStartupSettingsEntry();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void moveUttonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu 2 Item:  Move Start Button

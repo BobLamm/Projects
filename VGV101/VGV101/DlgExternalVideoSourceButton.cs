@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+//using System.Collections.Generic;
+//using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+//using System.Drawing;
+//using System.Text;
 using System.Windows.Forms;
 
-using System.IO;  // For Databasing
+//using System.IO;  // For Databasing
 using System.Data.OleDb;  // For Databasing
 
 namespace VGV101
@@ -60,10 +59,10 @@ namespace VGV101
 //            panel1.Enabled = true;
             label18.Text = (dataGridView1.Rows[comboBox1.SelectedIndex].Cells[3].Value.ToString() + " " + dataGridView1.Rows[comboBox1.SelectedIndex].Cells[4].Value.ToString() + " at " + dataGridView1.Rows[comboBox1.SelectedIndex].Cells[1].Value.ToString());  // Manufacturer
             label18.Visible = true;
-            //           label17.Text = dataGridView1.Rows[comboBox1.SelectedIndex].Cells[4].Value.ToString();  // Model Number
-            //           label17.Visible = true;
-            //           label16.Text = dataGridView1.Rows[comboBox1.SelectedIndex].Cells[1].Value.ToString();  // IP Address
-            //           label16.Visible = true;
+//           label17.Text = dataGridView1.Rows[comboBox1.SelectedIndex].Cells[4].Value.ToString();  // Model Number
+//           label17.Visible = true;
+//           label16.Text = dataGridView1.Rows[comboBox1.SelectedIndex].Cells[1].Value.ToString();  // IP Address
+//           label16.Visible = true;
             label2.Text = dataGridView1.Rows[comboBox1.SelectedIndex].Cells[5].Value.ToString();  // Status
             label2.Visible = true;
         }
@@ -75,7 +74,7 @@ namespace VGV101
         {
             int isConnectedToButton = 2;
             DlgListEditor frm = new DlgListEditor(0, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
         
         private void button11_Click_1(object sender, EventArgs e)  // Choose Template

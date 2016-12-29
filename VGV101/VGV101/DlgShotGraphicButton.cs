@@ -8,28 +8,29 @@
 /**
 *	Provides an interface to set camera shots and graphic text that a user button calls up
 *	
-*	Author:			Fred Koschara and Bob Lamm
-*	Creation Date:	December tenth, 2016
-*	Last Modified:	December 23, 2016 @ 11:17 am
+*	TO DO:  Remove temporary items.  Figure out how to refresh button display after a name or text source change.	|					
+*	
+*	Author:			Bob Lamm and Fred Koschara
+*	Creation Date:	prior to September, 2016
+*	Last Modified:	December 29, 2016 @ 4:16 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2016/12/23	blamm	original development
-*	
-*	TO DO:  Remove temporary items.  Figure out how to refresh button display after a name or text source change.	|					
+*	2016/12/29  wfredk  change dialogs to modal
+*	2016/12/24	blamm	added documentation header
 */
 using System;
-using System.Data;
+//using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
 //using System.Collections;  // For Axis
 //using System.ComponentModel;
-using AXISMEDIACONTROLLib;
+//using AXISMEDIACONTROLLib;
 
 using System.IO;  // For WebRequests
-using System.Net;
-using System.Text;
+//using System.Net;
+//using System.Text;
 
 using Utility.AxisCamera;
 
@@ -390,7 +391,7 @@ namespace VGV101
             if (lineOneTextSource == "Other Items") { listFileNumber = 3; }
 
             DlgListEditor frm = new DlgListEditor(listFileNumber, nRow);    // First variable tells new form which list is being called (by the combobox number), second variable tells new form which button it is connected to.
-            frm.Show();
+            frm.ShowDialog(this);
 
             formFocusBack = true;  // Sets flag so text is updated when the form becomes active again
         }
