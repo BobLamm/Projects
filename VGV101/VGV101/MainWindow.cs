@@ -8,25 +8,31 @@
 /**
 *	Main control interface for users - carries the controls with which the user creates a show.
 *	
-*	Author:			Fred Koschara and Bob Lamm
-*	Creation Date:	December tenth, 2016
-*	Last Modified:	December 23, 2016 @ 11:17 am
+*	TO DO:  Figure out how to refresh buttons (or entire display) after a name or text source change.  Background image vs. image|
+*	        Ensure RGB component values are 0-255 range
+*	        Change to button data in GlobalConfig
+*	
+*	Author:			Bob Lamm and Fred Koschara
+*	Creation Date:	prior to September, 2016
+*	Last Modified:	December 29, 2016 @ 4:14 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2016/12/23	blamm	original development
-*	     |
+*	2016/12/29  wfredk  change dialogs to modal
+*	2016/12/29  wfredk  documentation updates
+*	2016/12/28  wfredk  restore use of cfg.GetCurrentXml() and cfg.WriteCurrentXml()
+*                       restore replacement of %MEDIA_ROOT% when reading config. files
+*                       trap errors when fields missing from config files
+*                       limit button population to the size of the file
 *	2016/12/26  blamm   added button text coloring and fixed button problem
-*	
-*	TO DO:  Figure out how to refresh buttons (or entire display) after a name or text source change.  Background image vs. image|					
+*	2016/12/24	blamm	added documentation header
 */
 
 using System;
 //using System.Collections.Generic;
 //using System.ComponentModel;
-using System.Data;
+//using System.Data;
 using System.Drawing;
-//using System.Linq;
 //using System.Text;
 //using System.Threading;
 using System.Windows.Forms;
@@ -71,8 +77,9 @@ namespace VGV101
             InitializeComponent();
 
             // Open Buttons File...
-            // if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
-            if (!cfg.ReadXMLFile("Buttons.xml", buttonsData)) // we can't proceed from here
+            if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //if (!cfg.ReadXMLFile("Buttons.xml", buttonsData)) // we can't proceed from here
             {
                 MessageBox.Show("Button data not available","FATAL ERROR");
                 this.Close();
@@ -83,8 +90,10 @@ namespace VGV101
             // Set Main Window Background, if any
             if (buttonsData.Rows[0].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")     // buttonDataGridView.Rows[nRow].Cells[buttonDataGridView.Columns["Name_From_Graphic"].Index].Value.ToString()
             {
-             // this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
-                this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());
+                // the %MEDIA_ROOT% replacement is *REQUIRED*
+                this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
+                // this may work on *YOUR* machine, but it does NOT work on mine
+                // this.BackgroundImage = Image.FromFile(buttonsData.Rows[0].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());
             }
             else
             {
@@ -96,18 +105,38 @@ namespace VGV101
             button1.Top = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Location_Y"].Index].Value.ToString());
             button1.Width = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Width"].Index].Value.ToString());
             button1.Height = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Height"].Index].Value.ToString());
+
+            /*
+             * YOU NEED TO DO RANGE CHECKING HERE TO INSURE VALUES ARE IN THE 0-255 RANGE
+             */
             int red = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Red"].Index].Value.ToString());  // Variables to hold Start Button background color values
             int green = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Green"].Index].Value.ToString());
             int blue = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["Blue"].Index].Value.ToString());
             button1.BackColor = Color.FromArgb(red, green, blue);  // Start Button background color
-            int textRed = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextRed"].Index].Value.ToString());  // Variables to hold Start Button text color values
-            int textGreen = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
-            int textBlue = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
+            int textRed = 0;    // set default to black
+            int textGreen = 0;
+            int textBlue = 0;
+            try
+            {
+                /*
+                 * YOU NEED TO DO RANGE CHECKING HERE TO INSURE VALUES ARE IN THE 0-255 RANGE
+                 */
+                textRed = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextRed"].Index].Value.ToString());  // Variables to hold Start Button text color values
+                textGreen = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
+                textBlue = int.Parse(buttonsData.Rows[1].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
+            }
+            catch (Exception ex)    // for files that don't have these values
+            {
+                ex.ToString();
+            }
+
             button1.ForeColor = Color.FromArgb(textRed, textGreen, textBlue);  // Start Button text color
             if (buttonsData.Rows[1].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")
             {
-                // button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
-                button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());
+                // the %MEDIA_ROOT% replacement is *REQUIRED*
+                button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));
+                // this may work on *YOUR* machine, but it does NOT work on mine
+                ///button1.BackgroundImage = Image.FromFile(buttonsData.Rows[1].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());
                 button1.TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
             }
             else
@@ -134,27 +163,45 @@ namespace VGV101
             int textGreen = 0;
             int textBlue= 0;
 
-            int n = 2;
-            while (n < 100)  //  Set parameters for each button....
+            int nLimit = buttonsData.RowCount - 2;  // "button 0" is the background image, button 1 is the "start" button
+            // MessageBox.Show("nLimit = " + nLimit.ToString());
+            for (int n = 2; n <= nLimit; n++)  //  Set parameters for each button....
             {
                 xPos = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Location_X"].Index].Value.ToString());  //  X Position of button
                 yPos = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Location_Y"].Index].Value.ToString());  //  Y Position of button
                 btnArray[n] = new BobsButton(xPos, yPos, buttonsData,n/*, camerasData*/);  // Initialize each button
                 btnArray[n].Height = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Height"].Index].Value.ToString());  // Height of button 
                 btnArray[n].Width = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Width"].Index].Value.ToString());  // Width of button 
+
+                /*
+                 * YOU NEED TO DO RANGE CHECKING HERE TO INSURE VALUES ARE IN THE 0-255 RANGE
+                 */
                 red = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Red"].Index].Value.ToString());  // Variables to hold background color values
                 green = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Green"].Index].Value.ToString());
                 blue = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Blue"].Index].Value.ToString());
                 btnArray[n].BackColor = Color.FromArgb(red, green, blue);  // Button background color
-                textRed = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextRed"].Index].Value.ToString());  // Variables to hold text color values
-                textGreen = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
-                textBlue = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
+               try
+                {
+                    /*
+                     * YOU NEED TO DO RANGE CHECKING HERE TO INSURE VALUES ARE IN THE 0-255 RANGE
+                     */
+                    textRed = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextRed"].Index].Value.ToString());  // Variables to hold text color values
+                    textGreen = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextGreen"].Index].Value.ToString());
+                    textBlue = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["TextBlue"].Index].Value.ToString());
+                }
+                catch (Exception ex)    // for files that don't have these values
+                {
+                    ex.ToString();
+                }
+
                 btnArray[n].ForeColor = Color.FromArgb(textRed, textGreen, textBlue);  // Button text color
                 btnArray[n].BackgroundImageLayout = BackgroundImageLayout = ImageLayout.Stretch;
                 if (buttonsData.Rows[n].Cells[buttonsData.Columns["Image"].Index].Value.ToString() == "Yes")  // buttonsData.Rows[n].Cells[13].Value.ToString()
                 {
-                    // btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));  // works
-                    btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());  // works    
+                    // the %MEDIA_ROOT% replacement is *REQUIRED*
+                    btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString().Replace("%MEDIA_ROOT%", cfg.MediaRoot));  // works
+                    // this may work on *YOUR* machine, but it does NOT work on mine
+                    //btnArray[n].BackgroundImage = Image.FromFile(buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value.ToString());  // works    
                     btnArray[n].TextAlign = ContentAlignment.BottomCenter;  // Button Text is aligned along bottom
                 }
                 else
@@ -172,18 +219,11 @@ namespace VGV101
                     btnArray[n].Text = buttonsData.Rows[n].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();
                 }
                 btnArray[n].Tag = n.ToString();   // Put numbers into tags so we can identify them
-                if (buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value.ToString() == "Yes")  //Is button active (visible)?
-                {
-                    btnArray[n].Visible = true;  // Button is visible (active)
-                }
-                else
-                {
-                    btnArray[n].Visible = false;    // Button is not visible (inactive)
-                }
+
+                // the result of the right side of this equation is either true or false, so you can set the variable directly
+                btnArray[n].Visible = (buttonsData.Rows[n].Cells[buttonsData.Columns["Active"].Index].Value.ToString() == "Yes");  //Is button active (visible)?
                
                 this.Controls.Add(btnArray[n]); // Add button to form 
-
-                n++;
             }
         }
 
@@ -290,7 +330,7 @@ namespace VGV101
         private void createTemplateToolStripMenuItem1_Click(object sender, EventArgs e)  // Strip Menu Item:  Graphics/Templates Menu:  Create Template
         {
             DlgGraphicsTemplateEditor frm = new DlgGraphicsTemplateEditor();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void deleteTemplateToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Graphics/Templates Menu:  Delete Template
@@ -305,7 +345,7 @@ namespace VGV101
             int category = 0;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void addItemToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  People/Items Menu:  Add/Edit Agenda Item
@@ -313,7 +353,7 @@ namespace VGV101
             int category = 1;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void addNewCategoryToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  People/Items Menu:  Add/Edit Notice
@@ -321,7 +361,7 @@ namespace VGV101
             int category = 2;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void addOtherItemToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  People/Items Menu:  Add/Edit Other Item
@@ -329,7 +369,7 @@ namespace VGV101
             int category = 3;
             int isConnectedToButton = -1;
             DlgListEditor frm = new DlgListEditor(category, isConnectedToButton);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         // Strip Menu Items Continued:  Clips/Supers/Stills Menu
@@ -450,26 +490,26 @@ namespace VGV101
 
         private void setupWizardToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Setup Wizard
         {
-            DlgSetupWizard frm19 = new DlgSetupWizard();
-            frm19.Show();
+            DlgSetupWizard frm = new DlgSetupWizard();
+            frm.ShowDialog(this);
         }
 
         private void registerToolStripMenuItem_Click(object sender, EventArgs e)  //  Strip Menu Item:  Setup/Utilities Menu:  User Information
         {
              DlgRegistrationPage frm = new DlgRegistrationPage();
-             frm.Show();
+             frm.ShowDialog(this);
          }
 
         private void loadMeetingAtStartupToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Startup Settings
         {
             DlgStartupSettings frm = new DlgStartupSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void resetCamerasToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Setup Cameras
         {
             DlgCameraSettings frm = new DlgCameraSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void vIdeoSourcesToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Video Sources
@@ -480,7 +520,7 @@ namespace VGV101
         private void customerMediaToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  User Media
         {
             DlgActiveUserMedia frm = new DlgActiveUserMedia();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void graphicTemplateMediaToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Graphic Template Media
@@ -491,13 +531,13 @@ namespace VGV101
         private void buttonsToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Buttons
         {
             DlgButtonSettings frm = new DlgButtonSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void monitorsToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Monitors
         {
             DlgMonitorSettings frm = new DlgMonitorSettings();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void streamingToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Setup/Utilities Menu:  Streaming
@@ -540,7 +580,7 @@ namespace VGV101
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Help Menu:  : About
         {
             DlgAboutBox frm = new DlgAboutBox();
-            frm.Show();
+            frm.ShowDialog(this);
         }
         
 
@@ -639,8 +679,9 @@ namespace VGV101
 
                     // Update the Button.xml file
                     GlobalConfig cfg = GlobalConfig.Instance;
-                    // cfg.WriteCurrentXml("Buttons", buttonsData);
-                    cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                    cfg.WriteCurrentXml("Buttons", buttonsData);
+                    // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                    //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
 
                     break;
                 }
@@ -654,7 +695,7 @@ namespace VGV101
             else
             {
                 DlgShotGraphicButton frm = new DlgShotGraphicButton(buttonsData, theRow);  // Inactive button found - open menu...
-                frm.Show();
+                frm.ShowDialog(this);
             }
 
         }
@@ -700,8 +741,9 @@ namespace VGV101
                                                                             
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                // cfg.WriteCurrentXml("Buttons", buttonsData);
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -713,8 +755,9 @@ namespace VGV101
 
             // Update the Button.xml file
             GlobalConfig cfg = GlobalConfig.Instance;
-            // cfg.WriteCurrentXml("Buttons", buttonsData);
-            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
 
 
@@ -723,7 +766,7 @@ namespace VGV101
         private void editButtonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu2 Item:  Edit Start Settings
         {
             DlgStartupSettingsEntry frm = new DlgStartupSettingsEntry();
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void moveUttonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu 2 Item:  Move Start Button
@@ -756,8 +799,9 @@ namespace VGV101
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                // cfg.WriteCurrentXml("Buttons", buttonsData);
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -774,8 +818,9 @@ namespace VGV101
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                // cfg.WriteCurrentXml("Buttons", buttonsData);
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -795,8 +840,9 @@ namespace VGV101
 
                 // Update the Button.xml file
                 GlobalConfig cfg = GlobalConfig.Instance;
-                // cfg.WriteCurrentXml("Buttons", buttonsData);
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -850,8 +896,9 @@ namespace VGV101
 
             // Update Buttons file and info in buttonsData
             GlobalConfig cfg = GlobalConfig.Instance;
-            // cfg.WriteCurrentXml("Buttons", buttonsData);
-            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
 
 

@@ -8,26 +8,27 @@
 /**
 *	Makes and controls the user-creatable buttons.
 *	
+*	TO DO:  Update documentation to reflect removal of DataGridView, is this.hide a better way to delete button?			
+*	
 *	Author:			Fred Koschara and Bob Lamm
-*	Creation Date:	December tenth, 2016
-*	Last Modified:	December 23, 2016 @ 11:17 am
+*	Creation Date:	September tenth, 2016
+*	Last Modified:	December 29, 2016 @ 4:57 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2016/12/23	blamm	original development
-*	     |
+*	2016/12/29  wfredk  change dialogs to modal
 *	2016/12/26  blamm   added text coloring and fixed button image problem
-*	
-*	TO DO:  Update documentation to reflect removal of DataGridView, is this.hide a better way to delete button?			
+*	2016/12/24	blamm	added documentation header
+*	2016/09/10	wfredk	original development
 */
 using System;
 using System.Windows.Forms;
-using System.Data;
+//using System.Data;
 using System.Drawing;
 
 //using System.IO;  // For WebRequests
 //using System.Net;
-using System.Text;
+//using System.Text;
 
 namespace VGV101
 {
@@ -137,7 +138,7 @@ namespace VGV101
         private void editButtonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu Item:  Edit User Button Shot/Graphic Settings
         {
             DlgShotGraphicButton frm = new DlgShotGraphicButton(buttonsData,nRow);
-            frm.Show();
+            frm.ShowDialog(this);
         }
 
         private void moveButtonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu Item:  Move User Button
@@ -168,7 +169,9 @@ namespace VGV101
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;  // buttonsData.Rows[nRow].Cells[7  buttonsData.Columns["Width"].Index].Value = Width;
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;  // buttonsData.Rows[nRow].Cells[8  buttonsData.Columns["Height"].Index].Value = Height;
 
-            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
 
         private void buttonColorToolStripMenuItem_Click(object sender, EventArgs e)  // Context Menu Item:  Set User Button Color
@@ -185,7 +188,9 @@ namespace VGV101
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Blue"].Index].Value = BackColor.B;  // buttonsData.Rows[nRow].Cells[12].Value = BackColor.B;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image"].Index].Value = "No";  // No Image  // buttonsData.Rows[nRow].Cells[13].Value = "No";
 
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -201,7 +206,9 @@ namespace VGV101
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextGreen"].Index].Value = ForeColor.G;  // buttonsData.Rows[nRow].Cells[11].Value = BackColor.G;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["TextBlue"].Index].Value = ForeColor.B;  // buttonsData.Rows[nRow].Cells[12].Value = BackColor.B;
 
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -214,14 +221,19 @@ namespace VGV101
 
                 BackgroundImage = Image.FromFile(openFileDialog2.FileName);
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image"].Index].Value = "Yes";
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName; // openFileDialog2.FileName;  openFileDialog2.FileName.Replace(cfg.MediaRoot,"%MEDIA_ROOT%")
+                // the %MEDIA_ROOT% replacement is *REQUIRED*
+                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName.Replace(cfg.MediaRoot, "%MEDIA_ROOT%");
+                // this may work on *YOUR* machine, but it does NOT work on mine
+                //buttonsData.Rows[nRow].Cells[buttonsData.Columns["Image_Path"].Index].Value = openFileDialog2.FileName; // openFileDialog2.FileName;  openFileDialog2.FileName.Replace(cfg.MediaRoot,"%MEDIA_ROOT%")
                 Width = BackgroundImage.Width;
                 Height = BackgroundImage.Height;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Width"].Index].Value = Width;
                 buttonsData.Rows[nRow].Cells[buttonsData.Columns["Height"].Index].Value = Height;
                 TextAlign = ContentAlignment.BottomCenter;  // Button text is pushed to bottom
 
-                cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+                //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
             }
         }
 
@@ -232,7 +244,9 @@ namespace VGV101
             this.Visible = false;  // Hide button
             buttonsData.Rows[nRow].Cells[buttonsData.Columns["Active"].Index].Value = "No";  // Turns this button off in the XML file
                                                                                              // this.Hide();  // Alternate way of hiding button?
-            cfg.WriteXMLFile(buttonsData, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
+            //cfg.WriteXMLFile(buttonsData, "Buttons.xml");
         }
     }
 }

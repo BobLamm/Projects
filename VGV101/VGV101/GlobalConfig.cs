@@ -7,23 +7,29 @@
  */
 /**
 *	Provides an interface to program configuration files
+*	
+*	NO! NO! NO!
+*   TO DO:  Put the path for configuration information into an XML file.
+*           Media path should be absolute - users will put them all over the place.	CfgRoot should be typed in this form.
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	December 13, 2016 @ 11:17 am
+*	Last Modified:	December 29, 2016 @ 4:52 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2016/12/29	wfredk	read Registry inside Init() method
+*	2016/12/28	wfredk	comment out extraneous functions
 *	2016/12/13	wfredk	original development
 *		|						|
 *	2016/12/10	wfredk	original development
-*	
-*   TO DO:  Put the path for configuration information into an XML file.  Media path should be absolute - users will put them all over the place.	CfgRoot should be typed in this form.
 */
 using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Xml;  // for XML
+
+using Utility.ModifyRegistry;
 
 namespace VGV101
 {
@@ -73,15 +79,18 @@ namespace VGV101
         }
 
         // initializes the global configuration object, called during program startup
-        public bool Init(string cfgRoot,string mediaRoot,string logRoot)
+        public bool Init()
         {
             if (bInitialized)
                 return false;
 
+            ModifyRegistry regData = new ModifyRegistry();
+            // MessageBox.Show(regData.SubKey);    // "SOFTWARE\VGV101"
+
             // ensure paths end with a trailing slash
-            this.cfgRoot = TerminatePath(cfgRoot);
-            this.logRoot = TerminatePath(logRoot);
-            this.mediaRoot = TerminatePath(mediaRoot);
+            cfgRoot = TerminatePath(regData.ReadString("CfgRoot", @"C:\VGV Software\Configuration\"));
+            logRoot = TerminatePath(regData.ReadString("LogRoot", @"C:\VGV Software\Logs\"));
+            mediaRoot = TerminatePath(regData.ReadString("MediaRoot", @"C:\VGV Customer Media\"));
 
             xmlReaderSettings = new XmlReaderSettings();
 
@@ -127,6 +136,11 @@ namespace VGV101
         }
 
 
+        /*
+         *  DO NOT use this function:
+         *      a: hard-coded paths are EVIL
+         *      b: EXACTLY the same functionality is provided by the GetCurrentXml() method above, just don't add ".xml" to the end of the filename
+         *      
         //2ND VERSION
         public bool ReadXMLFile(string fileName, DataGridView dataGridView)  // Reads an XML file in Current configuration folder into the dataGridView that is passed
         {
@@ -152,6 +166,7 @@ namespace VGV101
 
             return retVal;
         }
+        */
 
 
         // Writes an XML file in Current configuration folder from the dataGridView that is passed
@@ -177,6 +192,11 @@ namespace VGV101
         }
 
 
+        /*
+         *  DO NOT use this function:
+         *      a: hard-coded paths are EVIL
+         *      b: EXACTLY the same functionality is provided by the WriteCurrentXml() method above, just don't add ".xml" to the end of the filename
+         *      
         // 2ND VERSION       
         public bool WriteXMLFile(DataGridView dataGridView1, string fileName)  // Writes an XML file in Current configuration folder from the dataGridView that is passed
         {
@@ -198,6 +218,7 @@ namespace VGV101
         
             return retVal;
         }
+        */
 
  
         // --------------------------------------------------------------------
