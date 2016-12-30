@@ -53,8 +53,8 @@
             this.addNewCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addOtherItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clipsAnimationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addClipToLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceClipInLibraryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PreviewStillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PreviewClipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.monitorsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.camera1ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -306,25 +306,25 @@
             // clipsAnimationsToolStripMenuItem
             // 
             this.clipsAnimationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addClipToLibraryToolStripMenuItem,
-            this.replaceClipInLibraryToolStripMenuItem});
+            this.PreviewStillToolStripMenuItem,
+            this.PreviewClipToolStripMenuItem});
             this.clipsAnimationsToolStripMenuItem.Name = "clipsAnimationsToolStripMenuItem";
             this.clipsAnimationsToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
             this.clipsAnimationsToolStripMenuItem.Text = "Clips/Supers/Stills";
             // 
-            // addClipToLibraryToolStripMenuItem
+            // PreviewStillToolStripMenuItem
             // 
-            this.addClipToLibraryToolStripMenuItem.Name = "addClipToLibraryToolStripMenuItem";
-            this.addClipToLibraryToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.addClipToLibraryToolStripMenuItem.Text = "Play Clip/Super/Still";
-            this.addClipToLibraryToolStripMenuItem.Click += new System.EventHandler(this.addClipToLibraryToolStripMenuItem_Click);
+            this.PreviewStillToolStripMenuItem.Name = "PreviewStillToolStripMenuItem";
+            this.PreviewStillToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.PreviewStillToolStripMenuItem.Text = "Preview Super/Still";
+            this.PreviewStillToolStripMenuItem.Click += new System.EventHandler(this.addClipToLibraryToolStripMenuItem_Click);
             // 
-            // replaceClipInLibraryToolStripMenuItem
+            // PreviewClipToolStripMenuItem
             // 
-            this.replaceClipInLibraryToolStripMenuItem.Name = "replaceClipInLibraryToolStripMenuItem";
-            this.replaceClipInLibraryToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.replaceClipInLibraryToolStripMenuItem.Text = "Delete Clip/Super/Still";
-            this.replaceClipInLibraryToolStripMenuItem.Click += new System.EventHandler(this.replaceClipInLibraryToolStripMenuItem_Click);
+            this.PreviewClipToolStripMenuItem.Name = "PreviewClipToolStripMenuItem";
+            this.PreviewClipToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.PreviewClipToolStripMenuItem.Text = "Preview Clip";
+            this.PreviewClipToolStripMenuItem.Click += new System.EventHandler(this.replaceClipInLibraryToolStripMenuItem_Click);
             // 
             // menuStrip1
             // 
@@ -672,7 +672,7 @@
             this.createStreamingButtonToolStripMenuItem,
             this.createRecordingButtonToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(264, 286);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(264, 264);
             this.contextMenuStrip1.Text = "Right-Click on Background";
             // 
             // toolStripSeparator9
@@ -923,8 +923,8 @@
         private System.Windows.Forms.ToolStripMenuItem addPersonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addItemToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clipsAnimationsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addClipToLibraryToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem replaceClipInLibraryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PreviewStillToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PreviewClipToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem utilitiesDagnosticsToolStripMenuItem;

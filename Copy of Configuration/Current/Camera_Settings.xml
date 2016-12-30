@@ -1,0 +1,115 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <Camera_Number>0</Camera_Number>
+    <IP_Address>100.0.193.98:1026</IP_Address>
+    <User_Name>root</User_Name>
+    <Password>VGV101video</Password>
+    <Camera_Name>Kamera Ein</Camera_Name>
+    <Manufacturer>Axis</Manufacturer>
+    <Model>P5512</Model>
+    <Home_Pan_Position>0</Home_Pan_Position>
+    <Home_Tilt_Position>157.9406</Home_Tilt_Position>
+    <Home_Zoom_Position>-14.9156</Home_Zoom_Position>
+    <Home_Focus_Position>20</Home_Focus_Position>
+    <Home_Iris_Position>10</Home_Iris_Position>
+    <Home_White_Position>30</Home_White_Position>
+    <Home_Gain_Position>6</Home_Gain_Position>
+    <Home_Backlight_Position>6</Home_Backlight_Position>
+    <Home_Auto_Focus_Preset>On</Home_Auto_Focus_Preset>
+    <Home_Auto_Iris_Preset>On</Home_Auto_Iris_Preset>
+    <Home_Auto_White_Preset>On</Home_Auto_White_Preset>
+    <Home_Auto_Gain_Preset>On</Home_Auto_Gain_Preset>
+    <Home_Auto_Backlight_Preset>Off</Home_Auto_Backlight_Preset>
+    <Pan_Speed>11</Pan_Speed>
+    <Tilt_Speed>12</Tilt_Speed>
+    <Zoom_Speed>13</Zoom_Speed>
+    <Focus_Speed>14</Focus_Speed>
+    <Hold_Frames>10</Hold_Frames>
+    <Status>Not Connected</Status>
+  </Record>
+  <Record>
+    <Camera_Number>1</Camera_Number>
+    <IP_Address>100.0.193.98:1026</IP_Address>
+    <User_Name>root</User_Name>
+    <Password>VGV101video</Password>
+    <Camera_Name>Kamera Zwei</Camera_Name>
+    <Manufacturer>Panasonic</Manufacturer>
+    <Model>HE-120</Model>
+    <Home_Pan_Position>1</Home_Pan_Position>
+    <Home_Tilt_Position>173.9625</Home_Tilt_Position>
+    <Home_Zoom_Position>-17.8875</Home_Zoom_Position>
+    <Home_Focus_Position>20</Home_Focus_Position>
+    <Home_Iris_Position>10</Home_Iris_Position>
+    <Home_White_Position>30</Home_White_Position>
+    <Home_Gain_Position>7</Home_Gain_Position>
+    <Home_Backlight_Position>7</Home_Backlight_Position>
+    <Home_Auto_Focus_Preset>On</Home_Auto_Focus_Preset>
+    <Home_Auto_Iris_Preset>On</Home_Auto_Iris_Preset>
+    <Home_Auto_White_Preset>On</Home_Auto_White_Preset>
+    <Home_Auto_Gain_Preset>On</Home_Auto_Gain_Preset>
+    <Home_Auto_Backlight_Preset>Off</Home_Auto_Backlight_Preset>
+    <Pan_Speed>22</Pan_Speed>
+    <Tilt_Speed>23</Tilt_Speed>
+    <Zoom_Speed>24</Zoom_Speed>
+    <Focus_Speed>25</Focus_Speed>
+    <Hold_Frames>26</Hold_Frames>
+    <Status>Full Communication</Status>
+  </Record>
+  <Record>
+    <Camera_Number>2</Camera_Number>
+    <IP_Address>64.183.63.196:1026</IP_Address>
+    <User_Name>root</User_Name>
+    <Password>root</Password>
+    <Camera_Name>Kamera Drei</Camera_Name>
+    <Manufacturer>Vaddio</Manufacturer>
+    <Model>VV-100</Model>
+    <Home_Pan_Position>100</Home_Pan_Position>
+    <Home_Tilt_Position>10</Home_Tilt_Position>
+    <Home_Zoom_Position>3</Home_Zoom_Position>
+    <Home_Focus_Position>8</Home_Focus_Position>
+    <Home_Iris_Position>8</Home_Iris_Position>
+    <Home_White_Position>8</Home_White_Position>
+    <Home_Gain_Position>8</Home_Gain_Position>
+    <Home_Backlight_Position>8</Home_Backlight_Position>
+    <Home_Auto_Focus_Preset>On</Home_Auto_Focus_Preset>
+    <Home_Auto_Iris_Preset>On</Home_Auto_Iris_Preset>
+    <Home_Auto_White_Preset>On</Home_Auto_White_Preset>
+    <Home_Auto_Gain_Preset>On</Home_Auto_Gain_Preset>
+    <Home_Auto_Backlight_Preset>On</Home_Auto_Backlight_Preset>
+    <Pan_Speed>33</Pan_Speed>
+    <Tilt_Speed>34</Tilt_Speed>
+    <Zoom_Speed>35</Zoom_Speed>
+    <Focus_Speed>36</Focus_Speed>
+    <Hold_Frames>37</Hold_Frames>
+    <Status>Not Connected</Status>
+  </Record>
+  <Record>
+    <Camera_Number>3</Camera_Number>
+    <IP_Address>64.183.63.196:1026</IP_Address>
+    <User_Name>root</User_Name>
+    <Password>root</Password>
+    <Camera_Name>Kamera Vier</Camera_Name>
+    <Manufacturer>PTZ Optics</Manufacturer>
+    <Model>WW-200</Model>
+    <Home_Pan_Position>157</Home_Pan_Position>
+    <Home_Tilt_Position>14</Home_Tilt_Position>
+    <Home_Zoom_Position>6</Home_Zoom_Position>
+    <Home_Focus_Position>9</Home_Focus_Position>
+    <Home_Iris_Position>9</Home_Iris_Position>
+    <Home_White_Position>9</Home_White_Position>
+    <Home_Gain_Position>9</Home_Gain_Position>
+    <Home_Backlight_Position>9</Home_Backlight_Position>
+    <Home_Auto_Focus_Preset>On</Home_Auto_Focus_Preset>
+    <Home_Auto_Iris_Preset>On</Home_Auto_Iris_Preset>
+    <Home_Auto_White_Preset>On</Home_Auto_White_Preset>
+    <Home_Auto_Gain_Preset>On</Home_Auto_Gain_Preset>
+    <Home_Auto_Backlight_Preset>On</Home_Auto_Backlight_Preset>
+    <Pan_Speed>44</Pan_Speed>
+    <Tilt_Speed>45</Tilt_Speed>
+    <Zoom_Speed>46</Zoom_Speed>
+    <Focus_Speed>47</Focus_Speed>
+    <Hold_Frames>48</Hold_Frames>
+    <Status>Not Connected</Status>
+  </Record>
+</xml>

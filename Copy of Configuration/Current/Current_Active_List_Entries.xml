@@ -1,0 +1,19 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <List>People</List>
+    <Active_Entry>1</Active_Entry>
+  </Record>
+  <Record>
+    <List>Agenda Items</List>
+    <Active_Entry>1</Active_Entry>
+  </Record>
+  <Record>
+    <List>Notices</List>
+    <Active_Entry>1</Active_Entry>
+  </Record>
+  <Record>
+    <List>Other Items</List>
+    <Active_Entry>4</Active_Entry>
+  </Record>
+</xml>

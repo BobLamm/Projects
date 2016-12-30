@@ -58,15 +58,14 @@ namespace VGV101
             // Set DataGridView read/write parameters and background colors
 
             buttonsData.RowTemplate.MinimumHeight = 30;
-            // buttonsData.BackgroundColor = Color.Red;  // This is set by DefaultCellStyle in the Properties panel
+            // DataGridView background color is set by DefaultCellStyle in the Properties panel
             buttonsData.Columns[0].Frozen = true;
-            buttonsData.Columns[0].ReadOnly = true;
-            buttonsData.Columns[0].DefaultCellStyle.BackColor = SystemColors.Control;
             buttonsData.AllowUserToResizeColumns = true;            
         }
 
 
-        // UPDATE BUTTONS SETTINGS
+        // EDIT BUTTONS SETTINGS
+
         private void button18_Click(object sender, EventArgs e)  // Update Buttons
         {
             // Update Startup Settings file from info in buttonsData
@@ -76,6 +75,14 @@ namespace VGV101
             // DON'T DO THIS:  SEE THE NOTE IN GlobalConfig.cs
             //if (cfg.WriteXMLFile(buttonsData, "Buttons.xml"))
             MessageBox.Show("Updated Buttons Settings");
+        }
+
+        private void enableEditingButton_Click(object sender, EventArgs e)  // Enable Editing
+        {
+            buttonsData.ReadOnly = false;
+            buttonsData.DefaultCellStyle.BackColor = Color.White;
+            buttonsData.Columns[0].ReadOnly = true;
+            buttonsData.Columns[0].DefaultCellStyle.BackColor = SystemColors.Control;
         }
     }
 }

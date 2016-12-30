@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <First_Line>Notice 1</First_Line>
+    <Second_Line>Ambulatory Notice</Second_Line>
+    <Third_Line>Ambulance</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Notice 2</First_Line>
+    <Second_Line>Bedside Notice</Second_Line>
+    <Third_Line>Bed</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Notice 3</First_Line>
+    <Second_Line>Clear Notice</Second_Line>
+    <Third_Line>Clear Sky</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Notice 4</First_Line>
+    <Second_Line>Dental Notice</Second_Line>
+    <Third_Line>Dentistryyy</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Notice 5</First_Line>
+    <Second_Line>Education Notice</Second_Line>
+    <Third_Line>Education</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Notice 6</First_Line>
+    <Second_Line>Fun Notice</Second_Line>
+    <Third_Line>Fun Factory</Third_Line>
+  </Record>
+</xml>

@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <First_Line>Agenda Item 1</First_Line>
+    <Second_Line>Assembly Call to Order</Second_Line>
+    <Third_Line>Aaron Aardvark</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Agenda Item 2</First_Line>
+    <Second_Line>Barrister Recognition</Second_Line>
+    <Third_Line>Bill Bennett</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Agenda Item 3</First_Line>
+    <Second_Line>Cessation of Hostilities</Second_Line>
+    <Third_Line>Charlie Chase</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Agenda Item 4</First_Line>
+    <Second_Line>Direct Appeal to Voters</Second_Line>
+    <Third_Line>Don Dean</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Agenda Item 5</First_Line>
+    <Second_Line>Elevation of Elevator</Second_Line>
+    <Third_Line>Edward Edgar</Third_Line>
+  </Record>
+</xml>
