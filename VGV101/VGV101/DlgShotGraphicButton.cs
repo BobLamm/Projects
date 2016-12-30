@@ -68,7 +68,8 @@ namespace VGV101
                 button4.Enabled = false;
             }
 
-            cfg.ReadXMLFile("Camera_Settings.xml", cameraDataGridView);  // Read camera settings file into dataGridView1
+            cfg.GetCurrentXml("Camera_Settings", cameraDataGridView);  // Read camera settings file into dataGridView1
+            //cfg.ReadXMLFile("Camera_Settings.xml", cameraDataGridView);  // Read camera settings file into dataGridView1
 
             // Enter camera names into camera selector combobox
             comboBox1.Items[0] = cameraDataGridView.Rows[0].Cells[cameraDataGridView.Columns["Camera_Name"].Index].Value.ToString();
@@ -143,13 +144,18 @@ namespace VGV101
             GlobalConfig cfg = GlobalConfig.Instance;
 
             // Open appropriate list file
-            string listFileName = "People.xml";  // This is the default
+            string listFileName = "People";  // This is the default
+            if (lineOneTextSource == "Agenda Items") { listFileName = "Agenda_Items"; }
+            if (lineOneTextSource == "Notices") { listFileName = "Notices"; }
+            if (lineOneTextSource == "Other Items") { listFileName = "Other_Items"; }
+/*            string listFileName = "People.xml";  // This is the default
             if (lineOneTextSource == "Agenda Items") { listFileName = "Agenda_Items.xml"; }
             if (lineOneTextSource == "Notices") { listFileName = "Notices.xml"; }
             if (lineOneTextSource == "Other Items") { listFileName = "Other_Items.xml"; }
-
+*/
             // Read appropriate list file into displayedListDataGridView
-            if (!cfg.ReadXMLFile(listFileName, displayedListDataGridView)) // we can't proceed from here
+            if (!cfg.GetCurrentXml(listFileName, displayedListDataGridView)) // we can't proceed from here
+            //if (!cfg.ReadXMLFile(listFileName, displayedListDataGridView)) // we can't proceed from here
             {
                 MessageBox.Show(listFileName + " data not available", "ERROR");
                 this.Close();
@@ -157,7 +163,8 @@ namespace VGV101
             }
 
             // Read current active list entries file into activeRowDataGridView to see which row in list is active
-            if (!cfg.ReadXMLFile("Current_Active_List_Entries.xml", activeRowDataGridView)) // we can't proceed from here
+            if (!cfg.GetCurrentXml("Current_Active_List_Entries", activeRowDataGridView)) // we can't proceed from here
+            //if (!cfg.ReadXMLFile("Current_Active_List_Entries.xml", activeRowDataGridView)) // we can't proceed from here
             {
                 MessageBox.Show("Current Active List Entries not available", "ERROR");
                 this.Close();
@@ -178,7 +185,8 @@ namespace VGV101
                 formFocusBack = false;  // reset variable
 
                 // Open Buttons.xml File to get updated info...
-                if (!cfg.ReadXMLFile("Buttons.xml", buttonsDataGridView)) // we can't proceed from here
+                if (!cfg.GetCurrentXml("Buttons", buttonsDataGridView)) // we can't proceed from here
+                //if (!cfg.ReadXMLFile("Buttons.xml", buttonsDataGridView)) // we can't proceed from here
                     {
                     MessageBox.Show("Button data not available", "ERROR");
                     this.Close();
@@ -260,8 +268,8 @@ namespace VGV101
                 buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Name_From_Graphic"].Index].Value = "No";
             }
 
-            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
             // ApplicationRestart?
         }
 
@@ -457,8 +465,8 @@ namespace VGV101
             buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_3"].Index].Value = textBox4.Text;
 
             // Update Buttons file from info in buttonsDataGridView
-            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
 
@@ -475,8 +483,8 @@ namespace VGV101
 
                 // Update Buttons file from info in buttonsDataGridView
                 GlobalConfig cfg = GlobalConfig.Instance;
-                // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-                cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+                //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
             }
         }
 
@@ -491,8 +499,8 @@ namespace VGV101
 
                 // Update Buttons file from info in buttonsDataGridView
                 GlobalConfig cfg = GlobalConfig.Instance;
-                // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-                cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+                cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+                //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
             }
         }
 
@@ -502,8 +510,8 @@ namespace VGV101
 
             // Update Buttons file from info in buttonsDataGridView
             GlobalConfig cfg = GlobalConfig.Instance;
-            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
         private void numericUpDown8_ValueChanged(object sender, EventArgs e)  // Leave Graphic Up For X seconds up/Down Validated
@@ -513,8 +521,8 @@ namespace VGV101
             buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Repeat_Graphic_Seconds"].Index].Value = numericUpDown8.Value.ToString();
 
             // Update Buttons file from info in buttonsDataGridView
-            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
         private void button13_Click(object sender, EventArgs e)  // Focus button pressed...
@@ -551,8 +559,8 @@ namespace VGV101
             buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1_Source"].Index].Value = "Text";
 
             // Update Buttons.xml file from info in buttonsDataGridView...
-            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
-            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
+            cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            //cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
         private void button14_Click(object sender, EventArgs e)  // Iris up button
