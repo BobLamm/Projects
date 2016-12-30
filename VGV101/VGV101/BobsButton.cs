@@ -139,6 +139,7 @@ namespace VGV101
         {
             DlgShotGraphicButton frm = new DlgShotGraphicButton(buttonsData,nRow);
             frm.ShowDialog(this);
+            // refresh button
         }
 
         private void moveButtonToolStripMenuItem_Click(object sender, EventArgs e)  //ContextMenu Item:  Move User Button
