@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Record>
+		<Template_Number>1</Template_Number>
+		<Template_Name>Yes</Template_Name>
+		<Layer>Shot</Layer>
+		<Text_Source>Zeke Zero</Text_Source>
+		<Line_1_Font>100</Line_1_Font>
+		<Line_1_Text>100</Line_1_Text>
+		<Line_2_Font>100</Line_2_Font>
+		<Line_2_Text>100</Line_2_Text>
+		<Line_3_Font>100</Line_3_Font>
+		<Line_3_Text>100</Line_3_Text>
+		<Background>120</Background>
+		<Path_To_Background>120</Path_To_Background>
+		<Repeat_Method>40</Repeat_Method>
+		<Repeat_Time>40</Repeat_Time>
+	</Record>
+	<Record>
+		<Template_Number>2</Template_Number>
+		<Template_Name>Yes</Template_Name>
+		<Layer>Shot</Layer>
+		<Text_Source>Zeke Zero</Text_Source>
+		<Line_1_Font>100</Line_1_Font>
+		<Line_1_Text>100</Line_1_Text>
+		<Line_2_Font>100</Line_2_Font>
+		<Line_2_Text>100</Line_2_Text>
+		<Line_3_Font>100</Line_3_Font>
+		<Line_3_Text>100</Line_3_Text>
+		<Background>120</Background>
+		<Path_To_Background>120</Path_To_Background>
+		<Repeat_Method>40</Repeat_Method>
+		<Repeat_Time>40</Repeat_Time>
+	</Record>
+	<Record>
+		<Template_Number>3</Template_Number>
+	</Record>
+	<Record>
+		<Template_Number>4</Template_Number>
+	</Record>
+</xml>

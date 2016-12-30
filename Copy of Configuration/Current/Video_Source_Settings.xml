@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Record>
+		<Device_Number>1</Device_Number>
+		<IP_Address>192.168.1.11</IP_Address>
+		<Device_Name>VTR 1</Device_Name>
+		<Manufacturer>Quasar</Manufacturer>
+		<Model>WW-100</Model>
+	</Record>
+	<Record>
+		<Device_Number>2</Device_Number>
+		<IP_Address>192.168.1.12</IP_Address>
+		<Device_Name>VTR 2</Device_Name>
+		<Manufacturer>Sanyo</Manufacturer>
+		<Model>XX-100</Model>
+	</Record>
+	<Record>
+		<Device_Number>3</Device_Number>
+		<IP_Address>192.168.1.13</IP_Address>
+		<Device_Name>VTR 3</Device_Name>
+		<Manufacturer>Zenith</Manufacturer>
+		<Model>YY-100</Model>
+	</Record>
+	<Record>
+		<Device_Number>4</Device_Number>
+		<IP_Address>192.168.1.14</IP_Address>
+		<Device_Name>VTR 4</Device_Name>
+		<Manufacturer>AJA</Manufacturer>
+		<Model>ZZ-100</Model>
+	</Record>
+</xml>

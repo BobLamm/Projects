@@ -374,22 +374,16 @@ namespace VGV101
 
         // Strip Menu Items Continued:  Clips/Supers/Stills Menu
 
-        private void addClipToLibraryToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Clips/Supers/Stills Menu:  Play CLip
+        private void addClipToLibraryToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Clips/Supers/Stills Menu:  Preview Super/Still
         {
-            MessageBox.Show("Opens File Explorer to allow user to browse for clips, supers (clips with alpha channel) and backgrounds and play them on the touch of a button on a menu with with settings");
-            if (openFileDialog3.ShowDialog() == DialogResult.OK)
-            {
-                GlobalConfig cfg = GlobalConfig.Instance;
-                // Delete?
-            }
+            MessageBox.Show("Previews Stills from a list with checkerbox to test alpha channel");
         }
 
-        private void replaceClipInLibraryToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Clips/Supers/Stills Menu:  Delete Clip/Super/Still
+        private void replaceClipInLibraryToolStripMenuItem_Click(object sender, EventArgs e)  // Strip Menu Item:  Clips/Supers/Stills Menu:  Preview Clip
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            MessageBox.Show("Opens Windows Explorer Meeting Media folder so user can see media in it and delete it.  - Delete?");
-            Process.Start(cfg.MediaRoot+"Media");
+            MessageBox.Show("Previews Clips from a list with checkerbox to test alpha channel");
         }
 
         // Strip Menu Items Continued:  Monitors Menu
@@ -644,7 +638,7 @@ namespace VGV101
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Path"].Index].Value = " ";
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Image_Transparency"].Index].Value = 0;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Proportion_Lock"].Index].Value = "Lock";
-                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value = 1;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value = -1;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Pan_Preset"].Index].Value = 0;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Tilt_Preset"].Index].Value = 0;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Zoom_Preset"].Index].Value = 0;
@@ -658,7 +652,7 @@ namespace VGV101
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_White_Preset"].Index].Value = "On";
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_Gain_Preset"].Index].Value = "On";
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Primary_Camera_Auto_Backlight_Preset"].Index].Value = "Off";
-                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Number"].Index].Value = 2;
+                    buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Number"].Index].Value = -1;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Pan_Preset"].Index].Value = 0;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Tilt_Preset"].Index].Value = 0;
                     buttonsData.Rows[n].Cells[buttonsData.Columns["Secondary_Camera_Zoom_Preset"].Index].Value = 0;

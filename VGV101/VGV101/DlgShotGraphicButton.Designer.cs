@@ -62,11 +62,7 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.button10 = new System.Windows.Forms.Button();
@@ -88,8 +84,10 @@
             this.numericUpDown7 = new System.Windows.Forms.NumericUpDown();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.displayedListData = new System.Windows.Forms.DataGridView();
-            this.activeRowData = new System.Windows.Forms.DataGridView();
+            this.displayedListDataGridView = new System.Windows.Forms.DataGridView();
+            this.activeRowDataGridView = new System.Windows.Forms.DataGridView();
+            this.cameraDataGridView = new System.Windows.Forms.DataGridView();
+            this.buttonsDataGridView = new System.Windows.Forms.DataGridView();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -103,8 +101,10 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.displayedListData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.activeRowData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.displayedListDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.activeRowDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cameraDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.buttonsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox7
@@ -376,11 +376,7 @@
             this.groupBox2.Controls.Add(this.button14);
             this.groupBox2.Controls.Add(this.button13);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.button8);
-            this.groupBox2.Controls.Add(this.button7);
             this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.groupBox8);
             this.groupBox2.Controls.Add(this.groupBox7);
@@ -431,6 +427,7 @@
             this.button12.TabIndex = 91;
             this.button12.Text = "Recall Secondary Shot";
             this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // button16
             // 
@@ -442,6 +439,7 @@
             this.button16.TabIndex = 90;
             this.button16.Text = "Recall Primary Shot";
             this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // label6
             // 
@@ -518,28 +516,6 @@
             this.label5.TabIndex = 78;
             this.label5.Text = "Right-click in picture for further settings including PTZ control sensitivity...";
             // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(776, 66);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(30, 20);
-            this.button8.TabIndex = 83;
-            this.button8.Text = "Go To";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Visible = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(746, 66);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(26, 20);
-            this.button7.TabIndex = 82;
-            this.button7.Text = "Query";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Visible = false;
-            this.button7.Click += new System.EventHandler(this.button7_Click_1);
-            // 
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(746, 13);
@@ -548,28 +524,6 @@
             this.textBox5.Size = new System.Drawing.Size(60, 22);
             this.textBox5.TabIndex = 81;
             this.textBox5.Visible = false;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(776, 41);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(30, 20);
-            this.button3.TabIndex = 80;
-            this.button3.Text = "Right";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(746, 41);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(26, 20);
-            this.button2.TabIndex = 79;
-            this.button2.Text = "Left";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // label3
             // 
@@ -810,31 +764,51 @@
             0});
             this.numericUpDown7.Validated += new System.EventHandler(this.numericUpDown7_Validated);
             // 
-            // displayedListData
+            // displayedListDataGridView
             // 
-            this.displayedListData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.displayedListData.Location = new System.Drawing.Point(378, 884);
-            this.displayedListData.Name = "displayedListData";
-            this.displayedListData.Size = new System.Drawing.Size(58, 21);
-            this.displayedListData.TabIndex = 52;
-            this.displayedListData.Visible = false;
+            this.displayedListDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.displayedListDataGridView.Location = new System.Drawing.Point(505, 885);
+            this.displayedListDataGridView.Name = "displayedListDataGridView";
+            this.displayedListDataGridView.Size = new System.Drawing.Size(58, 21);
+            this.displayedListDataGridView.TabIndex = 52;
+            this.displayedListDataGridView.Visible = false;
             // 
-            // activeRowData
+            // activeRowDataGridView
             // 
-            this.activeRowData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.activeRowData.Location = new System.Drawing.Point(759, 884);
-            this.activeRowData.Name = "activeRowData";
-            this.activeRowData.Size = new System.Drawing.Size(42, 21);
-            this.activeRowData.TabIndex = 53;
-            this.activeRowData.Visible = false;
+            this.activeRowDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.activeRowDataGridView.Location = new System.Drawing.Point(759, 884);
+            this.activeRowDataGridView.Name = "activeRowDataGridView";
+            this.activeRowDataGridView.Size = new System.Drawing.Size(42, 21);
+            this.activeRowDataGridView.TabIndex = 53;
+            this.activeRowDataGridView.Visible = false;
+            // 
+            // cameraDataGridView
+            // 
+            this.cameraDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.cameraDataGridView.Location = new System.Drawing.Point(43, 884);
+            this.cameraDataGridView.Name = "cameraDataGridView";
+            this.cameraDataGridView.Size = new System.Drawing.Size(58, 21);
+            this.cameraDataGridView.TabIndex = 54;
+            this.cameraDataGridView.Visible = false;
+            // 
+            // buttonsDataGridView
+            // 
+            this.buttonsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.buttonsDataGridView.Location = new System.Drawing.Point(242, 885);
+            this.buttonsDataGridView.Name = "buttonsDataGridView";
+            this.buttonsDataGridView.Size = new System.Drawing.Size(58, 21);
+            this.buttonsDataGridView.TabIndex = 55;
+            this.buttonsDataGridView.Visible = false;
             // 
             // DlgShotGraphicButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1049, 908);
-            this.Controls.Add(this.activeRowData);
-            this.Controls.Add(this.displayedListData);
+            this.Controls.Add(this.buttonsDataGridView);
+            this.Controls.Add(this.cameraDataGridView);
+            this.Controls.Add(this.activeRowDataGridView);
+            this.Controls.Add(this.displayedListDataGridView);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
@@ -867,8 +841,10 @@
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.displayedListData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.activeRowData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.displayedListDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.activeRowDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cameraDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.buttonsDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -913,18 +889,14 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.DataGridView displayedListData;
-        private System.Windows.Forms.DataGridView activeRowData;
+        private System.Windows.Forms.DataGridView displayedListDataGridView;
+        private System.Windows.Forms.DataGridView activeRowDataGridView;
         private AxAXISMEDIACONTROLLib.AxAxisMediaControl AMC;
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button13;
@@ -936,5 +908,7 @@
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridView cameraDataGridView;
+        private System.Windows.Forms.DataGridView buttonsDataGridView;
     }
 }

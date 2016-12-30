@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="yes"?>
+<xml>
+  <Record>
+    <First_Line>Anatoly Abramson</First_Line>
+    <Second_Line>Advocate</Second_Line>
+    <Third_Line>Aardvark Enterprises</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Bob Bodine</First_Line>
+    <Second_Line>Betterment Officer</Second_Line>
+    <Third_Line>Babson Betamaxes</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Clara Consiglione</First_Line>
+    <Second_Line>Case Commissioner</Second_Line>
+    <Third_Line>Clerkenwell Clocks</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Daria Dante</First_Line>
+    <Second_Line>Dentista</Second_Line>
+    <Third_Line>Dante Dentistry</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Edgar Ellwagen</First_Line>
+    <Second_Line>Enterologisttt</Second_Line>
+    <Third_Line>Entropy Envelopes</Third_Line>
+  </Record>
+  <Record>
+    <First_Line>Frank Fortunato</First_Line>
+    <Second_Line>Fireman</Second_Line>
+    <Third_Line>Foxboro Firehouse</Third_Line>
+  </Record>
+</xml>

@@ -41,10 +41,10 @@ namespace VGV101
     {
         private int nRow;  // row in dataGridView - also the button number
         private int camNumber = 0;  // To keep track of camera number in case properties are changed
-        private DataGridView buttonsData;  // DataGridView to hold button information
+        // private DataGridView buttonsDataGridView;  // DataGridView to hold button information - now on form itself
         bool formFocusBack = false;  // to sense when the list editor has returned focus to the form and it should reload the updated button data.
 
-        public DlgShotGraphicButton(DataGridView dGrid, int theRow)  // When called, the function gets the DataGridView with the button info as well as the button number (row in dataGridView)
+        public DlgShotGraphicButton(DataGridView tempDataGridView, int theRow)  // When called, the function gets the DataGridView with the button info as well as the button number (row in dataGridView)
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
@@ -53,35 +53,43 @@ namespace VGV101
             // LOAD UP FOUR DATAVIEWS WITH BUTTON, CAMERA, LIST AND CURRENT ACTIVE LIST ENTRY INFO.  
             // Button info is passed to bobsButton class function (along with number (nRow) of button), 
             // camera info is loaded into camerasData, 
-            // and when needed: list info into displayedListData and active list into into activeRowData...
+            // and when needed: list info into displayedListDataGridView and active list into into activeRowDataGridView...
             // Only the first 'Text From' field is used, when imported, all the 3 text lines are imported as a block.
 
-            buttonsData = dGrid;  // Load up Button information that was passed to function
+            buttonsDataGridView = tempDataGridView;  // Load up Button information that was passed to function
             nRow = theRow;  // Button number (row) passed to function
 
-            textBox1.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString();  // Load Button name from Button Settings in buttonsData...
+            textBox1.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Button_Name"].Index].Value.ToString();  // Load Button name from Button Settings in buttonsData...
 
-            if (buttonsData.Rows[nRow].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value.ToString() == "Yes")  // Load checkbox status on whether button name comes from graphic  
+            if (buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Name_From_Graphic"].Index].Value.ToString() == "Yes")  // Load checkbox status on whether button name comes from graphic  
             {
                 textBox1.Text = textBox2.Text;
                 checkBox5.Checked = true;
                 button4.Enabled = false;
             }
 
-            // Enter camera names into camera selector combobox            
-            for (int cnt = 0, nLim = cfg.NumCameras; cnt < nLim; cnt++)
+            cfg.ReadXMLFile("Camera_Settings.xml", cameraDataGridView);  // Read camera settings file into dataGridView1
+
+            // Enter camera names into camera selector combobox
+            comboBox1.Items[0] = cameraDataGridView.Rows[0].Cells[cameraDataGridView.Columns["Camera_Name"].Index].Value.ToString();
+            comboBox1.Items[1] = cameraDataGridView.Rows[1].Cells[cameraDataGridView.Columns["Camera_Name"].Index].Value.ToString();
+            comboBox1.Items[2] = cameraDataGridView.Rows[2].Cells[cameraDataGridView.Columns["Camera_Name"].Index].Value.ToString();
+            comboBox1.Items[3] = cameraDataGridView.Rows[3].Cells[cameraDataGridView.Columns["Camera_Name"].Index].Value.ToString();
+
+            /*
+                for (int cnt = 0, nLim = cfg.NumCameras; cnt < nLim; cnt++)
                 comboBox1.Items[cnt] = cfg.Camera(cnt).cameraName;
+            */
 
+            // FILL IN GRAPHICS INFO - Get from buttonsDataGridView - only the first TextLine1Source is used for the entire 3-line block of text.
 
-            // FILL IN GRAPHICS INFO - Get from buttonsData - only the first TextLine1Source is used for the entire 3-line block of text.
-
-            string lineOneTextSource = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1_Source"].Index].Value.ToString();  // See where the text for this button is coming from.
+            string lineOneTextSource = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1_Source"].Index].Value.ToString();  // See where the text for this button is coming from.
             
-            if (lineOneTextSource == "Text")  // If the text is typed in right here on this form, get it from the buttonsData...
+            if (lineOneTextSource == "Text")  // If the text is typed in right here on this form, get it from the buttonsDataGridView...
             {
-                textBox2.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1"].Index].Value.ToString();
-                textBox3.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_2"].Index].Value.ToString();
-                textBox4.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_3"].Index].Value.ToString();
+                textBox2.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1"].Index].Value.ToString();
+                textBox3.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_2"].Index].Value.ToString();
+                textBox4.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_3"].Index].Value.ToString();
             }
             else  // Or if the text comes from one of the lists...
             {
@@ -92,37 +100,37 @@ namespace VGV101
                 button5.Font = new Font(button5.Font, FontStyle.Bold);
                 button5.Text = "Text from " + lineOneTextSource;
 
-                // Read appropriate list file into displayedListData
-                // Read current active list entries file into activeRowData to see which row in list is active
+                // Read appropriate list file into displayedListDataGridView
+                // Read current active list entries file into activeRowDataGridView to see which row in list is active
                 if (!GetListData(lineOneTextSource))
                     return;
 
                 // Find the row that has the proper list information:
                 int lineNumber = 0; // Default is first line
                 
-                if (activeRowData.Rows[0].Cells[activeRowData.Columns["List"].Index].Value.ToString() == lineOneTextSource)
-                {   lineNumber = int.Parse(activeRowData.Rows[0].Cells[activeRowData.Columns["Active_Entry"].Index].Value.ToString());
+                if (activeRowDataGridView.Rows[0].Cells[activeRowDataGridView.Columns["List"].Index].Value.ToString() == lineOneTextSource)
+                {   lineNumber = int.Parse(activeRowDataGridView.Rows[0].Cells[activeRowDataGridView.Columns["Active_Entry"].Index].Value.ToString());
                 }
-                if (activeRowData.Rows[1].Cells[activeRowData.Columns["List"].Index].Value.ToString() == lineOneTextSource)
-                {   lineNumber = int.Parse(activeRowData.Rows[1].Cells[activeRowData.Columns["Active_Entry"].Index].Value.ToString());
+                if (activeRowDataGridView.Rows[1].Cells[activeRowDataGridView.Columns["List"].Index].Value.ToString() == lineOneTextSource)
+                {   lineNumber = int.Parse(activeRowDataGridView.Rows[1].Cells[activeRowDataGridView.Columns["Active_Entry"].Index].Value.ToString());
                 }
-                if (activeRowData.Rows[2].Cells[activeRowData.Columns["List"].Index].Value.ToString() == lineOneTextSource)
-                {   lineNumber = int.Parse(activeRowData.Rows[2].Cells[activeRowData.Columns["Active_Entry"].Index].Value.ToString());
+                if (activeRowDataGridView.Rows[2].Cells[activeRowDataGridView.Columns["List"].Index].Value.ToString() == lineOneTextSource)
+                {   lineNumber = int.Parse(activeRowDataGridView.Rows[2].Cells[activeRowDataGridView.Columns["Active_Entry"].Index].Value.ToString());
                 }
-                if (activeRowData.Rows[3].Cells[activeRowData.Columns["List"].Index].Value.ToString() == lineOneTextSource)
-                {   lineNumber = int.Parse(activeRowData.Rows[3].Cells[activeRowData.Columns["Active_Entry"].Index].Value.ToString());
+                if (activeRowDataGridView.Rows[3].Cells[activeRowDataGridView.Columns["List"].Index].Value.ToString() == lineOneTextSource)
+                {   lineNumber = int.Parse(activeRowDataGridView.Rows[3].Cells[activeRowDataGridView.Columns["Active_Entry"].Index].Value.ToString());
                 }
                 
-                textBox2.Text = displayedListData.Rows[lineNumber].Cells[displayedListData.Columns["First_Line"].Index].Value.ToString();  // Read this info into text boxes.  // = "Text from " + listFileName + ", Line #: " + lineNumber + ", :" + displayedListData.Rows[lineNumber].Cells[0].Value.ToString();
-                textBox3.Text = displayedListData.Rows[lineNumber].Cells[displayedListData.Columns["Second_Line"].Index].Value.ToString();
-                textBox4.Text = displayedListData.Rows[lineNumber].Cells[displayedListData.Columns["Third_Line"].Index].Value.ToString();
+                textBox2.Text = displayedListDataGridView.Rows[lineNumber].Cells[displayedListDataGridView.Columns["First_Line"].Index].Value.ToString();  // Read this info into text boxes.  // = "Text from " + listFileName + ", Line #: " + lineNumber + ", :" + displayedListData.Rows[lineNumber].Cells[0].Value.ToString();
+                textBox3.Text = displayedListDataGridView.Rows[lineNumber].Cells[displayedListDataGridView.Columns["Second_Line"].Index].Value.ToString();
+                textBox4.Text = displayedListDataGridView.Rows[lineNumber].Cells[displayedListDataGridView.Columns["Third_Line"].Index].Value.ToString();
             }
 
             // Recall Graphic Repeat Cycle Info
-            numericUpDown7.Value = int.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Repeat_Graphic_Seconds"].Index].Value.ToString());  // Recall graphic repeat time  (Repeat_Graphic_Seconds)
-            numericUpDown8.Value = int.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Leave_Graphic_Seconds"].Index].Value.ToString());  // Recall graphic duration  (Leave_Graphic_Seconds)
+            numericUpDown7.Value = int.Parse(buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Repeat_Graphic_Seconds"].Index].Value.ToString());  // Recall graphic repeat time  (Repeat_Graphic_Seconds)
+            numericUpDown8.Value = int.Parse(buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Leave_Graphic_Seconds"].Index].Value.ToString());  // Recall graphic duration  (Leave_Graphic_Seconds)
 
-            if (buttonsData.Rows[nRow].Cells[buttonsData.Columns["Bring_Graphic_Up_Second_Click"].Index].Value.ToString() == "Yes")  // Load graphic repeat status and set radio buttons and disable numerical display if repeat will be by a second click  (Bring_Graphic_Up_Second_Click)  
+            if (buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Bring_Graphic_Up_Second_Click"].Index].Value.ToString() == "Yes")  // Load graphic repeat status and set radio buttons and disable numerical display if repeat will be by a second click  (Bring_Graphic_Up_Second_Click)  
             {
                 radioButton7.Checked = true;
                 numericUpDown7.Enabled = false;
@@ -135,21 +143,21 @@ namespace VGV101
             GlobalConfig cfg = GlobalConfig.Instance;
 
             // Open appropriate list file
-            string listFileName = "People";  // This is the default
-            if (lineOneTextSource == "Agenda Items") { listFileName = "Agenda_Items"; }
-            if (lineOneTextSource == "Notices") { listFileName = "Notices"; }
-            if (lineOneTextSource == "Other Items") { listFileName = "Other_Items"; }
+            string listFileName = "People.xml";  // This is the default
+            if (lineOneTextSource == "Agenda Items") { listFileName = "Agenda_Items.xml"; }
+            if (lineOneTextSource == "Notices") { listFileName = "Notices.xml"; }
+            if (lineOneTextSource == "Other Items") { listFileName = "Other_Items.xml"; }
 
-            // Read appropriate list file into displayedListData
-            if (!cfg.GetCurrentXml(listFileName, displayedListData)) // we can't proceed from here
+            // Read appropriate list file into displayedListDataGridView
+            if (!cfg.ReadXMLFile(listFileName, displayedListDataGridView)) // we can't proceed from here
             {
-                MessageBox.Show(listFileName.Replace("_", " ") + " data not available", "ERROR");
+                MessageBox.Show(listFileName + " data not available", "ERROR");
                 this.Close();
                 return false;
             }
 
-            // Read current active list entries file into activeRowData to see which row in list is active
-            if (!cfg.GetCurrentXml("Current_Active_List_Entries", activeRowData)) // we can't proceed from here
+            // Read current active list entries file into activeRowDataGridView to see which row in list is active
+            if (!cfg.ReadXMLFile("Current_Active_List_Entries.xml", activeRowDataGridView)) // we can't proceed from here
             {
                 MessageBox.Show("Current Active List Entries not available", "ERROR");
                 this.Close();
@@ -170,21 +178,21 @@ namespace VGV101
                 formFocusBack = false;  // reset variable
 
                 // Open Buttons.xml File to get updated info...
-                if (!cfg.GetCurrentXml("Buttons", buttonsData)) // we can't proceed from here
-                {
+                if (!cfg.ReadXMLFile("Buttons.xml", buttonsDataGridView)) // we can't proceed from here
+                    {
                     MessageBox.Show("Button data not available", "ERROR");
                     this.Close();
                     return;
                 }
 
-                string lineOneTextSource = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1_Source"].Index].Value.ToString();  // See where the text for this button is coming from.
+                string lineOneTextSource = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1_Source"].Index].Value.ToString();  // See where the text for this button is coming from.
                 
-                if (lineOneTextSource == "Text")  // If the text is typed in right here on this form, get it from the buttonsData...
+                if (lineOneTextSource == "Text")  // If the text is typed in right here on this form, get it from the buttonsDataGridView...
                 {
                     // MessageBox.Show("If statement:  lineOneText Source was 'text'");
-                    textBox2.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1"].Index].Value.ToString();
-                    textBox3.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_2"].Index].Value.ToString();
-                    textBox4.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_3"].Index].Value.ToString();
+                    textBox2.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1"].Index].Value.ToString();
+                    textBox3.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_2"].Index].Value.ToString();
+                    textBox4.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_3"].Index].Value.ToString();
                     // MessageBox.Show("Finished the TEXT side of 'if' statement");
                 }
                 else  // Or if the text comes from one of the lists...
@@ -198,22 +206,26 @@ namespace VGV101
                     button5.Text = "Text From " + lineOneTextSource;
                     // MessageBox.Show("Activation lineOneTextSource: " + lineOneTextSource);
 
-                    // Read appropriate list file into displayedListData
-                    // Read current active list entries file into activeRowData to see which row in list is active
+                    // Read appropriate list file into displayedListDataGridView
+                    // Read current active list entries file into activeRowDataGridView to see which row in list is active
                     if (!GetListData(lineOneTextSource))
+                    {
+                        MessageBox.Show("List data not available", "ERROR");
                         return;
+                    }
+                       
 
                     // Find the row that has the proper list information:
                     int lineNumber = 0;
 
-                    if (activeRowData.Rows[0].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowData.Rows[0].Cells[1].Value.ToString()); }
-                    if (activeRowData.Rows[1].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowData.Rows[1].Cells[1].Value.ToString()); }
-                    if (activeRowData.Rows[2].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowData.Rows[2].Cells[1].Value.ToString()); }
-                    if (activeRowData.Rows[3].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowData.Rows[3].Cells[1].Value.ToString()); }
+                    if (activeRowDataGridView.Rows[0].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowDataGridView.Rows[0].Cells[1].Value.ToString()); }
+                    if (activeRowDataGridView.Rows[1].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowDataGridView.Rows[1].Cells[1].Value.ToString()); }
+                    if (activeRowDataGridView.Rows[2].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowDataGridView.Rows[2].Cells[1].Value.ToString()); }
+                    if (activeRowDataGridView.Rows[3].Cells[0].Value.ToString() == lineOneTextSource) { lineNumber = int.Parse(activeRowDataGridView.Rows[3].Cells[1].Value.ToString()); }
 
-                    textBox2.Text = displayedListData.Rows[lineNumber].Cells[0].Value.ToString();  // textBox2.Text = "Text from " + listFileName + ", Line #: " + lineNumber + ", :" + displayedListData.Rows[lineNumber].Cells[0].Value.ToString();
-                    textBox3.Text = displayedListData.Rows[lineNumber].Cells[1].Value.ToString();
-                    textBox4.Text = displayedListData.Rows[lineNumber].Cells[2].Value.ToString();
+                    textBox2.Text = displayedListDataGridView.Rows[lineNumber].Cells[0].Value.ToString();  // textBox2.Text = "Text from " + listFileName + ", Line #: " + lineNumber + ", :" + displayedListData.Rows[lineNumber].Cells[0].Value.ToString();
+                    textBox3.Text = displayedListDataGridView.Rows[lineNumber].Cells[1].Value.ToString();
+                    textBox4.Text = displayedListDataGridView.Rows[lineNumber].Cells[2].Value.ToString();
                     // MessageBox.Show("Finished the LIST side of 'if' statement - Text was from list was true");
                 }
                 // MessageBox.Show("Reached end of total if statement - - formFocustBack was true");
@@ -225,8 +237,8 @@ namespace VGV101
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Button_Name"].Index].Value = textBox1.Text;  // Update button name in buttonsData
-            cfg.WriteCurrentXml("Buttons",buttonsData);   // Update Buttons file from info in buttonsData
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Button_Name"].Index].Value = textBox1.Text;  // Update button name in buttonsDataGridView
+            cfg.WriteCurrentXml("Buttons",buttonsDataGridView);   // Update Buttons file from info in buttonsDataGridView
             // ApplicationRestart? (See Form 1) or just read updated text?
             // btnArray[nRow].Text = textBox1.Text;
         }
@@ -239,16 +251,17 @@ namespace VGV101
             {
                 textBox1.Text = textBox2.Text;
                 button4.Enabled = false;
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value = "Yes";  
+                buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Name_From_Graphic"].Index].Value = "Yes";  
             }
             else
             {
-                textBox1.Text = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Button_Name"].Index].Value.ToString(); 
+                textBox1.Text = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Button_Name"].Index].Value.ToString(); 
                 button4.Enabled = true;
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Name_From_Graphic"].Index].Value = "No";
+                buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Name_From_Graphic"].Index].Value = "No";
             }
 
-            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
             // ApplicationRestart?
         }
 
@@ -306,7 +319,7 @@ namespace VGV101
         // Save Primary Shot
         private void button1_Click(object sender, EventArgs e)
         {
-            if (camNumber == int.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Secondary_Camera_Number"].Index].Value.ToString()))  // check to make sure this isn't the same as the secondary camera...
+            if (camNumber == int.Parse(buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Secondary_Camera_Number"].Index].Value.ToString()))  // check to make sure this isn't the same as the secondary camera...
                 MessageBox.Show("Primary Camera has to be different from the one used for the Secondary Shot");
             else SaveCameraShot("Primary");
         }
@@ -338,52 +351,86 @@ namespace VGV101
                 } while (line != null);
             }
 
-            // Write Position Data into buttonsData
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Number"].Index].Value = camNumber;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Pan_Preset"].Index].Value = pan;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Tilt_Preset"].Index].Value = tilt;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Zoom_Preset"].Index].Value = zoom;
+            // Write Position Data into buttonsDataGridView
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Number"].Index].Value = camNumber;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Pan_Preset"].Index].Value = pan;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Tilt_Preset"].Index].Value = tilt;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Zoom_Preset"].Index].Value = zoom;
 
-            // Write Iris Position Data into buttonsData
+            // Write Iris Position Data into buttonsDataGridView
             string currentIrisPosition = "10"; // Get current iris position  TEMPORARY IMPLEMENTATION
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Iris_Preset"].Index].Value = currentIrisPosition;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Iris_Preset"].Index].Value = currentIrisPosition;
             // Current or Auto Iris Setting?
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Auto_Iris_Preset"].Index].Value = (radioButton9.Checked ? "Off" : "On");
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Auto_Iris_Preset"].Index].Value = (radioButton9.Checked ? "Off" : "On");
 
-            // Write Focus Position Data into buttonsData
+            // Write Focus Position Data into buttonsDataGridView
             string currentFocusPosition = "20"; // Get current focus position  TEMPORARY IMPLEMENTATION
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Focus_Preset"].Index].Value = currentFocusPosition;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Focus_Preset"].Index].Value = currentFocusPosition;
             // Current or Auto Focus Setting?
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Auto_Focus_Preset"].Index].Value = (radioButton1.Checked ? "Off" : "On");
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Auto_Focus_Preset"].Index].Value = (radioButton1.Checked ? "Off" : "On");
 
-            // Write White Balance Data into buttonsData
+            // Write White Balance Data into buttonsDataGridView
             string currentWhiteBalancePosition = "30"; // Get current focus position  TEMPORARY IMPLEMENTATION
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_White_Preset"].Index].Value = currentWhiteBalancePosition;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_White_Preset"].Index].Value = currentWhiteBalancePosition;
             // Current or Auto White Balance Setting?
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Auto_White_Preset"].Index].Value = (radioButton11.Checked ? "Off" : "On");
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Auto_White_Preset"].Index].Value = (radioButton11.Checked ? "Off" : "On");
 
-            // Write Backlight Setting into buttonsData
+            // Write Backlight Setting into buttonsDataGridView
             // Backlight On or Off?
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns[which+"_Camera_Auto_Backlight_Preset"].Index].Value = (radioButton3.Checked ? "On" : "Off");
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns[which+"_Camera_Auto_Backlight_Preset"].Index].Value = (radioButton3.Checked ? "On" : "Off");
 
-            // Update Buttons file from buttonsData
-            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // Update Buttons file from buttonsDataGridView
+            cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
         }
 
         private void button10_Click(object sender, EventArgs e)  // Save Secondary Shot
         {
-            if (camNumber == int.Parse(buttonsData.Rows[nRow].Cells[buttonsData.Columns["Primary_Camera_Number"].Index].Value.ToString()))
+            if (camNumber == int.Parse(buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Primary_Camera_Number"].Index].Value.ToString()))
                 MessageBox.Show("Secondary Camera has to be different from the one used for the Primary Shot");
             else SaveCameraShot("Secondary");
         }
 
+
+        // RECALL SHOTS - changing the comboboes reinitializes camera view
+
+        private void button16_Click(object sender, EventArgs e)  // Recall Primary Shot
+        {
+            GlobalConfig cfg = GlobalConfig.Instance;
+
+            string cameraNumber = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Primary_Camera_Number"].Index].Value.ToString();
+            string pan = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Primary_Camera_Pan_Preset"].Index].Value.ToString();
+            string tilt = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Primary_Camera_Tilt_Preset"].Index].Value.ToString();
+            string zoom = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Primary_Camera_Zoom_Preset"].Index].Value.ToString();
+
+            // Send camera to PTZ position
+            int camNumber = Int32.Parse(buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Primary_Camera_Number"].Index].Value.ToString());  // get camera number from button file
+            comboBox1.SelectedIndex = camNumber;
+            cfg.Camera(camNumber).GoTo(pan, tilt, zoom);
+        }
+
+        private void button12_Click(object sender, EventArgs e)  // Recall Secondary Shot
+        {
+            GlobalConfig cfg = GlobalConfig.Instance;
+
+            string cameraNumber = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Secondary_Camera_Number"].Index].Value.ToString();
+            string pan = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Secondary_Camera_Pan_Preset"].Index].Value.ToString();
+            string tilt = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Secondary_Camera_Tilt_Preset"].Index].Value.ToString();
+            string zoom = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Secondary_Camera_Zoom_Preset"].Index].Value.ToString();
+
+            // Send camera to PTZ position
+            int camNumber = Int32.Parse(buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Secondary_Camera_Number"].Index].Value.ToString());  // get camera number from button file
+            comboBox1.SelectedIndex = camNumber;
+            cfg.Camera(camNumber).GoTo(pan, tilt, zoom);
+        }
+
+        
         // GRAPHICS BUTTONS
 
         private void button5_Click(object sender, EventArgs e)  //Get Text from a List - Opens List menu...
         {
             // Open appropriate list file
 
-            string lineOneTextSource = buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1_Source"].Index].Value.ToString();  // See where the text for this button is coming from.
+            string lineOneTextSource = buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1_Source"].Index].Value.ToString();  // See where the text for this button is coming from.
 
             int listFileNumber = 0;  // Default is 'People'
             if (lineOneTextSource == "Agenda Items") { listFileNumber = 1; }
@@ -405,12 +452,13 @@ namespace VGV101
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1"].Index].Value = textBox2.Text;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_2"].Index].Value = textBox3.Text;
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_3"].Index].Value = textBox4.Text;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1"].Index].Value = textBox2.Text;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_2"].Index].Value = textBox3.Text;
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_3"].Index].Value = textBox4.Text;
 
-            // Update Buttons file from info in buttonsData
-            cfg.WriteCurrentXml("Buttons", buttonsData);  
+            // Update Buttons file from info in buttonsDataGridView
+            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
 
@@ -423,11 +471,12 @@ namespace VGV101
                 // MessageBox.Show("Graphics will be brought up with second click on this button.");
                 numericUpDown7.Enabled = false;
                 numericUpDown8.Enabled = false;
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Bring_Graphic_Up_Second_Click"].Index].Value = "Yes";
+                buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Bring_Graphic_Up_Second_Click"].Index].Value = "Yes";
 
-                // Update Buttons file from info in buttonsData
+                // Update Buttons file from info in buttonsDataGridView
                 GlobalConfig cfg = GlobalConfig.Instance;
-                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+                cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
             }
         }
 
@@ -438,31 +487,34 @@ namespace VGV101
                 // MessageBox.Show("Graphics will come up every " + numericUpDown7.Value.ToString() + " seconds.");
                 numericUpDown7.Enabled = true;
                 numericUpDown8.Enabled = true;
-                buttonsData.Rows[nRow].Cells[buttonsData.Columns["Bring_Graphic_Up_Second_Click"].Index].Value = "No";
+                buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Bring_Graphic_Up_Second_Click"].Index].Value = "No";
 
-                // Update Buttons file from info in buttonsData
+                // Update Buttons file from info in buttonsDataGridView
                 GlobalConfig cfg = GlobalConfig.Instance;
-                cfg.WriteCurrentXml("Buttons", buttonsData);
+                // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+                cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
             }
         }
 
         private void numericUpDown7_Validated(object sender, EventArgs e)  // Bring Up Graphic Every X seconds up/Down Validated
         {
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Repeat_Graphic_Seconds"].Index].Value = numericUpDown7.Value.ToString();
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Repeat_Graphic_Seconds"].Index].Value = numericUpDown7.Value.ToString();
 
-            // Update Buttons file from info in buttonsData
+            // Update Buttons file from info in buttonsDataGridView
             GlobalConfig cfg = GlobalConfig.Instance;
-            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
         private void numericUpDown8_ValueChanged(object sender, EventArgs e)  // Leave Graphic Up For X seconds up/Down Validated
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Repeat_Graphic_Seconds"].Index].Value = numericUpDown8.Value.ToString();
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Repeat_Graphic_Seconds"].Index].Value = numericUpDown8.Value.ToString();
 
-            // Update Buttons file from info in buttonsData
-            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // Update Buttons file from info in buttonsDataGridView
+            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
         private void button13_Click(object sender, EventArgs e)  // Focus button pressed...
@@ -495,11 +547,12 @@ namespace VGV101
             button5.Font = new Font(button5.Font, FontStyle.Regular);
             button5.Text = "Get text from...";
 
-            // Update buttonsData...
-            buttonsData.Rows[nRow].Cells[buttonsData.Columns["Text_Line_1_Source"].Index].Value = "Text";
+            // Update buttonsDataGridView...
+            buttonsDataGridView.Rows[nRow].Cells[buttonsDataGridView.Columns["Text_Line_1_Source"].Index].Value = "Text";
 
-            // Update Buttons.xml file from info in buttonsData...
-            cfg.WriteCurrentXml("Buttons", buttonsData);
+            // Update Buttons.xml file from info in buttonsDataGridView...
+            // cfg.WriteCurrentXml("Buttons", buttonsDataGridView);
+            cfg.WriteXMLFile(buttonsDataGridView, "Buttons.xml");
         }
 
         private void button14_Click(object sender, EventArgs e)  // Iris up button
@@ -526,72 +579,74 @@ namespace VGV101
 
         // UTILITY FUNCTIONS
 
-
         private void AMC_OnError(object sender, AxAXISMEDIACONTROLLib._IAxisMediaControlEvents_OnErrorEvent e)  // On AMC error
         {
             MessageBox.Show("Error with AMC viewer on Shot/Graphic Settings Menu ");
         }
 
 
-        // TEMPORARY BUTTONS
-
-        private void button2_Click_1(object sender, EventArgs e)  // Temporary pan left
-        {
-            GlobalConfig cfg = GlobalConfig.Instance;
-            string pan = "-10";
-            string response = cfg.Camera(camNumber).Pan(pan);
-            response = "Move Left";
-            textBox5.Text = response;
-        }
-
-        private void button3_Click_1(object sender, EventArgs e)  // Temprary pan right
-        {
-            GlobalConfig cfg = GlobalConfig.Instance;
-            string pan = "10";
-            string response = cfg.Camera(camNumber).Pan(pan);
-            response = "Move Right";
-            textBox5.Text = response;
-        }
-
-        private void button7_Click_1(object sender, EventArgs e)  // Temporary query for Position
-        {
-            GlobalConfig cfg = GlobalConfig.Instance;
-            string response = cfg.Camera(camNumber).GetPosition();
-            textBox5.Text = response;
-
-            string pan = "0";
-            string tilt = "0";
-            string zoom = "5000";
-            string iris = "0";
-
-            using (StringReader reader = new StringReader(response))  // Get pan/tilt/zoom values from web 'response' - read into 'line' with reader.ReadLine
-            {
-                string line = string.Empty;
-                // MessageBox.Show("Empty the 'Line' Variable");
-                do
-                {
-                    line = reader.ReadLine();
-                    if (line != null)
-                    {
-                        // MessageBox.Show("Line is: " + line);
-                        if (line.Substring(0, "pan=".Length) == "pan=") { pan = line.Substring("pan=".Length); } // MessageBox.Show("Pan is: " + pan); }
-                        if (line.Substring(0, "tilt=".Length) == "tilt=") { tilt = line.Substring("tilt=".Length); } // MessageBox.Show("Tilt is: " + pan); }
-                        if (line.Substring(0, "zoom=".Length) == "zoom=") { zoom = line.Substring("zoom=".Length); } // MessageBox.Show("Zoom is: " + pan); }
-                        if (line.Substring(0, "iris=".Length) == "iris=") { iris = line.Substring("iris=".Length); } // MessageBox.Show("Iris is: " + pan); }
-                    }
-                } while (line != null);
-            }
-        }
-
-        private void button8_Click(object sender, EventArgs e)  // Temporary Go To Position
-        {
-            GlobalConfig cfg = GlobalConfig.Instance;
-            string pan = "0";
-            string tilt = "0";
-            string zoom = "5000";
-            textBox5.Text = cfg.Camera(camNumber).GoTo(pan, tilt, zoom);
-        }
     }    
 }
+
+/*
+private void button2_Click_1(object sender, EventArgs e)  // Temporary pan left
+{
+    GlobalConfig cfg = GlobalConfig.Instance;
+    string pan = "-10";
+    string response = cfg.Camera(camNumber).Pan(pan);
+    response = "Move Left";
+    textBox5.Text = response;
+}
+
+private void button3_Click_1(object sender, EventArgs e)  // Temporary pan right
+{
+    GlobalConfig cfg = GlobalConfig.Instance;
+    string pan = "10";
+    string response = cfg.Camera(camNumber).Pan(pan);
+    response = "Move Right";
+    textBox5.Text = response;
+}
+
+private void button7_Click_1(object sender, EventArgs e)  // Temporary query for Position
+{
+    GlobalConfig cfg = GlobalConfig.Instance;
+    string response = cfg.Camera(camNumber).GetPosition();
+    textBox5.Text = response;
+
+    string pan = "0";
+    string tilt = "0";
+    string zoom = "5000";
+    string iris = "0";
+
+    using (StringReader reader = new StringReader(response))  // Get pan/tilt/zoom values from web 'response' - read into 'line' with reader.ReadLine
+    {
+        string line = string.Empty;
+        // MessageBox.Show("Empty the 'Line' Variable");
+        do
+        {
+            line = reader.ReadLine();
+            if (line != null)
+            {
+                // MessageBox.Show("Line is: " + line);
+                if (line.Substring(0, "pan=".Length) == "pan=") { pan = line.Substring("pan=".Length); } // MessageBox.Show("Pan is: " + pan); }
+                if (line.Substring(0, "tilt=".Length) == "tilt=") { tilt = line.Substring("tilt=".Length); } // MessageBox.Show("Tilt is: " + pan); }
+                if (line.Substring(0, "zoom=".Length) == "zoom=") { zoom = line.Substring("zoom=".Length); } // MessageBox.Show("Zoom is: " + pan); }
+                if (line.Substring(0, "iris=".Length) == "iris=") { iris = line.Substring("iris=".Length); } // MessageBox.Show("Iris is: " + pan); }
+            }
+        } while (line != null);
+    }
+}
+
+private void button8_Click(object sender, EventArgs e)  // Temporary Go To Position
+{
+    GlobalConfig cfg = GlobalConfig.Instance;
+    string pan = "0";
+    string tilt = "0";
+    string zoom = "5000";
+    textBox5.Text = cfg.Camera(camNumber).GoTo(pan, tilt, zoom);
+}
+*/
+
+
 //
 // EOF: DlgShotGraphicButton.cs
