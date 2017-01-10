@@ -1,19 +1,20 @@
 ﻿/**
  * File: Program.cs
  * 
- *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *	Copyright © 2016-2017 by City Council Video.  All rights reserved.
  *
- *	$Id: /Program.cs,v $
+ *	$Id: /VGV101/Program.cs,v $
  */
 /**
-*	FUNCTION
+*	C# program entry point
 *
 *	Author:			Visual Studio, Fred Koschara
 *	Creation Date:	prior to September, 2016
-*	Last Modified:	December 29, 2016 @ 4:54 pm
+*	Last Modified:	January 9, 2017 @ 7:14 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/01/09	wfredk	documentation updates
 *	2016/12/29	wfredk	GlobalConfig.Init() reads Registry, not this module
 *	2016/12/29	wfredk	added documentation header
 */
