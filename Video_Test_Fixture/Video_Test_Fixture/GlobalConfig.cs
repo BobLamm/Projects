@@ -10,7 +10,7 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	January 9, 2017 @ 7:29 pm
+*	Last Modified:	January 9, 2017 @ 7:36 pm
 *
 *	Revision History:
 *	   Date		  by		Description
@@ -27,6 +27,7 @@ using System.Xml;  // for XML
 
 using Utility.ModifyRegistry;
 
+namespace Video_Test_Fixture
 {
     /**
      * global configuration object for the program
