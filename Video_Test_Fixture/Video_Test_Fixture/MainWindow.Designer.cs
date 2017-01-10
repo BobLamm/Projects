@@ -109,6 +109,7 @@
             this.Controls.Add(this.addGraphicButton);
             this.Controls.Add(this.camera2Button);
             this.Controls.Add(this.camera1Button);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Video_Test_Fixture";
