@@ -7,6 +7,7 @@
  * -------------------------------------------------------------------------------------------------
  * Revision History:
  *    Date        by        Description
+ * 2017-01-27   wfredk  clean up from w7/64 Registry debugging
  * 2017-01-27   wfredk  default to RegistryView.Registry64 so programs work as expected on w7/64
  *                      also don't use (and comment out support for) baseRegistryKey
  * 2016-12-09   wfredk  major rewrite to incorporate fixes from comments, add error checking, etc.
@@ -75,17 +76,6 @@ namespace Utility.ModifyRegistry
 			get { return subKey; }
 			set	{ subKey = value; }
 		}
-
-		/*private RegistryKey baseRegistryKey = Registry.LocalMachine;
-		/// <summary>
-		/// A property to set the BaseRegistryKey value.
-		/// (default = Registry.LocalMachine)
-		/// </summary>
-		public RegistryKey BaseRegistryKey
-		{
-			get { return baseRegistryKey; }
-			set	{ baseRegistryKey = value; }
-		}*/
 
         //Andrew Morpeth
         //Added ability to specifiy x86 or x64 Registry targets using RegistryKey.OpenBaseKey Method rather than baseRegistryKey. 
@@ -186,14 +176,12 @@ namespace Utility.ModifyRegistry
         {
             // Opening the Registry key
             RegistryKey rk = RegistryKey.OpenBaseKey(registryHive,registryView);
-            //MessageBox.Show(rk.ToString());
             // Open subKey as read-only
             RegistryKey sk1 = rk.OpenSubKey(subKey);
 
             // If the RegistrySubKey doesn't exist -> (null)
             if (sk1 == null)
             {
-                //MessageBox.Show("RegistrySubKey "+subKey+" doesn't exist");
                 rk.Close();
                 return defaultValue;
             }
@@ -205,7 +193,6 @@ namespace Utility.ModifyRegistry
                 object w1 = sk1.GetValue(KeyName);
                 sk1.Close();
                 rk.Close();
-                //if (w1 == null) MessageBox.Show("Key value "+KeyName+"is not set");
                 return (w1==null ? defaultValue : w1);
             }
             catch (Exception e)

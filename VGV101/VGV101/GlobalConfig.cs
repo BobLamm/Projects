@@ -7,13 +7,14 @@
  */
 /**
 *	Provides an interface to program configuration files
-*	
+*
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	January 27, 2017 @ 6:57 am
+*	Last Modified:	January 27, 2017 @ 12:29 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/01/27	wfredk	cleaned up from w7/64 Registry debug
 *	2017/01/27	wfredk	removed undesirable methods
 *	2017/01/27	wfredk	debug Registry operation under w7/64
 *		|						|
@@ -26,12 +27,10 @@
 */
 using System;
 using System.Data;
-using System.Security.Principal;
 using System.Windows.Forms;
 using System.Xml;  // for XML
 
 using Utility.ModifyRegistry;
-//using Microsoft.Win32;
 
 namespace VGV101
 {
@@ -80,23 +79,13 @@ namespace VGV101
             get { return mediaRoot; }
         }
 
-        public static bool IsAdministrator()
-        {
-            return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
-                    .IsInRole(WindowsBuiltInRole.Administrator);
-        }
-
         // initializes the global configuration object, called during program startup
         public bool Init()
         {
             if (bInitialized)
                 return false;
 
-            //MessageBox.Show("VGV101 is "+(IsAdministrator() ? "" : "not ")+"running as administrator");
-            //MessageBox.Show("VGV101 is running as a "+(Environment.Is64BitProcess ? "64" : "32") + " bit process");
-
             ModifyRegistry regData = new ModifyRegistry();
-            //regData.RegistryView = RegistryView.Registry64;
             // MessageBox.Show(regData.SubKey);    // "SOFTWARE\VGV101"
 
             // ensure paths end with a trailing slash
@@ -152,7 +141,7 @@ namespace VGV101
         {
             bool retVal = true;
 
-            try 
+            try
             {
                 DataTable dt = new DataTable();
                 dt = (DataTable)dataGridView.DataSource;
