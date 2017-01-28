@@ -14,7 +14,7 @@
 *	
 *	Author:			Bob Lamm and Fred Koschara
 *	Creation Date:	prior to September, 2016
-*	Last Modified:	December 29, 2016 @ 4:14 pm
+*	Last Modified:	December 29, 2016 @ 9:23 pm
 *
 *	Revision History:
 *	   Date		  by		Description
@@ -68,7 +68,7 @@ namespace VGV101
         private bool isDragging = false;
         private bool isScaling = false;
 
-        Button[] btnArray = new BobsButton[100];  // Declare button array = 100 buttons
+        Button[] btnArray = new BobsButton[102];  // Declare button array = 100 buttons
 
         public MainWindow()
         {
@@ -164,7 +164,7 @@ namespace VGV101
             int textBlue= 0;
 
             int nLimit = buttonsData.RowCount - 2;  // "button 0" is the background image, button 1 is the "start" button
-            // MessageBox.Show("nLimit = " + nLimit.ToString());
+            //MessageBox.Show("nLimit = " + nLimit.ToString());
             for (int n = 2; n <= nLimit; n++)  //  Set parameters for each button....
             {
                 xPos = int.Parse(buttonsData.Rows[n].Cells[buttonsData.Columns["Location_X"].Index].Value.ToString());  //  X Position of button
