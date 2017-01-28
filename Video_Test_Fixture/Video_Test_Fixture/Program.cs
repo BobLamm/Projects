@@ -1,7 +1,7 @@
 ﻿/**
  * File: Program.cs
  * 
- *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *	Copyright © 2016-2017 by City Council Video.  All rights reserved.
  *
  *	$Id: /Video_Test_Fixture/Program.cs,v $
  */
@@ -10,17 +10,17 @@
 *
 *	Author:			Bob Lamm
 *	Creation Date:	October twentieth, 2016
-*	Last Modified:	December 20, 2016 @ 1:04 am
+*	Last Modified:	January 9, 2017 @ 7:29 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/01/09	wfredk	GlobalConfig.Init() reads Registry, not this module (restored)
 *	2016/12/20	wfredk	add Registry support, catch startup exceptions
 *	2016/12/20	wfredk	rename program to Video_Test_Fixture, add documentation
 *	2016/10/20	blamm	original development ("Prototype for Fred" C# solution)
 */
 using System;
 using System.Windows.Forms;
-using Utility.ModifyRegistry;
 
 namespace Video_Test_Fixture
 {
@@ -31,14 +31,8 @@ namespace Video_Test_Fixture
         /// </summary>
         [STAThread]
         static void Main()
-        {
-            ModifyRegistry regData = new ModifyRegistry();
-            regData.SubKey = @"SOFTWARE\VGV101";
-            String cfgRoot = regData.ReadString("CfgRoot", @"C:\VGV Software\Configuration\");
-            String logRoot = regData.ReadString("LogRoot", @"C:\VGV Software\Logs\");
-            String mediaRoot = regData.ReadString("MediaRoot", @"C:\VGV Customer Media\");
-            GlobalConfig cfg = GlobalConfig.Instance;
-            cfg.Init(cfgRoot, mediaRoot, logRoot);
+        {   GlobalConfig cfg = GlobalConfig.Instance;
+            cfg.Init();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

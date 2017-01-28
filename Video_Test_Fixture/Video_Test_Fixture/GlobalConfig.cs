@@ -1,7 +1,7 @@
 ﻿/**
  * File: GlobalConfig.cs
  * 
- *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *	Copyright © 2016-2017 by City Council Video.  All rights reserved.
  *
  *	$Id: /GlobalConfig.cs,v $
  */
@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	December 20, 2016 @ 1:24 am
+*	Last Modified:	January 9, 2017 @ 7:36 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/01/09	wfredk	read Registry inside Init() method (restored)
 *	2016/12/20	wfredk	import into Video_Test_Fixture
 *	2016/12/13	wfredk	original development
 *		|						|
@@ -23,6 +24,8 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Xml;  // for XML
+
+using Utility.ModifyRegistry;
 
 namespace Video_Test_Fixture
 {
@@ -72,15 +75,18 @@ namespace Video_Test_Fixture
         }
 
         // initializes the global configuration object, called during program startup
-        public bool Init(string cfgRoot,string mediaRoot,string logRoot)
+        public bool Init()
         {
             if (bInitialized)
                 return false;
 
+            ModifyRegistry regData = new ModifyRegistry();
+            // MessageBox.Show(regData.SubKey);    // "SOFTWARE\VGV101"
+
             // ensure paths end with a trailing slash
-            this.cfgRoot = TerminatePath(cfgRoot);
-            this.logRoot = TerminatePath(logRoot);
-            this.mediaRoot = TerminatePath(mediaRoot);
+            cfgRoot = TerminatePath(regData.ReadString("CfgRoot", @"C:\VGV Software\Configuration\"));
+            logRoot = TerminatePath(regData.ReadString("LogRoot", @"C:\VGV Software\Logs\"));
+            mediaRoot = TerminatePath(regData.ReadString("MediaRoot", @"C:\VGV Customer Media\"));
 
             xmlReaderSettings = new XmlReaderSettings();
 

@@ -1,23 +1,23 @@
 ﻿/**
  * File: GlobalConfig.cs
  * 
- *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *	Copyright © 2016-2017 by City Council Video.  All rights reserved.
  *
  *	$Id: /GlobalConfig.cs,v $
  */
 /**
 *	Provides an interface to program configuration files
 *	
-*	NO! NO! NO!
-*   TO DO:  Put the path for configuration information into an XML file.
-*           Media path should be absolute - users will put them all over the place.	CfgRoot should be typed in this form.
-*
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	December 29, 2016 @ 4:52 pm
+*	Last Modified:	January 27, 2017 @ 6:57 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/01/27	wfredk	removed undesirable methods
+*	2017/01/27	wfredk	debug Registry operation under w7/64
+*		|						|
+*	2017/01/26	wfredk	debug Registry operation under w7/64
 *	2016/12/29	wfredk	read Registry inside Init() method
 *	2016/12/28	wfredk	comment out extraneous functions
 *	2016/12/13	wfredk	original development
@@ -26,10 +26,12 @@
 */
 using System;
 using System.Data;
+using System.Security.Principal;
 using System.Windows.Forms;
 using System.Xml;  // for XML
 
 using Utility.ModifyRegistry;
+//using Microsoft.Win32;
 
 namespace VGV101
 {
@@ -78,13 +80,23 @@ namespace VGV101
             get { return mediaRoot; }
         }
 
+        public static bool IsAdministrator()
+        {
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
+                    .IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
         // initializes the global configuration object, called during program startup
         public bool Init()
         {
             if (bInitialized)
                 return false;
 
+            //MessageBox.Show("VGV101 is "+(IsAdministrator() ? "" : "not ")+"running as administrator");
+            //MessageBox.Show("VGV101 is running as a "+(Environment.Is64BitProcess ? "64" : "32") + " bit process");
+
             ModifyRegistry regData = new ModifyRegistry();
+            //regData.RegistryView = RegistryView.Registry64;
             // MessageBox.Show(regData.SubKey);    // "SOFTWARE\VGV101"
 
             // ensure paths end with a trailing slash
@@ -135,40 +147,6 @@ namespace VGV101
             return retVal;
         }
 
-
-        /*
-         *  DO NOT use this function:
-         *      a: hard-coded paths are EVIL
-         *      b: EXACTLY the same functionality is provided by the GetCurrentXml() method above, just don't add ".xml" to the end of the filename
-         *      
-        //2ND VERSION
-        public bool ReadXMLFile(string fileName, DataGridView dataGridView)  // Reads an XML file in Current configuration folder into the dataGridView that is passed
-        {
-            bool retVal = true;
-            DataSet ds;
-            XmlReader xmlFile = null;
-
-            try  // Read appropriate XML file into dataGridView
-            {
-                xmlFile = XmlReader.Create(@"C:\VGV Software\Configuration\Current\" + fileName, xmlReaderSettings);
-                ds = new DataSet();
-                ds.ReadXml(xmlFile);
-                dataGridView.DataSource = ds.Tables[0];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Could not read " + fileName + " XML File into memory from GlobalConfig ReadXML subroutine:  " + ex.ToString(), "GetCurrentXml Exception");
-                retVal = false;
-            }
-
-            if (xmlFile != null)
-                xmlFile.Close();
-
-            return retVal;
-        }
-        */
-
-
         // Writes an XML file in Current configuration folder from the dataGridView that is passed
         public bool WriteCurrentXml(string fileName,DataGridView dataGridView)
         {
@@ -191,36 +169,6 @@ namespace VGV101
             return retVal;
         }
 
-
-        /*
-         *  DO NOT use this function:
-         *      a: hard-coded paths are EVIL
-         *      b: EXACTLY the same functionality is provided by the WriteCurrentXml() method above, just don't add ".xml" to the end of the filename
-         *      
-        // 2ND VERSION       
-        public bool WriteXMLFile(DataGridView dataGridView1, string fileName)  // Writes an XML file in Current configuration folder from the dataGridView that is passed
-        {
-            bool retVal = true;
-
-            try  /// Write appropriate XML file from dataGridView 
-            {
-                DataTable dt = new DataTable();
-                dt = (DataTable)dataGridView1.DataSource;
-
-                dt.WriteXml(@"C:\VGV Software\Configuration\Current\" + fileName, true);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Could not write " + fileName + " XML File from memory using GlobalConfig WriteXML subroutine:  " + ex.ToString(), "ReadCurrentXml Exception");
-
-                retVal = false;
-             }
-        
-            return retVal;
-        }
-        */
-
- 
         // --------------------------------------------------------------------
 
         private CameraObject[] Cameras=null;
