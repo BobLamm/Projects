@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GEP-2", "GEP-2.csproj", "{DFB65D21-C0F4-4583-BDB4-FD8CF3B1DAF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFB65D21-C0F4-4583-BDB4-FD8CF3B1DAF4}.Debug|x86.ActiveCfg = Debug|x86
+		{DFB65D21-C0F4-4583-BDB4-FD8CF3B1DAF4}.Debug|x86.Build.0 = Debug|x86
+		{DFB65D21-C0F4-4583-BDB4-FD8CF3B1DAF4}.Release|x86.ActiveCfg = Release|x86
+		{DFB65D21-C0F4-4583-BDB4-FD8CF3B1DAF4}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
