@@ -12,10 +12,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	January 9, 2017 @ 11:13 pm
+*	Last Modified:	March 19, 2017 @ 3:31 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
 *		|						|
 *	2017/01/08	wfredk	original development
@@ -51,7 +52,25 @@ namespace Video_Test_Fixture
         // operational controls
 
         /// <summary>
+        /// opens a preview window for this video source
+        /// 
+        /// If a preview window was already opened for this video source, it is
+        /// made visible and brought to the top of the Z stack.
+        /// 
+        /// This method should be overridden in derived classes.  The derived method
+        /// should call this base implementation for the core window functionality.
+        /// </summary>
+        /// <returns>bool, true=preview opened successfully</returns>
+        public override bool preview()
+        {
+            // TODO: open the file in a preview window
+
+            return base.preview();     // bring visible window to top of Z stack
+        }
+
+        /// <summary>
         /// shows or hides the output of this video source when it's an overlay
+        /// 
         /// If this video source is NOT an overlay, the returned value will always
         /// be the same as the passed one:  "show" succeeds, "hide" fails
         /// 
