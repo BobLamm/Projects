@@ -54,7 +54,11 @@ namespace Video_Test_Fixture
                 }
                 // Render the preview pin on the video capture filter
                 // Use this instead of pGraph.RenderFile
-                hr = pBuilder.RenderStream(PinCategory.Preview,MediaType.Video,srcFilter,null,null);
+                Guid CLSID_VideoRenderer = new Guid("{B87BEB7B-8D29-423F-AE4D-6582C10175AC}"); //quartz.dll
+                IBaseFilter pVideoRenderer = (IBaseFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoRenderer));
+                hr = (graphPreview as IFilterGraph2).AddFilter(pVideoRenderer,"Video Renderer");
+                VgvUtil.checkHR(hr,"Can't add Video Renderer to graph");
+                hr = pBuilder.RenderStream(PinCategory.Preview,MediaType.Video,srcFilter,null,pVideoRenderer);
                 VgvUtil.checkHR(hr,"cannot render preview pin");
 
                 // Get DirectShow interfaces
