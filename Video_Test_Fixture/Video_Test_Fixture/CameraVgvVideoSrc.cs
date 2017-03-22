@@ -12,15 +12,23 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	January 9, 2017 @ 11:18 pm
+*	Last Modified:	March 19, 2017 @ 7:45 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
 *		|						|
 *	2017/01/08	wfredk	original development
 */
 using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+
+using Utility.VgvUtility;
+
+using AlaxInfoIpVideoSource;
+using DirectShowLib;
 
 namespace Video_Test_Fixture
 {
@@ -28,6 +36,48 @@ namespace Video_Test_Fixture
     {
         protected bool bPaused = false;
         protected CameraObject inputCam;
+
+        IJpegVideoSourceFilter rawFilter = null;
+        IBaseFilter srcFilter = null;
+        public IBaseFilter SrcFilter
+        {
+            get
+            {
+                if (srcFilter == null)
+                {
+                    GlobalConfig cfg = GlobalConfig.Instance;
+                    IGraphBuilder graph = cfg.Graph;
+                    if (graph != null)
+                    {
+                        int hr = 0;
+                        string userPass = (inputCam.userName != null && inputCam.password != null)
+                                        ? inputCam.userName + ":" + inputCam.password + "@"
+                                        : "";
+                        string location = "http://" + userPass + inputCam.ipAddrPort + "/axis-cgi/mjpg/video.cgi?resolution="
+                                        + inputCam.scanWidth + "x" + inputCam.scanLines;
+
+                        //graph builder
+                        ICaptureGraphBuilder2 pBuilder = (ICaptureGraphBuilder2)new CaptureGraphBuilder2();
+                        hr = pBuilder.SetFiltergraph(graph);
+                        VgvUtil.checkHR(hr,"Can't SetFiltergraph");
+
+                        //add Alax.Info JPEG Video Source
+                        Guid CLSID_VideoSource = new Guid("{A8DA2ECB-DEF6-414D-8CE2-E651640DBA4F}");    // IpVideoSource.dll
+                        rawFilter = (IJpegVideoSourceFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoSource));
+                        srcFilter = rawFilter as IBaseFilter;
+                        hr = (graph as IFilterGraph2).AddFilter(srcFilter,"Alax.Info JPEG Video Source");
+                        VgvUtil.checkHR(hr,"Can't add Alax.Info JPEG Video Source to graph");
+
+                        rawFilter.Location = location;
+                        rawFilter.Width = inputCam.scanWidth;
+                        rawFilter.Height = inputCam.scanLines;
+                    }
+                }
+                return srcFilter;
+            }
+        }
+
+        WndPreview wndPreview = null;
 
         // --------------------------------------------------------------------
         // constructor
@@ -69,6 +119,25 @@ namespace Video_Test_Fixture
 
         // --------------------------------------------------------------------
         // operational controls
+
+        /// <summary>
+        /// opens a preview window for this video source
+        /// 
+        /// If a preview window was already opened for this video source, it is
+        /// made visible and brought to the top of the Z stack.
+        /// 
+        /// This method should be overridden in derived classes.  The derived method
+        /// should call this base implementation for the core window functionality.
+        /// </summary>
+        /// <returns>bool, true=preview opened successfully</returns>
+        public override bool preview()
+        {
+            // TODO: open the camera in a preview window
+            wndPreview = new WndPreview(/*SrcFilter,*/inputCam);
+            wndPreview.Show();
+
+            return base.preview();     // bring visible window to top of Z stack
+        }
 
         /// <summary>
         /// shows or hides the output of this video source when it's an overlay

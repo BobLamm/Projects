@@ -50,7 +50,30 @@
   <PropertyGroup>
     <ApplicationIcon>programicon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DirectShowLib-2005">
+      <HintPath>..\..\Common\lib\DirectShowLib-2005.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,9 +87,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AviFileVgvVideoSrc.cs" />
     <Compile Include="AxisCameraUtility.cs" />
+    <Compile Include="BaseFileVgvVideoSrc.cs" />
+    <Compile Include="BaseVgvVideoSrc.cs" />
+    <Compile Include="DlgCamConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgCamConfig.Designer.cs">
+      <DependentUpon>DlgCamConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="CameraObject.cs" />
+    <Compile Include="CameraVgvVideoSrc.cs" />
+    <Compile Include="DlgEditCamConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgEditCamConfig.Designer.cs">
+      <DependentUpon>DlgEditCamConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExcelFileVgvVideoSrc.cs" />
     <Compile Include="GlobalConfig.cs" />
+    <Compile Include="ImgFileVgvVideoSrc.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,8 +115,26 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ModifyRegistry.cs" />
+    <Compile Include="MpgFileVgvVideoSrc.cs" />
+    <Compile Include="PptFileVgvVideoSrc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SmartExcelFileVgvVideoSrc.cs" />
+    <Compile Include="TextVgvVideoSrc.cs" />
+    <Compile Include="VgvErrorCode.cs" />
+    <Compile Include="VgvUtil.cs" />
+    <Compile Include="WndPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WndPreview.Designer.cs">
+      <DependentUpon>WndPreview.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DlgCamConfig.resx">
+      <DependentUpon>DlgCamConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgEditCamConfig.resx">
+      <DependentUpon>DlgEditCamConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -89,6 +148,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WndPreview.resx">
+      <DependentUpon>WndPreview.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -118,6 +180,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="AlaxInfoIpVideoSource">
+      <Guid>{BDCE8B49-8895-4605-8278-E9A1FBC889AC}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="AxAXISMEDIACONTROLLib">
       <Guid>{A48F4EE0-B408-4376-B4C9-BC9CF6E16EBC}</Guid>
       <VersionMajor>1</VersionMajor>
