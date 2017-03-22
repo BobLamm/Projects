@@ -10,10 +10,13 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	January 9, 2017 @ 7:36 pm
+*	Last Modified:	March 19, 2017 @ 7:36 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/19	wfredk	add global filter graph object
+*	2017/03/18	wfredk	GetCameras() internal documentation corrected
+*	                    support adding and deleting cameras
 *	2017/01/09	wfredk	read Registry inside Init() method (restored)
 *	2016/12/20	wfredk	import into Video_Test_Fixture
 *	2016/12/13	wfredk	original development
@@ -22,10 +25,15 @@
 */
 using System;
 using System.Data;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Xml;  // for XML
 
+using DirectShowLib;
+
 using Utility.ModifyRegistry;
+using Utility.VgvUtility;
 
 namespace Video_Test_Fixture
 {
@@ -81,12 +89,12 @@ namespace Video_Test_Fixture
                 return false;
 
             ModifyRegistry regData = new ModifyRegistry();
-            // MessageBox.Show(regData.SubKey);    // "SOFTWARE\VGV101"
+            // MessageBox.Show(regData.SubKey);    // "SOFTWARE\Video_Test_Fixture"
 
             // ensure paths end with a trailing slash
-            cfgRoot = TerminatePath(regData.ReadString("CfgRoot", @"C:\VGV Software\Configuration\"));
-            logRoot = TerminatePath(regData.ReadString("LogRoot", @"C:\VGV Software\Logs\"));
-            mediaRoot = TerminatePath(regData.ReadString("MediaRoot", @"C:\VGV Customer Media\"));
+            cfgRoot = VgvUtil.TerminatePath(regData.ReadString("CfgRoot", @"C:\VGV Software\Configuration\"));
+            logRoot = VgvUtil.TerminatePath(regData.ReadString("LogRoot", @"C:\VGV Software\Logs\"));
+            mediaRoot = VgvUtil.TerminatePath(regData.ReadString("MediaRoot", @"C:\VGV Customer Media\"));
 
             xmlReaderSettings = new XmlReaderSettings();
 
@@ -95,11 +103,25 @@ namespace Video_Test_Fixture
 
         // --------------------------------------------------------------------
 
-        public string TerminatePath(string path)
-        {   if (!path.EndsWith(@"\"))
-                return path + @"\";
+        // Application-defined message to notify app of filtergraph events
+        public const int WM_GRAPHNOTIFY = 0x8000 + 1;
 
-            return path;
+        IGraphBuilder graph = null;
+        public IGraphBuilder Graph
+        {   get
+            {   if (graph == null)
+                {   try
+                    {   graph = (IGraphBuilder)new FilterGraph();
+                    }
+                    catch (COMException ex)
+                    {   MessageBox.Show("COM Error: " + ex.ToString());
+                    }
+                    catch (Exception ex)
+                    {   MessageBox.Show("Error: " + ex.ToString());
+                    }
+                }
+                return graph;
+            }
         }
 
         // --------------------------------------------------------------------
@@ -165,6 +187,11 @@ namespace Video_Test_Fixture
             }
         }
 
+        public bool AddCamera(CameraObject newCam)
+        {
+            return DoSaveCameras(-1,newCam);
+        }
+
         public CameraObject Camera(int camNum)
         {
             if (Cameras == null)
@@ -177,6 +204,59 @@ namespace Video_Test_Fixture
             }
 
             return Cameras[camNum];
+        }
+
+        public bool DeleteCamera(int nDelete)
+        {
+            return DoSaveCameras(nDelete,null);
+        }
+
+        public bool DoSaveCameras(int nDel,CameraObject newCam)
+        {
+            bool retVal = true;
+            if ((Cameras == null || nCameras == 0) && newCam==null)
+            {
+                MessageBox.Show("No cameras to save!","ERROR");
+                return false;
+            }
+            if (nDel >= nCameras)
+            {
+                MessageBox.Show("Bad delete index " + nDel + " found in DoCameraSave()");
+                return false;
+            }
+            if (nDel>=0 && newCam!=null)
+            {
+                MessageBox.Show("Simultaneous add and delete not supported","ERROR");
+                return false;
+            }
+            try
+            {
+                int cnt;
+                DataTable dt = CameraObject.NewTable("Record");
+                for (cnt = 0; cnt < nCameras; cnt++)
+                {
+                    if (nDel >= 0 && nDel == cnt)
+                        continue;   // don't save the one being deleted
+                    Cameras[cnt].NewRow(dt,cnt);
+                    if (Cameras[cnt].ErrorStatus != 0)
+                        throw new Exception(Cameras[cnt].ErrorString);
+                }
+                if (newCam != null) // adding a new camera
+                {
+                    newCam.NewRow(dt,cnt);
+                    if (newCam.ErrorStatus != 0)
+                        throw new Exception(newCam.ErrorString);
+                }
+                dt.WriteXml(cfgRoot + "Current\\Camera_Settings.xml",true);
+                if (nDel >= 0 || newCam != null)    // if camera deleted or added
+                    ResetCameraConfig();    // in-memory array is now invalid
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(),"ERROR Saving Cameras");
+                retVal = false;
+            }
+            return retVal;
         }
 
         // called after saving camera settings in DlgCameraSettings() using DataGridView
@@ -192,29 +272,7 @@ namespace Video_Test_Fixture
 
         public bool SaveCameras()
         {
-            bool retVal = true;
-            if (Cameras==null || nCameras==0)
-            {
-                MessageBox.Show("No cameras to save!", "ERROR");
-                return false;
-            }
-            try
-            {
-                DataTable dt = CameraObject.NewTable("Record");
-                for (int cnt = 0; cnt < nCameras; cnt++)
-                {
-                    Cameras[cnt].NewRow(dt, cnt);
-                    if (Cameras[cnt].ErrorStatus != 0)
-                        throw new Exception(Cameras[cnt].ErrorString);
-                    dt.WriteXml(cfgRoot + "Current\\Camera_Settings.xml", true);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "ERROR Saving Cameras");
-                retVal = false;
-            }
-            return retVal;
+            return DoSaveCameras(-1,null);
         }
 
         private bool GetCameras()
@@ -222,10 +280,11 @@ namespace Video_Test_Fixture
             bool retVal = true;
             DataSet ds;
             XmlReader xmlFile = null;
+            string fspec = cfgRoot + "Current\\Camera_Settings.xml";
 
-            try  // Read Button Settings from Buttons.xml file into CameraObject array
+            try  // Read Camera Settings from Camera_Settings.xml file into CameraObject array
             {
-                xmlFile = XmlReader.Create(cfgRoot + "Current\\Camera_Settings.xml", xmlReaderSettings);
+                xmlFile = XmlReader.Create(fspec, xmlReaderSettings);
                 ds = new DataSet();
                 ds.ReadXml(xmlFile);
                 nCameras = ds.Tables[0].Rows.Count;
@@ -234,6 +293,18 @@ namespace Video_Test_Fixture
                 int cnt = 0;
                 foreach (DataRow row in dt.Rows)
                     Cameras[cnt++] = new CameraObject(row);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                string dir = cfgRoot + "Current";
+                Directory.CreateDirectory(dir);
+                MessageBox.Show("Directory " + dir + " created\nFile Camera_Settings.xml does not exist");
+                return false;
+            }
+            catch (FileNotFoundException)
+            {
+                MessageBox.Show("File does not exist:\n" + fspec);
+                retVal = false;
             }
             catch (Exception ex)
             {
