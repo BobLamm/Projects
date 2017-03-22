@@ -1,7 +1,7 @@
 ﻿/**
  * File: CameraObject.cs
  * 
- *	Copyright © 2016 by City Council Video.  All rights reserved.
+ *	Copyright © 2016-2017 by City Council Video.  All rights reserved.
  *
  *	$Id: /CameraObject.cs,v $
  */
@@ -10,10 +10,13 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December twelfth, 2016
-*	Last Modified:	December 20, 2016 @ 1:24 am
+*	Last Modified:	March 18, 2017 @ 12:42 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/18  wfredk  add members for scan height, width
+*	2017/03/17  wfredk  add default constructor, documentation
+*	                    add methods to set ipAddress, port
 *	2016/12/20	wfredk	import into Video_Test_Fixture
 *	2016/12/13	wfredk	original development
 *		|						|
@@ -53,6 +56,8 @@ namespace Video_Test_Fixture
         public String zoomSpeed;
         public String focusSpeed;
         public String holdFrames;
+        public int scanLines;   // video height, pixels
+        public int scanWidth;   // video width, pixels
         public String status;
 
         private int errorStatus = 0;
@@ -66,10 +71,44 @@ namespace Video_Test_Fixture
 
         // --------------------------------------------------------------------
 
-        // constructor
+        // default constructor
+        public CameraObject()
+        {   ipAddress="";
+            port=80;
+            ipAddrPort="";
+            userName="";
+            password="";
+            cameraName="";
+            manufacturer="";
+            model="";
+            homePanPosition="";
+            homeTiltPosition="";
+            homeZoomPosition="";
+            homeFocusPosition="";
+            homeIrisPosition="";
+            homeWhitePosition="";
+            homeGainPosition="";
+            homeBacklightPosition="";
+            homeAutoFocusPreset=false;
+            homeAutoIrisPreset=false;
+            homeAutoWhitePreset=false;
+            homeAutoGainPreset=false;
+            homeAutoBacklightPreset=false;
+            panSpeed="";
+            tiltSpeed="";
+            zoomSpeed="";
+            focusSpeed="";
+            holdFrames="";
+            scanLines = 0;
+            scanWidth = 0;
+            status = "< unknown >";
+        }
+
+        // constructor used when reading from a configuration file
         public CameraObject(DataRow row)
         {
-            ipAddrPort = row["IP_Address"].ToString();  // get camera IP address from camera file
+            // get camera IP address+port from camera file
+            SetIpPort(row["IP_Address"].ToString());
             userName = row["User_Name"].ToString();  // get camera user name from camera file
             password = row["Password"].ToString();  // get camera password from camera file
             cameraName = row["Camera_Name"].ToString();
@@ -93,6 +132,8 @@ namespace Video_Test_Fixture
             zoomSpeed = row["Zoom_Speed"].ToString();
             focusSpeed = row["Focus_Speed"].ToString();
             holdFrames = row["Hold_Frames"].ToString();
+            scanLines = int.Parse(row["Scan_Lines"].ToString());
+            scanWidth = int.Parse(row["Scan_Width"].ToString());
             status = row["Status"].ToString();
         }
 
@@ -130,6 +171,8 @@ namespace Video_Test_Fixture
                 dt.Columns.Add("Zoom_Speed",typeof(string));
                 dt.Columns.Add("Focus_Speed",typeof(string));
                 dt.Columns.Add("Hold_Frames",typeof(string));
+                dt.Columns.Add("Scan_Lines",typeof(string));
+                dt.Columns.Add("Scan_Width",typeof(string));
                 dt.Columns.Add("Status",typeof(string));
             }
             catch (Exception ex)
@@ -170,6 +213,8 @@ namespace Video_Test_Fixture
                 dr["Zoom_Speed"] = zoomSpeed;
                 dr["Focus_Speed"] = focusSpeed;
                 dr["Hold_Frames"] = holdFrames;
+                dr["Scan_Lines"] = scanLines;
+                dr["Scan_Width"] = scanWidth;
                 dr["Status"] = status;
 
                 dt.Rows.Add(dr);
@@ -185,7 +230,123 @@ namespace Video_Test_Fixture
 
         // --------------------------------------------------------------------
 
-        // send an arbitrary command to the camera
+        /// <summary>
+        /// set the IP address for the camera
+        /// 
+        /// The ipAddrPort string is set using the new IP address and the
+        /// existing port number.
+        /// </summary>
+        /// <param name="newIpAddress">string, new IP address</param>
+        /// <returns>bool, true=SUCCESS</returns>
+        public bool SetIpAddress(string newIpAddress)
+        {
+            ipAddrPort = (ipAddress = newIpAddress) + ":" + port;
+            return true;
+        }
+        /// <summary>
+        /// set the port for accessing the camera
+        /// 
+        /// The ipAddrPort string is set using the existing IP address and the
+        /// new port number.
+        /// </summary>
+        /// <param name="newPort">string, new port number</param>
+        /// <returns>bool, true=SUCCESS</returns>
+        public bool SetPort(string newPort)
+        {
+            try
+            {
+                port = UInt16.Parse(newPort);
+            }
+            catch
+            {
+                return false;
+            }
+            ipAddrPort = ipAddress + ":" + port;
+            return true;
+        }
+        /// <summary>
+        /// set the port for accessing the camera
+        /// 
+        /// The ipAddrPort string is set using the existing IP address and the
+        /// new port number.
+        /// </summary>
+        /// <param name="newPort">UInt16, new port number</param>
+        /// <returns>bool, true=SUCCESS</returns>
+        public bool SetPort(UInt16 newPort)
+        {
+            ipAddrPort = ipAddress + ":" + (port = newPort);
+            return true;
+        }
+        /// <summary>
+        /// set the IP address and port number for accessing the camera
+        /// 
+        /// The ipAddrPort string is set using the passed parameters.
+        /// </summary>
+        /// <param name="newIpAddress">string, new IP address</param>
+        /// <param name="newPort">string, new port number</param>
+        /// <returns>bool, true=SUCCESS</returns>
+        public bool SetIpPort(string newIpAddress,string newPort)
+        {
+            try
+            {   port = UInt16.Parse(newPort);
+            }
+            catch
+            {   return false;
+            }
+            ipAddrPort = (ipAddress = newIpAddress) + ":" + port;
+            return true;
+        }
+        /// <summary>
+        /// set the IP address and port number for accessing the camera
+        /// 
+        /// The ipAddrPort string is set using the passed parameters.
+        /// </summary>
+        /// <param name="newIpAddress">string, new IP address</param>
+        /// <param name="newPort">UInt16, new port number</param>
+        /// <returns>bool, true=SUCCESS</returns>
+        public bool SetIpPort(string newIpAddress,UInt16 newPort)
+        {
+            ipAddrPort = (ipAddress = newIpAddress) + ":" + (port = newPort);
+            return true;
+        }
+        /// <summary>
+        /// set the IP address and port number for accessing the camera
+        /// 
+        /// The ipAddress string and port number member variables are
+        /// set by parsing the passed string, separating it on the ':'
+        /// character which must occur once in the string.   The IP
+        /// address must be the first part of the string, the port number
+        /// must be the second part.
+        /// </summary>
+        /// <param name="newIpAddress">string, new IP address:port</param>
+        /// <returns>bool, true=SUCCESS</returns>
+        public bool SetIpPort(string newIpPort)
+        {
+            String[] parts = newIpPort.Split(':');  // separate into components
+            if (parts.Length != 2)
+                return false;
+            try
+            {   port = UInt16.Parse(parts[1]);   // set port
+            }
+            catch
+            {   return false;
+            }
+            ipAddrPort = newIpPort;
+            ipAddress = parts[0];   // set ipAddress
+            return true;
+        }
+
+        // --------------------------------------------------------------------
+
+        /// <summary>
+        /// send an arbitrary command to the camera
+        /// 
+        /// The URL used to access the camera is constructed from the IP/port
+        /// configured for the camera, "/axis-cgi/", and the passed command.
+        /// The access credentials are uaed when accessing the constructed URL.
+        /// </summary>
+        /// <param name="command">string, command to send to the camera</param>
+        /// <returns>string, camera response</returns>
         public string CamOperation(string command)
         {   string response = "no response";
             errorStatus = 0;    // clear any previous error indication
@@ -206,30 +367,60 @@ namespace Video_Test_Fixture
         }
 
         // send an arbitrary command from the /com/ folder to the camera
+        /// <summary>
+        /// send an arbitrary command from the /com/ folder to the camera
+        /// 
+        /// The URL used to access the camera is the configured IP/port for the
+        /// camera, "/axis-cgi/com/", plus the passed command.
+        /// The access credentials are uaed when accessing the constructed URL.
+        /// </summary>
+        /// <param name="command">string, command to send to the camera</param>
+        /// <returns>string, camera response</returns>
         public string CamCommand(string command)
         {   return CamOperation("com/" + command);
         }
 
         // --------------------------------------------------------------------
 
-        // send a PTZ command to the camera
+        /// <summary>
+        /// send a PTZ command to the camera
+        /// 
+        /// The URL used to access the camera is the configured IP/port for the
+        /// camera, "/axis-cgi/com/ptz.cgi?", plus the passed command.
+        /// The access credentials are uaed when accessing the constructed URL.
+        /// </summary>
+        /// <param name="command">string, PTZ command for the camera</param>
+        /// <returns>string, camera response</returns>
         public string PtzCommand(string command)
         {   return CamCommand("ptz.cgi?" + command);
         }
 
         // --------------------------------------------------------------------
 
-        // query the camera for its current position
+        /// <summary>
+        /// query the camera for its current position
+        /// </summary>
+        /// <returns>string, camera response</returns>
         public string GetPosition()
         {   return PtzCommand("query=position");
         }
 
-        // command the camera to a specific PTZ setting
+        /// <summary>
+        /// command the camera to a specific PTZ setting
+        /// </summary>
+        /// <param name="pan">string, camera azimuth angle</param>
+        /// <param name="tilt">string, camera altitude angle</param>
+        /// <param name="zoom">string, camera zoom percentage</param>
+        /// <returns>string, camera response</returns>
         public string GoTo(string pan, string tilt, string zoom)
         {   return PtzCommand("pan=" + pan + "&tilt=" + tilt + "&zoom=" + zoom);
         }
 
-        // pan the camera
+        /// <summary>
+        /// pan the camera
+        /// </summary>
+        /// <param name="pan">string, camera azimuth angle</param>
+        /// <returns>string, camera response</returns>
         public string Pan(string pan)
         {   return PtzCommand("rpan=" + pan);
         }
