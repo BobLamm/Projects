@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	March nineteenth, 2017
-*	Last Modified:	March 19, 2017 @ 4:47 pm
+*	Last Modified:	March 21, 2017 @ 8:28 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/21	wfredk	work on implementing EnumFilters()
 *	2017/03/19	wfredk	original development
 */
 using System;
