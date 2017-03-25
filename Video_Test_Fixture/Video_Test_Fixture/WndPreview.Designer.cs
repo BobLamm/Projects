@@ -26,6 +26,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "WndPreview";
             this.Text = "WndPreview";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WndPreview_FormClosing);
             this.ResumeLayout(false);
 
         }
