@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	March 19, 2017 @ 7:36 pm
+*	Last Modified:	March 22, 2017 @ 10:32 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/22	wfredk	add [more] documentation
 *	2017/03/19	wfredk	add global filter graph object
 *	2017/03/18	wfredk	GetCameras() internal documentation corrected
 *	                    support adding and deleting cameras
@@ -37,9 +38,9 @@ using Utility.VgvUtility;
 
 namespace Video_Test_Fixture
 {
-    /**
-     * global configuration object for the program
-     */
+    /// <summary>
+    /// global configuration object for the program
+    /// </summary>
     public sealed class GlobalConfig
     {
         // singleton implementation
@@ -47,6 +48,9 @@ namespace Video_Test_Fixture
         private GlobalConfig()
         {
         }
+        /// <summary>
+        /// returns a reference to the single instance of this object that exists
+        /// </summary>
         public static GlobalConfig Instance
         {
             get { return Nested.instance; }
@@ -67,22 +71,44 @@ namespace Video_Test_Fixture
         private XmlReaderSettings xmlReaderSettings = null;
 
         private String cfgRoot;
+        /// <summary>
+        /// returns the root path of the configuration directory tree on disk
+        /// </summary>
         public String CfgRoot
         {
             get { return cfgRoot; }
         }
         private String logRoot;
+        /// <summary>
+        /// returns the root path of the log directory tree on disk
+        /// </summary>
         public String LogRoot
         {
             get { return logRoot; }
         }
         private String mediaRoot;
+        /// <summary>
+        /// returns the root path of the media directory tree on disk
+        /// </summary>
         public String MediaRoot
         {
             get { return mediaRoot; }
         }
 
-        // initializes the global configuration object, called during program startup
+        /// <summary>
+        /// initializes the global configuration object
+        /// 
+        /// This method is called once during program startup.  Any subsequent
+        /// calls will be silently ignored.
+        /// 
+        /// If CfgRoot, LogRoot and/or MediaRoot keys are found in the Registry
+        /// HKEY_LOCAL_MACHINE\SOFTWARE hive for this program, they are used.
+        /// Otherwise, the paths default to these values:
+        ///     CfgRoot     C:\VGV Software\Configuration\
+        ///     LogRoot     C:\VGV Software\Logs\
+        ///     MediaRoot   C:\VGV Customer Media\
+        /// </summary>
+        /// <returns></returns>
         public bool Init()
         {
             if (bInitialized)
@@ -103,10 +129,18 @@ namespace Video_Test_Fixture
 
         // --------------------------------------------------------------------
 
-        // Application-defined message to notify app of filtergraph events
+        /// <summary>
+        /// application-defined message to notify app of filtergraph events
+        /// </summary>
         public const int WM_GRAPHNOTIFY = 0x8000 + 1;
 
         IGraphBuilder graph = null;
+        /// <summary>
+        /// returns a handle to the global filter graph for the program
+        /// 
+        /// The filter graph is instantiated the first time this property
+        /// is accessed.
+        /// </summary>
         public IGraphBuilder Graph
         {   get
             {   if (graph == null)
@@ -126,7 +160,12 @@ namespace Video_Test_Fixture
 
         // --------------------------------------------------------------------
 
-        // Reads an XML file in Current configuration folder into the DataGridView that is passed
+        /// <summary>
+        /// reads an XML file in Current configuration folder into the DataGridView that is passed
+        /// </summary>
+        /// <param name="fileName">string, filename (without ".xml" extension) to read</param>
+        /// <param name="dataGridView">DataGridView, where to return the data read from the file</param>
+        /// <returns>bool, true=successful operation</returns>
         public bool GetCurrentXml(string fileName, DataGridView dataGridView)
         {
             bool retVal = true;
@@ -153,7 +192,12 @@ namespace Video_Test_Fixture
             return retVal;
         }
 
-        // Writes an XML file in Current configuration folder from the dataGridView that is passed
+        /// <summary>
+        /// writes an XML file in Current configuration folder from the dataGridView that is passed
+        /// </summary>
+        /// <param name="fileName">string, filename (without ".xml" extension) to read</param>
+        /// <param name="dataGridView">DataGridView, data to be written to the file</param>
+        /// <returns>bool, true=successful operation</returns>
         public bool WriteCurrentXml(string fileName,DataGridView dataGridView)
         {
             bool retVal = true;
@@ -178,6 +222,9 @@ namespace Video_Test_Fixture
 
         private CameraObject[] Cameras=null;
         private int nCameras = 0;
+        /// <summary>
+        /// returns the number of cameras known to the application
+        /// </summary>
         public int NumCameras
         {   get
             {
@@ -187,11 +234,31 @@ namespace Video_Test_Fixture
             }
         }
 
+        /// <summary>
+        /// adds a camera to the application's list
+        /// 
+        /// The camera configuration file is updated
+        /// </summary>
+        /// <param name="newCam">CameraObject, the camera's configuration data</param>
+        /// <returns>bool, true=successful operation</returns>
         public bool AddCamera(CameraObject newCam)
         {
             return DoSaveCameras(-1,newCam);
         }
 
+        /// <summary>
+        /// returns the configuration data for a particular camera
+        /// 
+        /// The first time this method is called, the camera data is read
+        /// from the configuration file.
+        /// 
+        /// N.B.:   On error, this method returns a null object.
+        /// 
+        /// An error is returned if the requested camera number is less than
+        /// zero, or greater than the number of cameras configured.
+        /// </summary>
+        /// <param name="camNum">int, zero-based camera index number</param>
+        /// <returns>CameraObject, the camera configuration</returns>
         public CameraObject Camera(int camNum)
         {
             if (Cameras == null)
@@ -206,12 +273,35 @@ namespace Video_Test_Fixture
             return Cameras[camNum];
         }
 
+        /// <summary>
+        /// removes a camera configuration from the application's list
+        /// 
+        /// The camera configuration file is updated
+        /// </summary>
+        /// <param name="nDelete">int, zero-based index of the camera to delete</param>
+        /// <returns>bool, true=successful operation</returns>
         public bool DeleteCamera(int nDelete)
         {
             return DoSaveCameras(nDelete,null);
         }
 
-        public bool DoSaveCameras(int nDel,CameraObject newCam)
+        /// <summary>
+        /// common method used to add or delete cameras, or update the camera
+        /// configuration file
+        /// 
+        /// The nDel parameter must be a positive integer between zero and the
+        /// number of cameras defined to delete a camera configuration.
+        /// 
+        /// If a non-null newCam object is passed, it is added to the camera
+        /// configuration after the other existing cameras have been written.
+        /// 
+        /// N.B.:   It is an error to try adding and deleting cameras at the
+        ///         same time.
+        /// </summary>
+        /// <param name="nDel">int, zero based index of camera to delete</param>
+        /// <param name="newCam">CameraObject, new camera to add to the file</param>
+        /// <returns>bool, true=successful operation</returns>
+        private bool DoSaveCameras(int nDel,CameraObject newCam)
         {
             bool retVal = true;
             if ((Cameras == null || nCameras == 0) && newCam==null)
@@ -259,7 +349,16 @@ namespace Video_Test_Fixture
             return retVal;
         }
 
-        // called after saving camera settings in DlgCameraSettings() using DataGridView
+        /// <summary>
+        /// discards the in-memory copy of the camera configuration data after
+        /// the disk file has been modified to ensure the correct information
+        /// will be used for accessing cameras:  The next time the code calls
+        /// the Camera() method, the configuration is freshly read from disk
+        /// into memory as a clean copy.
+        /// 
+        /// For example, this method is called after saving camera settings in
+        /// DlgCameraSettings() using DataGridView.
+        /// </summary>
         public void ResetCameraConfig()
         {   try
             {   Cameras = null;
@@ -270,11 +369,28 @@ namespace Video_Test_Fixture
             }
         }
 
+        /// <summary>
+        /// updates the camera configuration file on disk with the current
+        /// contents of the CameraObject array in memory
+        /// </summary>
+        /// <returns>bool, true=successful operation</returns>
         public bool SaveCameras()
         {
             return DoSaveCameras(-1,null);
         }
 
+        /// <summary>
+        /// reads the camera settings from the Camera_Settings.xml file in the
+        /// configuration directory into the internal CameraObject array
+        /// 
+        /// If the configuration directory does not exist, it is created.  A
+        /// MessageBox is displayed to inform the user the directory has been
+        /// created, and that the configuration file does not exist.
+        /// 
+        /// If the configuration file does not exist, a MessageBox is displayed
+        /// to inform the user.
+        /// </summary>
+        /// <returns>bool, true=successful operation</returns>
         private bool GetCameras()
         {
             bool retVal = true;
@@ -282,7 +398,7 @@ namespace Video_Test_Fixture
             XmlReader xmlFile = null;
             string fspec = cfgRoot + "Current\\Camera_Settings.xml";
 
-            try  // Read Camera Settings from Camera_Settings.xml file into CameraObject array
+            try
             {
                 xmlFile = XmlReader.Create(fspec, xmlReaderSettings);
                 ds = new DataSet();

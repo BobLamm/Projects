@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January fourth, 2017
-*	Last Modified:	March 19, 2017 @ 3:31 pm
+*	Last Modified:	March 22, 2017 @ 10:44 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/22	wfredk	filled out the documentation
 *	2017/03/19	wfredk	add preview() method to IVgvVideoSrc
 *	2017/01/09	wfredk	original development
 *		|						|
@@ -23,6 +24,9 @@ using System;
 
 namespace Video_Test_Fixture
 {
+    /// <summary>
+    /// an interface for setting the position of a video source
+    /// </summary>
     public interface IVgvPosition
     {
         /// <summary>
@@ -54,6 +58,10 @@ namespace Video_Test_Fixture
         /// <returns>int[6], position information, or null</returns>
         int[] getPosition();
     }
+    /// <summary>
+    /// the common interface for all video sources used in the application,
+    /// whether they are base layer video or overlays
+    /// </summary>
     public interface IVgvVideoSrc
     {
         /// <summary>
@@ -166,23 +174,77 @@ namespace Video_Test_Fixture
         bool showOverlay(int nOverlay,bool show = true,bool autoStart=true);
     }
 
+    /// <summary>
+    /// the base class object from which all video source objects in the
+    /// application are derived
+    /// </summary>
     public class BaseVgvVideoSrc : IVgvVideoSrc, IVgvPosition
     {
+        /// <summary>
+        /// indicates if this video source is an overlay, false=base layer (default)
+        /// </summary>
         protected bool bOverlay = false;
+        /// <summary>
+        /// number of overlays attached to this video source
+        /// default = 0
+        /// </summary>
         protected int nOverlays=0;
+        /// <summary>
+        /// top pixel position of the video source window, relative to its container
+        /// default = -1 (don't care)
+        /// </summary>
         protected int nTop=-1;
+        /// <summary>
+        /// left pixel position of the video source window, relative to its container
+        /// default = -1 (don't care)
+        /// </summary>
         protected int nLeft=-1;
+        /// <summary>
+        /// bottom pixel position of the video source window, relative to its container
+        /// default = -1 (don't care)
+        /// </summary>
         protected int nBottom=-1;
+        /// <summary>
+        /// right pixel position of the video source window, relative to its container
+        /// default = -1 (don't care)
+        /// </summary>
         protected int nRight=-1;
+        /// <summary>
+        /// pixel height of the video source window, relative to its container
+        /// default = -1 (don't care)
+        /// </summary>
         protected int nHeight = -1;
+        /// <summary>
+        /// pixel width of the video source window, relative to its container
+        /// default = -1 (don't care)
+        /// </summary>
         protected int nWidth = -1;
+        /// <summary>
+        /// overlays attached to this video source
+        /// </summary>
         protected IVgvVideoSrc[] overlays;
+        /// <summary>
+        /// current error string for this video source, may be set by derived classes
+        /// default = no error string
+        /// </summary>
         protected string errorString = "";
+        /// <summary>
+        /// current error status code for this video source, may be set by derived classes
+        /// default = VgvErrorCode.NO_ERROR
+        /// </summary>
         protected VgvErrorCode errorStatus = VgvErrorCode.NO_ERROR;
 
+        /// <summary>
+        /// property for accessing the error status code of this video source
+        /// </summary>
+        /// <returns>VgvErrorCode, current error code</returns>
         public VgvErrorCode ErrorStatus()
         {   return errorStatus;
         }
+        /// <summary>
+        /// property for accessing the error string of this video source
+        /// </summary>
+        /// <returns>string, current error state</returns>
         public string ErrorString()
         {   return errorString;
         }

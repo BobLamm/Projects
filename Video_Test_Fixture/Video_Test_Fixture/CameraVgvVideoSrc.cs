@@ -12,10 +12,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	March 19, 2017 @ 7:45 pm
+*	Last Modified:	March 22, 2017 @ 9:21 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/22	wfredk	add documentation
 *	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
 *		|						|
@@ -32,13 +33,25 @@ using DirectShowLib;
 
 namespace Video_Test_Fixture
 {
+    /// <summary>
+    /// implements a camera video source
+    /// </summary>
     public class CameraVgvVideoSrc : BaseVgvVideoSrc
     {
+        /// <summary>
+        /// bool, set if the camera is in a paused state
+        /// </summary>
         protected bool bPaused = false;
+        /// <summary>
+        /// CameraObject, information about the camera
+        /// </summary>
         protected CameraObject inputCam;
 
         IJpegVideoSourceFilter rawFilter = null;
         IBaseFilter srcFilter = null;
+        /// <summary>
+        /// property (accessor) for this camera's source filter object
+        /// </summary>
         public IBaseFilter SrcFilter
         {
             get
@@ -91,6 +104,7 @@ namespace Video_Test_Fixture
             inputCam = cam;
 
             // TODO
+            // MessageBox.Show("camera source object created");
         }
 
         // --------------------------------------------------------------------

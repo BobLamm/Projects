@@ -6,14 +6,15 @@
  *	$Id: /CameraObject.cs,v $
  */
 /**
-*	Provides an interface for an individual camera
+*	Provides an interface to configuration data for an individual camera
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December twelfth, 2016
-*	Last Modified:	March 18, 2017 @ 12:42 pm
+*	Last Modified:	March 22, 2017 @ 9:51 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/22	wfredk	add documentation
 *	2017/03/18  wfredk  add members for scan height, width
 *	2017/03/17  wfredk  add default constructor, documentation
 *	                    add methods to set ipAddress, port
@@ -28,50 +29,151 @@ using System.Net;
 
 namespace Video_Test_Fixture
 {
+    /// <summary>
+    /// provides an interface to configuration data for an individual camera
+    /// </summary>
     public class CameraObject
     {
+        /// <summary>
+        /// IP address where the camera is attached to the network
+        /// </summary>
         public String ipAddress;
+        /// <summary>
+        /// port number the camera is attached to at its IP address
+        /// </summary>
         public UInt16 port;
+        /// <summary>
+        /// Ip.ad.dr.ess:port for accessing the camera
+        /// </summary>
         public String ipAddrPort;
+        /// <summary>
+        /// username to be used for accessing the camera
+        /// </summary>
         public String userName;
+        /// <summary>
+        /// password to be used for accessing the camera
+        /// </summary>
         public String password;
+        /// <summary>
+        /// internal name for the camera, e.g., its physical location
+        /// </summary>
         public String cameraName;
+        /// <summary>
+        /// camera manufacturer's name
+        /// </summary>
         public String manufacturer;
+        /// <summary>
+        /// camera model information
+        /// </summary>
         public String model;
+        /// <summary>
+        /// home position pan command string
+        /// </summary>
         public String homePanPosition;
+        /// <summary>
+        /// home position tilt command string
+        /// </summary>
         public String homeTiltPosition;
+        /// <summary>
+        /// home position zoom command string
+        /// </summary>
         public String homeZoomPosition;
+        /// <summary>
+        /// home position focus command string
+        /// </summary>
         public String homeFocusPosition;
+        /// <summary>
+        /// home iris setting command string
+        /// </summary>
         public String homeIrisPosition;
+        /// <summary>
+        /// home white balance setting command string
+        /// </summary>
         public String homeWhitePosition;
+        /// <summary>
+        /// home gain setting command string
+        /// </summary>
         public String homeGainPosition;
+        /// <summary>
+        /// home backlight compensation setting command string
+        /// </summary>
         public String homeBacklightPosition;
+        /// <summary>
+        /// use auto focus at home position
+        /// </summary>
         public bool homeAutoFocusPreset;
+        /// <summary>
+        /// use auto iris preset at home position
+        /// </summary>
         public bool homeAutoIrisPreset;
+        /// <summary>
+        /// use auto white balance at home position
+        /// </summary>
         public bool homeAutoWhitePreset;
+        /// <summary>
+        /// use auto gain adjustment at home position
+        /// </summary>
         public bool homeAutoGainPreset;
+        /// <summary>
+        /// use auto backlight compensation at home position
+        /// </summary>
         public bool homeAutoBacklightPreset;
+        /// <summary>
+        /// camera pan speed setting
+        /// </summary>
         public String panSpeed;
+        /// <summary>
+        /// camera tilt speed setting
+        /// </summary>
         public String tiltSpeed;
+        /// <summary>
+        /// camera zoom speed setting
+        /// </summary>
         public String zoomSpeed;
+        /// <summary>
+        /// camera focus speed setting
+        /// </summary>
         public String focusSpeed;
+        /// <summary>
+        /// camera hold frames setting
+        /// </summary>
         public String holdFrames;
-        public int scanLines;   // video height, pixels
-        public int scanWidth;   // video width, pixels
+        /// <summary>
+        /// video height, pixels
+        /// </summary>
+        public int scanLines;
+        /// <summary>
+        /// video width, pixels
+        /// </summary>
+        public int scanWidth;
+        /// <summary>
+        /// last status string returned by the camera
+        /// </summary>
         public String status;
 
         private int errorStatus = 0;
+        /// <summary>
+        /// property (accessor) for getting the camera's error status code
+        /// </summary>
         public int ErrorStatus
         {   get { return errorStatus; }
         }
         private string errorString = "";
+        /// <summary>
+        /// property (accessor) for getting the camera's error string
+        /// </summary>
         public string ErrorString
         {   get { return errorString; }
         }
 
         // --------------------------------------------------------------------
 
-        // default constructor
+        /// <summary>
+        /// default constructor
+        /// 
+        /// port is set to 80, booleans to false, strings to empty except
+        /// status which is set to "&lt; unknown &gt;"
+        /// </summary>
         public CameraObject()
         {   ipAddress="";
             port=80;
@@ -104,7 +206,10 @@ namespace Video_Test_Fixture
             status = "< unknown >";
         }
 
-        // constructor used when reading from a configuration file
+        /// <summary>
+        /// constructor used when reading from a configuration file
+        /// </summary>
+        /// <param name="row">DataRow, the configuration read from the file</param>
         public CameraObject(DataRow row)
         {
             // get camera IP address+port from camera file
@@ -138,8 +243,14 @@ namespace Video_Test_Fixture
         }
 
         // --------------------------------------------------------------------
-
         // methods for saving camera data, used by GlobalConfig.SaveCameras()
+
+        /// <summary>
+        /// constructs an empty DataTable object properly structured to use
+        /// for writing camera configuration data to disk
+        /// </summary>
+        /// <param name="tableId">string, the table name property to use</param>
+        /// <returns>DataTable, the object to use for writing the file</returns>
         public static DataTable NewTable(string tableId)
         {   DataTable dt = null;
 
@@ -181,6 +292,13 @@ namespace Video_Test_Fixture
 
             return dt;
         }
+        /// <summary>
+        /// adds the configuration data for a camera to the DataTable that will
+        /// be used to write the configuration to a disk file
+        /// </summary>
+        /// <param name="dt">DataTable, the structure used for writing to disk</param>
+        /// <param name="camNumber">int, zero-based camera index in the file</param>
+        /// <returns></returns>
         public bool NewRow(DataTable dt,int camNumber)
         {
             errorStatus = 0;    // clear any previous error indication
@@ -318,7 +436,7 @@ namespace Video_Test_Fixture
         /// address must be the first part of the string, the port number
         /// must be the second part.
         /// </summary>
-        /// <param name="newIpAddress">string, new IP address:port</param>
+        /// <param name="newIpPort">string, new IP address:port</param>
         /// <returns>bool, true=SUCCESS</returns>
         public bool SetIpPort(string newIpPort)
         {

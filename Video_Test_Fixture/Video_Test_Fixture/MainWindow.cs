@@ -27,11 +27,17 @@ using System.Windows.Forms;
 
 namespace Video_Test_Fixture
 {
+    /// <summary>
+    /// main window for the test fixture application
+    /// </summary>
     public partial class MainWindow : Form
     {
         CameraVgvVideoSrc srcCam1=null;
         CameraVgvVideoSrc srcCam2=null;
 
+        /// <summary>
+        /// constructor, creates the form elements
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
