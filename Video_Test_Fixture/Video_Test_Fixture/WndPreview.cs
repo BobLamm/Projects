@@ -18,9 +18,15 @@ namespace Video_Test_Fixture
 
         DsROTEntry rot = null;
 
+        IBaseFilter pVideoRenderer = null;
+        IJpegVideoSourceFilter rawFilter = null;
+
+        /// <summary>
+        /// camera preview window
+        /// </summary>
+        /// <param name="cam"></param>
         public WndPreview(/*IBaseFilter srcFilter,*/CameraObject cam)
         {
-            IJpegVideoSourceFilter rawFilter = null;
             IBaseFilter srcFilter = null;
             int hr = 0;
 
@@ -55,7 +61,7 @@ namespace Video_Test_Fixture
                 // Render the preview pin on the video capture filter
                 // Use this instead of pGraph.RenderFile
                 Guid CLSID_VideoRenderer = new Guid("{B87BEB7B-8D29-423F-AE4D-6582C10175AC}"); //quartz.dll
-                IBaseFilter pVideoRenderer = (IBaseFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoRenderer));
+                pVideoRenderer = (IBaseFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoRenderer));
                 hr = (graphPreview as IFilterGraph2).AddFilter(pVideoRenderer,"Video Renderer");
                 VgvUtil.checkHR(hr,"Can't add Video Renderer to graph");
                 hr = pBuilder.RenderStream(PinCategory.Preview,MediaType.Video,srcFilter,null,pVideoRenderer);
@@ -65,6 +71,8 @@ namespace Video_Test_Fixture
                 mediaControl = (IMediaControl)graphPreview;
                 videoWindow = (IVideoWindow)graphPreview;
                 mediaEventEx = (IMediaEventEx)graphPreview;
+
+//              VgvUtil.EnumFilters(graphPreview);
 
                 hr = mediaEventEx.SetNotifyWindow(Handle,GlobalConfig.WM_GRAPHNOTIFY,IntPtr.Zero);
                 VgvUtil.checkHR(hr,"SetNotifyWindow failed");
@@ -105,7 +113,7 @@ namespace Video_Test_Fixture
             base.Dispose(disposing);
         }
 
-        public void CloseInterfaces()
+        private void CloseInterfaces()
         {
             // Stop previewing data
             if (mediaControl != null)
@@ -120,25 +128,40 @@ namespace Video_Test_Fixture
             // the video renderer, as it still assumes that it has a valid
             // parent window.
             if (videoWindow != null)
-            {
-                videoWindow.put_Visible(OABool.False);
+            {   videoWindow.put_Visible(OABool.False);
                 videoWindow.put_Owner(IntPtr.Zero);
             }
 
             // Remove filter graph from the running object table
             if (rot != null)
-            {
-                rot.Dispose();
+            {   rot.Dispose();
                 rot = null;
             }
 
             // Release DirectShow interfaces
-            if (mediaControl != null) Marshal.ReleaseComObject(mediaControl); mediaControl = null;
-            if (mediaEventEx != null) Marshal.ReleaseComObject(mediaEventEx); mediaEventEx = null;
-            if (videoWindow != null) Marshal.ReleaseComObject(videoWindow); videoWindow = null;
-            if (graphPreview != null) Marshal.ReleaseComObject(graphPreview); graphPreview = null;
+            if (mediaControl != null)
+            {   Marshal.ReleaseComObject(mediaControl);
+                mediaControl = null;
+            }
+            if (mediaEventEx != null)
+            {   Marshal.ReleaseComObject(mediaEventEx);
+                mediaEventEx = null;
+            }
+            if (videoWindow != null)
+            {   Marshal.ReleaseComObject(videoWindow);
+                videoWindow = null;
+            }
+            if (graphPreview != null)
+            {
+//              VgvUtil.ReleaseFilters(graphPreview);
+                Marshal.ReleaseComObject(graphPreview);
+                graphPreview = null;
+            }
         }
 
+        /// <summary>
+        /// sets the video window to be a child of the main window
+        /// </summary>
         public void SetupPreviewWindow()
         {
             int hr = 0;
@@ -159,6 +182,9 @@ namespace Video_Test_Fixture
             DsError.ThrowExceptionForHR(hr);
         }
 
+        /// <summary>
+        /// resizes the video preview window to match owner window size
+        /// </summary>
         public void ResizePreviewWindow()
         {
             // Resize the video preview window to match owner window size
@@ -166,6 +192,61 @@ namespace Video_Test_Fixture
             {
                 videoWindow.SetWindowPosition(0,0,ClientSize.Width,ClientSize.Height);
             }
+        }
+
+        private void HandleGraphEvent()
+        {
+            int hr = 0;
+            EventCode evCode;
+            IntPtr evParam1, evParam2;
+
+            if (mediaEventEx == null)
+                return;
+
+            while (mediaEventEx.GetEvent(out evCode,out evParam1,out evParam2,0) == 0)
+            {
+                // Free event parameters to prevent memory leaks associated with
+                // event parameter data.  While this application is not interested
+                // in the received events, applications should always process them.
+                hr = mediaEventEx.FreeEventParams(evCode,evParam1,evParam2);
+                DsError.ThrowExceptionForHR(hr);
+
+                // Insert event processing code here, if desired
+            }
+        }
+
+        /// <summary>
+        /// WndProc override
+        /// </summary>
+        /// <param name="m"></param>
+        protected override void WndProc(ref Message m)
+        {
+            switch (m.Msg)
+            {
+                case GlobalConfig.WM_GRAPHNOTIFY:
+                {
+                    HandleGraphEvent();
+                    break;
+                }
+            }
+
+            // Pass this message to the video window for notification of system changes
+            if (videoWindow != null)
+                videoWindow.NotifyOwnerMessage(m.HWnd,m.Msg,m.WParam,m.LParam);
+
+            base.WndProc(ref m);
+        }
+
+        private void WndPreview_FormClosing(object sender,FormClosingEventArgs e)
+        {
+//          MessageBox.Show(e.ToString());
+
+            CloseInterfaces();
+
+            if (rawFilter != null)
+                rawFilter = null;
+            if (pVideoRenderer != null)
+                pVideoRenderer = null;
         }
     }
 }
