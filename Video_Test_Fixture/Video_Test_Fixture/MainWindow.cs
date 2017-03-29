@@ -10,10 +10,11 @@
 *
 *	Author:			Bob Lamm
 *	Creation Date:	October twentieth, 2016
-*	Last Modified:	March 19, 2017 @ 7:00 pm
+*	Last Modified:	March 25, 2017 @ 5:51 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/03/25	wfredk	delete camera objects in StopAllRunningCameras()
 *	2017/03/19	wfredk	call StopAllRunningCameras() in connectToCameras_Click()
 *	                    add camera preview buttons
 *	2017/03/18	wfredk	call DlgCamConfig in connectToCameras_Click()
@@ -105,6 +106,10 @@ namespace Video_Test_Fixture
             // TODO
             // stop all running cameras
             // invalidate all CameraObject references
+            if (srcCam1 != null)
+                srcCam1 = null;
+            if (srcCam2 != null)
+                srcCam2 = null;
         }
 
         private void btnPreview1_Click(object sender,EventArgs e)
