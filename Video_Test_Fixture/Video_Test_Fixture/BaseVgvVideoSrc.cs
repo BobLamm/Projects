@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January fourth, 2017
-*	Last Modified:	March 22, 2017 @ 10:44 pm
+*	Last Modified:	April 10, 2017 @ 7:14 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/10	wfredk	add graph, bridge members to base class
 *	2017/03/22	wfredk	filled out the documentation
 *	2017/03/19	wfredk	add preview() method to IVgvVideoSrc
 *	2017/01/09	wfredk	original development
@@ -21,6 +22,11 @@
 *	2017/01/04	wfredk	original development
 */
 using System;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+
+using DirectShowLib;
+using GMFBridgeLib;
 
 namespace Video_Test_Fixture
 {
@@ -249,6 +255,51 @@ namespace Video_Test_Fixture
         {   return errorString;
         }
 
+        protected IGraphBuilder graph = null;
+        protected IMediaControl mediaCtl = null;
+        /// <summary>
+        /// returns a handle to the filter graph
+        /// 
+        /// The filter graph is instantiated the first time this property
+        /// is accessed.
+        /// </summary>
+        public IGraphBuilder Graph
+        {   get
+            {   if (graph == null)
+                {   try
+                    {   graph = (IGraphBuilder)new FilterGraph();
+                        mediaCtl = (IMediaControl)graph;
+                    }
+                    catch (COMException ex)
+                    {   MessageBox.Show("COM Error: " + ex.ToString());
+                    }
+                    catch (Exception ex)
+                    {   MessageBox.Show("Error: " + ex.ToString());
+                    }
+                }
+                return graph;
+            }
+        }
+        /// <summary>
+        /// Gets the media control.
+        /// </summary>
+        /// <value>
+        /// The media control.
+        /// </value>
+        public IMediaControl MediaCtl
+        {   get
+            {   if (mediaCtl == null)
+                {   try
+                    {   IGraphBuilder theGraph = Graph;
+                    }
+                    catch (Exception ex)
+                    {   MessageBox.Show("Error: " + ex.ToString());
+                    }
+                }
+                return mediaCtl;
+            }
+        }
+
         // --------------------------------------------------------------------
         // constructor
 
@@ -270,8 +321,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>string, "off"</returns>
         public virtual string getType()
-        {
-            return "off";
+        {   return "off";
         }
         /// <summary>
         /// returns a name of the configured input
@@ -281,8 +331,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>string, input name</returns>
         public virtual string getId()
-        {
-            return "no source";
+        {   return "no source";
         }
 
         /// <summary>
@@ -290,8 +339,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>int, number of overlays</returns>
         public int numOverlays()
-        {
-            if (overlays == null)
+        {   if (overlays == null)
                 return 0;
 
             return nOverlays;
@@ -306,8 +354,7 @@ namespace Video_Test_Fixture
         /// <param name="nOverlay">int, zero-based index of the desired overlay</param>
         /// <returns>IVgvVideoSrc, selected overlay, or null</returns>
         public IVgvVideoSrc overlay(int nOverlay)
-        {
-            if (overlays==null || nOverlay < 0 || nOverlay > nOverlays)
+        {   if (overlays==null || nOverlay < 0 || nOverlay > nOverlays)
                 return null;
             return overlays[nOverlay];
         }
@@ -322,8 +369,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>int[6], position information, or null</returns>
         public int[] getPosition()
-        {
-            if (!bOverlay)
+        {   if (!bOverlay)
                 return null;
 
             return new int[] { nTop,nLeft,nBottom,nRight,nHeight,nWidth };
@@ -360,8 +406,7 @@ namespace Video_Test_Fixture
         /// <param name="show">bool, true=show the overlay, false=hide it</param>
         /// <returns>bool, true=state changed successfully</returns>
         public virtual bool show(bool show)
-        {
-            if (!bOverlay)
+        {   if (!bOverlay)
                 return show;
 
             return false;
@@ -377,8 +422,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>bool, true=state changed successfully</returns>
         public virtual bool start()
-        {
-            return false;
+        {   return false;
         }
 
         /// <summary>
@@ -391,8 +435,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>bool, true=state changed successfully</returns>
         public virtual bool pause()
-        {
-            return false;
+        {   return false;
         }
 
         /// <summary>
@@ -402,8 +445,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>bool, true=state changed successfully</returns>
         public virtual bool stop()
-        {
-            return false;
+        {   return false;
         }
 
         // --------------------------------------------------------------------
@@ -446,15 +488,13 @@ namespace Video_Test_Fixture
         /// <param name="autoStart">bool, true=start/stop overlay, false=no overlay state change</param>
         /// <returns>bool, true=operation succeeded, false=error</returns>
         public bool showOverlay(int nOverlay,bool show,bool autoStart)
-        {
-            if (nOverlay < 0 || nOverlay > overlays.GetLength(0))
+        {   if (nOverlay < 0 || nOverlay > overlays.GetLength(0))
                 return false;
 
             bool bRet = overlays[nOverlay].show(show);
 
             if (bRet && autoStart)
-            {
-                if (show)
+            {   if (show)
                     bRet = overlays[nOverlay].start();
                 else bRet = overlays[nOverlay].stop();
             }
@@ -481,8 +521,7 @@ namespace Video_Test_Fixture
         /// <param name="wd">int, object width, -1=calculate automatically</param>
         /// <returns>bool, true=operation succeeded</returns>
         public bool setPosition(int top,int left,int bot,int right,int ht,int wd)
-        {
-            bOverlay = true;
+        {   bOverlay = true;
             nTop = top;
             nLeft = left;
             nBottom = bot;
