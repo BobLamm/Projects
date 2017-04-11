@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	March 22, 2017 @ 10:32 pm
+*	Last Modified:	April 10, 2017 @ 7:27 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/10	wfredk	MuxGraph member replaces DirectShow graph member
 *	2017/03/22	wfredk	add [more] documentation
 *	2017/03/19	wfredk	add global filter graph object
 *	2017/03/18	wfredk	GetCameras() internal documentation corrected
@@ -124,6 +125,8 @@ namespace Video_Test_Fixture
 
             xmlReaderSettings = new XmlReaderSettings();
 
+            bInitialized = true;
+
             return true;
         }
 
@@ -134,18 +137,18 @@ namespace Video_Test_Fixture
         /// </summary>
         public const int WM_GRAPHNOTIFY = 0x8000 + 1;
 
-        IGraphBuilder graph = null;
+        MuxGraph graph = null;
         /// <summary>
         /// returns a handle to the global filter graph for the program
         /// 
         /// The filter graph is instantiated the first time this property
         /// is accessed.
         /// </summary>
-        public IGraphBuilder Graph
+        public MuxGraph Graph
         {   get
             {   if (graph == null)
                 {   try
-                    {   graph = (IGraphBuilder)new FilterGraph();
+                    {   graph = new MuxGraph();
                     }
                     catch (COMException ex)
                     {   MessageBox.Show("COM Error: " + ex.ToString());
