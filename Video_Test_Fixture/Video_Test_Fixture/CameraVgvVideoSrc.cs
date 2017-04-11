@@ -12,10 +12,12 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	March 22, 2017 @ 9:21 pm
+*	Last Modified:	April 10, 2017 @ 7:18 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/10	wfredk	graph inherited from base class, not found in GlobalConfig
+*	2017/04/07	wfredk	GlobalConfig reference is class member
 *	2017/03/22	wfredk	add documentation
 *	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
@@ -47,22 +49,18 @@ namespace Video_Test_Fixture
         /// </summary>
         protected CameraObject inputCam;
 
+        private GlobalConfig cfg = null;
+
         IJpegVideoSourceFilter rawFilter = null;
         IBaseFilter srcFilter = null;
         /// <summary>
         /// property (accessor) for this camera's source filter object
         /// </summary>
         public IBaseFilter SrcFilter
-        {
-            get
-            {
-                if (srcFilter == null)
-                {
-                    GlobalConfig cfg = GlobalConfig.Instance;
-                    IGraphBuilder graph = cfg.Graph;
-                    if (graph != null)
-                    {
-                        int hr = 0;
+        {   get
+            {   if (srcFilter == null)
+                {   if (graph != null)
+                    {   int hr = 0;
                         string userPass = (inputCam.userName != null && inputCam.password != null)
                                         ? inputCam.userName + ":" + inputCam.password + "@"
                                         : "";
@@ -90,7 +88,7 @@ namespace Video_Test_Fixture
             }
         }
 
-        WndPreview wndPreview = null;
+        WndMonitor wndPreview = null;
 
         // --------------------------------------------------------------------
         // constructor
@@ -100,7 +98,8 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <param name="cam">CameraObject instance</param>
         public CameraVgvVideoSrc(CameraObject cam)
-        {
+        {   cfg = GlobalConfig.Instance;
+
             inputCam = cam;
 
             // TODO
@@ -115,8 +114,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>string, "camera"</returns>
         public override string getType()
-        {
-            return "camera";
+        {   return "camera";
         }
         /// <summary>
         /// returns the camera name and its IP address/port
@@ -125,8 +123,7 @@ namespace Video_Test_Fixture
         /// </summary>
         /// <returns>string, input name</returns>
         public override string getId()
-        {
-            return (inputCam == null)
+        {   return (inputCam == null)
                 ? "no camera source"
                 : inputCam.cameraName + " @ " + inputCam.ipAddrPort;
         }
@@ -147,7 +144,7 @@ namespace Video_Test_Fixture
         public override bool preview()
         {
             // TODO: open the camera in a preview window
-            wndPreview = new WndPreview(/*SrcFilter,*/inputCam);
+            wndPreview = new WndMonitor(/*SrcFilter,*/inputCam);
             wndPreview.Show();
 
             return base.preview();     // bring visible window to top of Z stack
