@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December twelfth, 2016
-*	Last Modified:	March 22, 2017 @ 9:51 pm
+*	Last Modified:	April 13, 2017 @ 8:14 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/13	wfredk	fields reordered for future class rearchitecting
 *	2017/03/22	wfredk	add documentation
 *	2017/03/18  wfredk  add members for scan height, width
 *	2017/03/17  wfredk  add default constructor, documentation
@@ -35,6 +36,49 @@ namespace Video_Test_Fixture
     public class CameraObject
     {
         /// <summary>
+        /// internal name for the camera, e.g., its physical location
+        /// </summary>
+        public String cameraName;
+        /// <summary>
+        /// camera manufacturer's name
+        /// </summary>
+        public String manufacturer;
+        /// <summary>
+        /// camera model information
+        /// </summary>
+        public String model;
+        /// <summary>
+        /// video height, pixels
+        /// </summary>
+        public int scanLines;
+        /// <summary>
+        /// video width, pixels
+        /// </summary>
+        public int scanWidth;
+        /// <summary>
+        /// last status string returned by the camera
+        /// </summary>
+        public String status;
+
+        private int errorStatus = 0;
+        /// <summary>
+        /// property (accessor) for getting the camera's error status code
+        /// </summary>
+        public int ErrorStatus
+        {   get { return errorStatus; }
+        }
+        private string errorString = "";
+        /// <summary>
+        /// property (accessor) for getting the camera's error string
+        /// </summary>
+        public string ErrorString
+        {   get { return errorString; }
+        }
+
+        // ---------------------------------------------------------------------
+        // class IpCameraObject
+
+        /// <summary>
         /// IP address where the camera is attached to the network
         /// </summary>
         public String ipAddress;
@@ -54,18 +98,10 @@ namespace Video_Test_Fixture
         /// password to be used for accessing the camera
         /// </summary>
         public String password;
-        /// <summary>
-        /// internal name for the camera, e.g., its physical location
-        /// </summary>
-        public String cameraName;
-        /// <summary>
-        /// camera manufacturer's name
-        /// </summary>
-        public String manufacturer;
-        /// <summary>
-        /// camera model information
-        /// </summary>
-        public String model;
+
+        // ---------------------------------------------------------------------
+        // class Axis[mode]IpCameraObject
+
         /// <summary>
         /// home position pan command string
         /// </summary>
@@ -138,33 +174,6 @@ namespace Video_Test_Fixture
         /// camera hold frames setting
         /// </summary>
         public String holdFrames;
-        /// <summary>
-        /// video height, pixels
-        /// </summary>
-        public int scanLines;
-        /// <summary>
-        /// video width, pixels
-        /// </summary>
-        public int scanWidth;
-        /// <summary>
-        /// last status string returned by the camera
-        /// </summary>
-        public String status;
-
-        private int errorStatus = 0;
-        /// <summary>
-        /// property (accessor) for getting the camera's error status code
-        /// </summary>
-        public int ErrorStatus
-        {   get { return errorStatus; }
-        }
-        private string errorString = "";
-        /// <summary>
-        /// property (accessor) for getting the camera's error string
-        /// </summary>
-        public string ErrorString
-        {   get { return errorString; }
-        }
 
         // --------------------------------------------------------------------
 
