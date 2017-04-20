@@ -10,11 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	January 8, 2017 @ 9:34 am
+*	Last Modified:	April 13, 2017 @ 9:27 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2017/01/08	wfredk	original development
+*	2017/04/13	wfredk	original development
 *		|						|
 *	2017/01/08	wfredk	original development
 */
@@ -28,7 +28,10 @@ namespace Video_Test_Fixture
         INPUT_ALREADY_SET,
         NO_INPUT_CONFIGURED,
         END_OF_FILE,
-        NO_SIGNAL
+        NO_SIGNAL,
+        FAILED_CAM_COMMAND,
+        FAILED_ADD_DATATABLE_ROW,
+        FAILED_CREATE_BRIDGE_FILTER
     }
 }
 //
