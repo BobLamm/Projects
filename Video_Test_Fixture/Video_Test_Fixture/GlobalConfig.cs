@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	April 10, 2017 @ 7:27 pm
+*	Last Modified:	April 13, 2017 @ 9:53 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/13	wfredk	tweaked error reporting
 *	2017/04/10	wfredk	MuxGraph member replaces DirectShow graph member
 *	2017/03/22	wfredk	add [more] documentation
 *	2017/03/19	wfredk	add global filter graph object
@@ -151,10 +152,10 @@ namespace Video_Test_Fixture
                     {   graph = new MuxGraph();
                     }
                     catch (COMException ex)
-                    {   MessageBox.Show("COM Error: " + ex.ToString());
+                    {   MessageBox.Show("COM Error: " + ex.ToString(),"ERROR");
                     }
                     catch (Exception ex)
-                    {   MessageBox.Show("Error: " + ex.ToString());
+                    {   MessageBox.Show(ex.ToString(),"ERROR");
                     }
                 }
                 return graph;
@@ -314,7 +315,7 @@ namespace Video_Test_Fixture
             }
             if (nDel >= nCameras)
             {
-                MessageBox.Show("Bad delete index " + nDel + " found in DoCameraSave()");
+                MessageBox.Show("Bad delete index " + nDel + " found in DoCameraSave()","ERROR");
                 return false;
             }
             if (nDel>=0 && newCam!=null)
@@ -331,14 +332,14 @@ namespace Video_Test_Fixture
                     if (nDel >= 0 && nDel == cnt)
                         continue;   // don't save the one being deleted
                     Cameras[cnt].NewRow(dt,cnt);
-                    if (Cameras[cnt].ErrorStatus != 0)
-                        throw new Exception(Cameras[cnt].ErrorString);
+                    if (Cameras[cnt].ErrorStatus() != VgvErrorCode.NO_ERROR)
+                        throw new Exception(Cameras[cnt].ErrorString());
                 }
                 if (newCam != null) // adding a new camera
                 {
                     newCam.NewRow(dt,cnt);
-                    if (newCam.ErrorStatus != 0)
-                        throw new Exception(newCam.ErrorString);
+                    if (newCam.ErrorStatus() != VgvErrorCode.NO_ERROR)
+                        throw new Exception(newCam.ErrorString());
                 }
                 dt.WriteXml(cfgRoot + "Current\\Camera_Settings.xml",true);
                 if (nDel >= 0 || newCam != null)    // if camera deleted or added
@@ -368,7 +369,7 @@ namespace Video_Test_Fixture
                 nCameras = 0;
             }
             catch (Exception ex)
-            {   MessageBox.Show("Error resetting camera configuration: " + ex.ToString());
+            {   MessageBox.Show("Error resetting camera configuration: " + ex.ToString(),"ERROR");
             }
         }
 
@@ -417,12 +418,12 @@ namespace Video_Test_Fixture
             {
                 string dir = cfgRoot + "Current";
                 Directory.CreateDirectory(dir);
-                MessageBox.Show("Directory " + dir + " created\nFile Camera_Settings.xml does not exist");
+                MessageBox.Show("Directory " + dir + " created\nFile Camera_Settings.xml does not exist","Notice!");
                 return false;
             }
             catch (FileNotFoundException)
             {
-                MessageBox.Show("File does not exist:\n" + fspec);
+                MessageBox.Show("File does not exist:\n" + fspec,"ERROR");
                 retVal = false;
             }
             catch (Exception ex)
