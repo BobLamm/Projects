@@ -10,11 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	April seventh, 2017
-*	Last Modified:	April 10, 2017 @ 4:49 pm
+*	Last Modified:	April 13, 2017 @ 10:22 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2017/04/10	wfredk	original development
+*	2017/04/13	wfredk	original development
 *		|						|
 *	2017/04/07	wfredk	original development
 */
@@ -99,7 +99,28 @@ namespace Video_Test_Fixture
 
             for (int cnt = 0; cnt < nLim; cnt++)
             {
-                bridgeSrcFilter[cnt] = (IBaseFilter)inBridge[cnt].Bridge.InsertSourceFilter(BridgeSinkFilter,Graph);
+                IBaseFilter sink = cfg.Camera(cnt).InsertBridgeSink(inBridge[cnt]);
+                bridgeSrcFilter[cnt] = (IBaseFilter)inBridge[cnt].Bridge.InsertSourceFilter(sink,Graph);
+            }
+        }
+
+        /// <summary>
+        /// Finalizes an instance of the <see cref="MuxGraph"/> class.
+        /// </summary>
+        ~MuxGraph()
+        {
+            int cnt;
+            int nLim = cfg.NumCameras;
+
+            for (cnt = 0; cnt < nLim; cnt++)    // disconnect source graphs
+                inBridge[cnt].Bridge.BridgeGraphs(null,null);
+
+            mediaCtl.Stop();    // stop this graph
+
+            for (cnt = 0; cnt < nLim; cnt++)    // release resources
+            {
+                inBridge[cnt]=null;
+                bridgeSrcFilter[cnt] = null;
             }
         }
     }
