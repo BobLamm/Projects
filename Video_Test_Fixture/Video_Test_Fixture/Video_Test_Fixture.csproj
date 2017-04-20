@@ -99,7 +99,6 @@
       <DependentUpon>DlgCamConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="CameraObject.cs" />
-    <Compile Include="CameraVgvVideoSrc.cs" />
     <Compile Include="DlgEditCamConfig.cs">
       <SubType>Form</SubType>
     </Compile>
