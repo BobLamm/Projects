@@ -10,11 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	April seventh, 2017
-*	Last Modified:	April 13, 2017 @ 10:22 pm
+*	Last Modified:	April 26, 2017 @ 11:45 am
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2017/04/13	wfredk	original development
+*	2017/04/26	wfredk	original development
 *		|						|
 *	2017/04/07	wfredk	original development
 */
@@ -25,6 +25,8 @@ using System.Windows.Forms;
 using DirectShowLib;
 using GMFBridgeLib;
 
+using Utility.VgvUtility;
+
 namespace Video_Test_Fixture
 {
     /// <summary>
@@ -33,13 +35,15 @@ namespace Video_Test_Fixture
     public class MuxGraph
     {
         private GlobalConfig cfg = null;
+//      private IBaseFilter outFilter = null;
         private VgvBridge[] inBridge = null;
         private VgvBridge outBridge = null;
 
         private IBaseFilter[] bridgeSrcFilter = null;
 
-        IGraphBuilder graph = null;
-        IMediaControl mediaCtl = null;
+        private IGraphBuilder graph = null;
+        private IMediaControl mediaCtl = null;
+
         /// <summary>
         /// returns a handle to the filter graph
         /// 
@@ -92,16 +96,45 @@ namespace Video_Test_Fixture
         public MuxGraph()
         {
             cfg = GlobalConfig.Instance;
+            int cnt;
+            int hr;
             int nLim = cfg.NumCameras;
 
             inBridge = new VgvBridge[nLim];
-            bridgeSrcFilter = new IBaseFilter[] { };
+            bridgeSrcFilter = new IBaseFilter[nLim];
 
-            for (int cnt = 0; cnt < nLim; cnt++)
+            // required for mock implementation only
+            Guid CLSID_NullRenderer = new Guid("{C1F400A4-3F08-11D3-9F0B-006008039E37}"); //qedit.dll
+
+            for (cnt = 0; cnt < nLim; cnt++)
             {
-                IBaseFilter sink = cfg.Camera(cnt).InsertBridgeSink(inBridge[cnt]);
-                bridgeSrcFilter[cnt] = (IBaseFilter)inBridge[cnt].Bridge.InsertSourceFilter(sink,Graph);
+                IBaseFilter pMuxInput;
+                IBaseFilter sink;
+
+                inBridge[cnt] = new VgvBridge();
+                sink = cfg.Camera(cnt).connectSrcGraph(inBridge[cnt]);
+                // start the source graph
+                cfg.Camera(cnt).MediaCtl.Run();
+
+                // ***********************
+                // TODO: build multiplexor
+                // ***********************
+                {
+                    // create null renderer
+                    pMuxInput = (IBaseFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_NullRenderer));
+                    hr = Graph.AddFilter(pMuxInput,"Null Renderer");
+                    VgvUtil.checkHR(hr,"Can't add Null Renderer "+cnt+" to graph");
+                }
+
+                bridgeSrcFilter[cnt] = inBridge[cnt].ConnectOutput(VgvUtil.GetPin(pMuxInput,"In"),Graph);
             }
+
+            // after mux is constructed, connect the source graphs and mux
+            for (cnt = 0; cnt < nLim; cnt++)
+                inBridge[cnt].ConnectGraphs();
+
+            outBridge = new VgvBridge();
+//          outBridge = new VgvBridge(Graph,VgvUtil.GetPin(pMuxFilter,"Output"));
         }
 
         /// <summary>
@@ -109,6 +142,7 @@ namespace Video_Test_Fixture
         /// </summary>
         ~MuxGraph()
         {
+/*
             int cnt;
             int nLim = cfg.NumCameras;
 
@@ -122,6 +156,7 @@ namespace Video_Test_Fixture
                 inBridge[cnt]=null;
                 bridgeSrcFilter[cnt] = null;
             }
+*/
         }
     }
 }
