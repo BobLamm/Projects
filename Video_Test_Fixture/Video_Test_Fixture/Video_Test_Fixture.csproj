@@ -72,15 +72,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxInterop.AXISMEDIACONTROLLib">
-      <HintPath>obj\Debug\AxInterop.AXISMEDIACONTROLLib.dll</HintPath>
+    <Reference Include="AxInterop.AXISMEDIACONTROLLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x86\Debug\AxInterop.AXISMEDIACONTROLLib.dll</HintPath>
     </Reference>
     <Reference Include="DirectShowLib-2005">
       <HintPath>..\..\Common\lib\DirectShowLib-2005.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.AXISMEDIACONTROLLib">
-      <HintPath>obj\Debug\Interop.AXISMEDIACONTROLLib.dll</HintPath>
+    <Reference Include="Interop.AXISMEDIACONTROLLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\x86\Debug\Interop.AXISMEDIACONTROLLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
