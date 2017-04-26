@@ -19,16 +19,15 @@ namespace Video_Test_Fixture
 
         DsROTEntry rot = null;
 
+        IBaseFilter pColorSpaceConverter = null;
         IBaseFilter pVideoRenderer = null;
-        IJpegVideoSourceFilter rawFilter = null;
 
         /// <summary>
         /// camera preview window
         /// </summary>
-        /// <param name="cam"></param>
-        public WndMonitor(/*IBaseFilter srcFilter,*/CameraObject cam)
+        /// <param name="bridge"></param>
+        public WndMonitor(VgvBridge bridge)
         {
-            IBaseFilter srcFilter = null;
             int hr = 0;
 
             cfg = GlobalConfig.Instance;
@@ -37,45 +36,37 @@ namespace Video_Test_Fixture
 
             try
             {
-                // An exception is thrown if cast fail
                 graphPreview = (IGraphBuilder)new FilterGraph();
+                // Get DirectShow interfaces
+                mediaControl = (IMediaControl)graphPreview;
+                videoWindow = (IVideoWindow)graphPreview;
+                mediaEventEx = (IMediaEventEx)graphPreview;
+
                 //graph builder
                 ICaptureGraphBuilder2 pBuilder = (ICaptureGraphBuilder2)new CaptureGraphBuilder2();
                 hr = pBuilder.SetFiltergraph(graphPreview);
                 VgvUtil.checkHR(hr,"Can't SetFiltergraph");
-                {
-                    string userPass = (cam.userName != null && cam.password != null)
-                                    ? cam.userName + ":" + cam.password + "@"
-                                    : "";
-                    string location = "http://" + userPass + cam.ipAddrPort + "/axis-cgi/mjpg/video.cgi?resolution="
-                                    + cam.scanWidth + "x" + cam.scanLines;
 
-                    //add Alax.Info JPEG Video Source
-                    Guid CLSID_VideoSource = new Guid("{A8DA2ECB-DEF6-414D-8CE2-E651640DBA4F}");    // IpVideoSource.dll
-                    rawFilter = (IJpegVideoSourceFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoSource));
-                    srcFilter = rawFilter as IBaseFilter;
-                    hr = (graphPreview as IFilterGraph2).AddFilter(srcFilter,"Alax.Info JPEG Video Source");
-                    VgvUtil.checkHR(hr,"Can't add Alax.Info JPEG Video Source to graph");
+                // add Color Space Converter
+                pColorSpaceConverter = (IBaseFilter)new Colour();
+                hr = graphPreview.AddFilter(pColorSpaceConverter,"Color Space Converter");
+                VgvUtil.checkHR(hr,"Can't add Color Space Converter to graph");
 
-                    rawFilter.Location = location;
-                    rawFilter.Width = cam.scanWidth;
-                    rawFilter.Height = cam.scanLines;
-                }
+                bridge.ConnectOutput(VgvUtil.GetPin(pColorSpaceConverter,"Input"),graphPreview);
+                bridge.ConnectGraphs();
+
                 // Render the preview pin on the video capture filter
                 // Use this instead of pGraph.RenderFile
                 Guid CLSID_VideoRenderer = new Guid("{B87BEB7B-8D29-423F-AE4D-6582C10175AC}"); //quartz.dll
                 pVideoRenderer = (IBaseFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoRenderer));
                 hr = (graphPreview as IFilterGraph2).AddFilter(pVideoRenderer,"Video Renderer");
                 VgvUtil.checkHR(hr,"Can't add Video Renderer to graph");
-                hr = pBuilder.RenderStream(PinCategory.Preview,MediaType.Video,srcFilter,null,pVideoRenderer);
+
+                //connect Color Space Converter and Video Renderer
+                hr = graphPreview.ConnectDirect(VgvUtil.GetPin(pColorSpaceConverter,"XForm Out"),
+                                                VgvUtil.GetPin(pVideoRenderer,"VMR Input0"),
+                                                null);
                 VgvUtil.checkHR(hr,"cannot render preview pin");
-
-                // Get DirectShow interfaces
-                mediaControl = (IMediaControl)graphPreview;
-                videoWindow = (IVideoWindow)graphPreview;
-                mediaEventEx = (IMediaEventEx)graphPreview;
-
-//              VgvUtil.EnumFilters(graphPreview);
 
                 hr = mediaEventEx.SetNotifyWindow(Handle,GlobalConfig.WM_GRAPHNOTIFY,IntPtr.Zero);
                 VgvUtil.checkHR(hr,"SetNotifyWindow failed");
@@ -246,8 +237,6 @@ namespace Video_Test_Fixture
 
             CloseInterfaces();
 
-            if (rawFilter != null)
-                rawFilter = null;
             if (pVideoRenderer != null)
                 pVideoRenderer = null;
         }
