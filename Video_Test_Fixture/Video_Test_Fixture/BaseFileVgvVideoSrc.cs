@@ -12,10 +12,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	March 19, 2017 @ 3:31 pm
+*	Last Modified:	April 22, 2017 @ 12:27 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/22	wfredk	add default buildGraph(), preview() implementations
 *	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
 *		|						|
@@ -25,9 +26,19 @@ using System;
 
 namespace Video_Test_Fixture
 {
+    /// <summary>
+    /// provides a common interface for file-based video sources
+    /// </summary>
+    /// <seealso cref="Video_Test_Fixture.BaseVgvVideoSrc" />
     public class BaseFileVgvVideoSrc : BaseVgvVideoSrc
     {
+        /// <summary>
+        /// set if this video source is paused
+        /// </summary>
         protected bool bPaused=false;
+        /// <summary>
+        /// the input file
+        /// </summary>
         protected string inputFile;
 
         // --------------------------------------------------------------------
@@ -42,6 +53,17 @@ namespace Video_Test_Fixture
             inputFile = filename;
 
             // TODO
+        }
+
+        /// <summary>
+        /// Builds the graph.
+        /// 
+        /// This method may be overridden in derived classes.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        protected override void buildGraph()
+        {
+            throw new NotImplementedException();
         }
 
         // --------------------------------------------------------------------
@@ -106,6 +128,23 @@ namespace Video_Test_Fixture
             // TODO: open the file
             bPaused = false;
 
+            return false;
+        }
+
+        /// <summary>
+        /// temporarily stops the video output from this source
+        /// 
+        /// If start() is called after the output has been paused by this method,
+        /// output will resume from where it was stopped.
+        /// 
+        /// This method may be overridden in derived classes.
+        /// 
+        /// N.B. This method is a no-op for most file types, and returns false.
+        /// </summary>
+        /// <returns>bool, true=state changed successfully</returns>
+        public override bool pause()
+        {
+            // no-op for most file types
             return false;
         }
 

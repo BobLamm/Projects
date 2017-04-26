@@ -12,10 +12,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	March 19, 2017 @ 3:33 pm
+*	Last Modified:	April 22, 2017 @ 12:25 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/22	wfredk	add default buildGraph() implementations
 *	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
 *		|						|
@@ -25,6 +26,10 @@ using System;
 
 namespace Video_Test_Fixture
 {
+    /// <summary>
+    /// implements a text "video" source
+    /// </summary>
+    /// <seealso cref="Video_Test_Fixture.BaseVgvVideoSrc" />
     public class TextVgvVideoSrc : BaseVgvVideoSrc
     {
         protected string srcText;
@@ -43,6 +48,17 @@ namespace Video_Test_Fixture
         public bool showText(int nText,bool show = true)
         {
             return false;
+        }
+
+        /// <summary>
+        /// Builds the graph.
+        /// 
+        /// This method may be overridden in derived classes.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        protected override void buildGraph()
+        {
+            throw new NotImplementedException();
         }
 
         // --------------------------------------------------------------------
