@@ -1,9 +1,9 @@
 ﻿/**
- * File: FileVgvVideoSrc.cs
+ * File: BaseFileVgvVideoSrc.cs
  * 
  *	Copyright © 2017 by City Council Video.  All rights reserved.
  *
- *	$Id: /Video_Test_Fixture/FileVgvVideoSrc.cs,v $
+ *	$Id: /Video_Test_Fixture/BaseFileVgvVideoSrc.cs,v $
  */
 /**
 *	Provides a common interface for file-based video sources
@@ -12,10 +12,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January eighth, 2017
-*	Last Modified:	April 22, 2017 @ 12:27 am
+*	Last Modified:	April 26, 2017 @ 11:53 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/26	wfredk	corrected internal documentation
 *	2017/04/22	wfredk	add default buildGraph(), preview() implementations
 *	2017/03/19	wfredk	add preview() method
 *	2017/01/09	wfredk	original development
@@ -164,4 +165,4 @@ namespace Video_Test_Fixture
     }
 }
 //
-// EOF: FileVgvVideoSrc.cs
+// EOF: BaseFileVgvVideoSrc.cs
