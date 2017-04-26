@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	March nineteenth, 2017
-*	Last Modified:	March 22, 2017 @ 9:12 pm
+*	Last Modified:	April 22, 2017 @ 2:38 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/22	wfredk	add ListPins() method
 *	2017/03/22	wfredk	finish EnumFilters() implementation
 *	                    add ReleaseFilters() method
 *	                    add documentation
@@ -44,7 +45,7 @@ namespace Utility.VgvUtility
         {
             if (hr < 0)
             {
-                MessageBox.Show(msg);
+                MessageBox.Show(msg,"Error Encountered");
                 //Console.WriteLine(msg);
                 DsError.ThrowExceptionForHR(hr);
             }
@@ -121,8 +122,42 @@ namespace Utility.VgvUtility
                 if (found)
                     return pins[0];
             }
-            checkHR(-1,"Pin not found");
+            checkHR(-1,"Pin "+pinname+" not found");
             return null;
+        }
+
+        /// <summary>
+        /// Lists the pins on a filter
+        /// </summary>
+        /// <param name="filter">The filter.</param>
+        static public void ListPins(IBaseFilter filter)
+        {
+            IEnumPins epins;
+            int cnt = 0;
+            int ctr = 0;
+            int hr = filter.EnumPins(out epins);
+            checkHR(hr,"Can't enumerate pins");
+            IntPtr fetched = Marshal.AllocCoTaskMem(4);
+            IPin[] pins = new IPin[1];
+            while (epins.Next(1,pins,fetched) == 0)
+                cnt++;
+            epins.Reset();
+            string[] strings = new string[cnt];
+            while (epins.Next(1,pins,fetched) == 0)
+            {
+                PinInfo pinfo;
+                pins[0].QueryPinInfo(out pinfo);
+                strings[ctr++] = pinfo.name +", "+pinfo.dir.ToString()+" ("+pinfo.ToString()+")";
+                DsUtils.FreePinInfo(pinfo);
+            }
+            string txt = "Pins found on " + filter.ToString() + ":\n\n";
+            string sep = "";
+            for (ctr = 0; ctr < cnt; ctr++)
+            {
+                txt += sep + strings[ctr];
+                sep = "\n";
+            }
+            MessageBox.Show(txt,"Info");
         }
 
         /// <summary>
