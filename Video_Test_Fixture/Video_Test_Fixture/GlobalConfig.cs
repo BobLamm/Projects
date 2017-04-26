@@ -10,10 +10,11 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December tenth, 2016
-*	Last Modified:	April 13, 2017 @ 9:53 pm
+*	Last Modified:	April 22, 2017 @ 1:40 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/21	wfredk	add mediaCtl member
 *	2017/04/13	wfredk	tweaked error reporting
 *	2017/04/10	wfredk	MuxGraph member replaces DirectShow graph member
 *	2017/03/22	wfredk	add [more] documentation
@@ -138,7 +139,8 @@ namespace Video_Test_Fixture
         /// </summary>
         public const int WM_GRAPHNOTIFY = 0x8000 + 1;
 
-        MuxGraph graph = null;
+        private MuxGraph graph = null;
+        private IMediaControl mediaCtl = null;
         /// <summary>
         /// returns a handle to the global filter graph for the program
         /// 
@@ -150,6 +152,7 @@ namespace Video_Test_Fixture
             {   if (graph == null)
                 {   try
                     {   graph = new MuxGraph();
+                        mediaCtl = (IMediaControl)graph.Graph;
                     }
                     catch (COMException ex)
                     {   MessageBox.Show("COM Error: " + ex.ToString(),"ERROR");
@@ -159,6 +162,29 @@ namespace Video_Test_Fixture
                     }
                 }
                 return graph;
+            }
+        }
+
+        /// <summary>
+        /// returns the media control of the program's global filter graph
+        /// 
+        /// If the graph has not been instantiated, accessing this property
+        /// will cause it to be instantiated.
+        /// </summary>
+        /// <value>
+        /// The media control.
+        /// </value>
+        public IMediaControl MediaCtl
+        {   get
+            {   if (mediaCtl == null)
+                {   try
+                    {   MuxGraph theGraph = Graph;
+                    }
+                    catch (Exception ex)
+                    {   MessageBox.Show("Error: " + ex.ToString());
+                    }
+                }
+                return mediaCtl;
             }
         }
 
