@@ -10,10 +10,12 @@
 *
 *	Author:			Bob Lamm
 *	Creation Date:	October twentieth, 2016
-*	Last Modified:	March 25, 2017 @ 5:51 am
+*	Last Modified:	April 22, 2017 @ 3:48 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/22	wfredk	hide splash screen after initialization
+*	2017/04/19	wfredk	CameraObject implements VgvVideoSrc functionality
 *	2017/03/25	wfredk	delete camera objects in StopAllRunningCameras()
 *	2017/03/19	wfredk	call StopAllRunningCameras() in connectToCameras_Click()
 *	                    add camera preview buttons
@@ -33,15 +35,13 @@ namespace Video_Test_Fixture
     /// </summary>
     public partial class MainWindow : Form
     {
-        CameraVgvVideoSrc srcCam1=null;
-        CameraVgvVideoSrc srcCam2=null;
-
         /// <summary>
         /// constructor, creates the form elements
         /// </summary>
-        public MainWindow()
+        public MainWindow(WndSplashScreen splash)
         {
             InitializeComponent();
+            splash.Hide();
         }
 
         private void pictureBoxForVideo_Click(object sender, AxAXISMEDIACONTROLLib._IAxisMediaControlEvents_OnClickEvent e)
@@ -87,7 +87,7 @@ namespace Video_Test_Fixture
             DlgCamConfig dlg = new DlgCamConfig();
             dlg.ShowDialog();
 
-/*            MessageBox.Show("I can give you the C# code that I use to connect to the camera in California.  "
+/*          MessageBox.Show("I can give you the C# code that I use to connect to the camera in California.  "
                             + "Also the code I use to send it web commands.  "
                             + "The documentation for the camera comes in two sets:  \n\n"
                             + "1) A .CHM file for the Active Object that displays the "
@@ -106,30 +106,20 @@ namespace Video_Test_Fixture
             // TODO
             // stop all running cameras
             // invalidate all CameraObject references
-            if (srcCam1 != null)
-                srcCam1 = null;
-            if (srcCam2 != null)
-                srcCam2 = null;
         }
 
         private void btnPreview1_Click(object sender,EventArgs e)
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            if (srcCam1 == null)
-                srcCam1 = new CameraVgvVideoSrc(cfg.Camera(0));
-
-            srcCam1.preview();
+            cfg.Camera(0).preview();
         }
 
         private void btnPreview2_Click(object sender,EventArgs e)
         {
             GlobalConfig cfg = GlobalConfig.Instance;
 
-            if (srcCam2 == null)
-                srcCam2 = new CameraVgvVideoSrc(cfg.Camera(1));
-
-            srcCam2.preview();
+            cfg.Camera(1).preview();
         }
     }
 }
