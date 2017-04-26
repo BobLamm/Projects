@@ -10,15 +10,16 @@
 *
 *	Author:			Fred Koschara
 *	Proto Created:	December tenth, 2016
-*	Creation Date:	April seventh, 2017
-*	Creation Date:	April 7, 2017
-*	Last Modified:	April 7, 2017 @ 8:30 pm
+*	Creation Date:	April nineteenth, 2017
+*	Creation Date:	April 19, 2017
+*	Last Modified:	April 19, 2017 @ 9:24 pm
 *
 *	Revision History:
 *	   Date		  by		Description
-*	2017/04/07	wfredk	original development
+*	2017/04/19	wfredk	original development
 *		|						|
-*	2017/04/07	wfredk	original development
+*	2017/04/19	wfredk	original development
+*	2017/04/19	wfredk	prototype dates updated
 *	2017/04/07	wfredk	prototype dates updated
 *	2017/03/19	wfredk	prototype dates updated
 *	2017/01/04	wfredk	prototype updated to 2017
