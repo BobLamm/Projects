@@ -72,8 +72,15 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxInterop.AXISMEDIACONTROLLib">
+      <HintPath>obj\Debug\AxInterop.AXISMEDIACONTROLLib.dll</HintPath>
+    </Reference>
     <Reference Include="DirectShowLib-2005">
       <HintPath>..\..\Common\lib\DirectShowLib-2005.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.AXISMEDIACONTROLLib">
+      <HintPath>obj\Debug\Interop.AXISMEDIACONTROLLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -92,6 +99,7 @@
     <Compile Include="AxisCameraUtility.cs" />
     <Compile Include="BaseFileVgvVideoSrc.cs" />
     <Compile Include="BaseVgvVideoSrc.cs" />
+    <Compile Include="CameraObjectVideoSrc.cs" />
     <Compile Include="DlgCamConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +139,12 @@
     <Compile Include="WndMonitor.Designer.cs">
       <DependentUpon>WndMonitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="WndSplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WndSplashScreen.Designer.cs">
+      <DependentUpon>WndSplashScreen.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="DlgCamConfig.resx">
       <DependentUpon>DlgCamConfig.cs</DependentUpon>
     </EmbeddedResource>
@@ -152,6 +166,9 @@
     </Compile>
     <EmbeddedResource Include="WndMonitor.resx">
       <DependentUpon>WndMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WndSplashScreen.resx">
+      <DependentUpon>WndSplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -184,23 +201,6 @@
   <ItemGroup>
     <COMReference Include="AlaxInfoIpVideoSource">
       <Guid>{BDCE8B49-8895-4605-8278-E9A1FBC889AC}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="AxAXISMEDIACONTROLLib">
-      <Guid>{A48F4EE0-B408-4376-B4C9-BC9CF6E16EBC}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
-    <COMReference Include="AXISMEDIACONTROLLib">
-      <Guid>{A48F4EE0-B408-4376-B4C9-BC9CF6E16EBC}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
