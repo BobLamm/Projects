@@ -10,10 +10,13 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	January fourth, 2017
-*	Last Modified:	April 10, 2017 @ 7:14 pm
+*	Last Modified:	April 22, 2017 @ 12:24 am
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/21	wfredk	initialize mediaCtl before calling buildGraph()
+*	2017/04/20	wfredk	call buildGraph() when instantiating the graph
+*	2017/04/20	wfredk	change no-op methods to abstract
 *	2017/04/10	wfredk	add graph, bridge members to base class
 *	2017/03/22	wfredk	filled out the documentation
 *	2017/03/19	wfredk	add preview() method to IVgvVideoSrc
@@ -184,7 +187,7 @@ namespace Video_Test_Fixture
     /// the base class object from which all video source objects in the
     /// application are derived
     /// </summary>
-    public class BaseVgvVideoSrc : IVgvVideoSrc, IVgvPosition
+    public abstract class BaseVgvVideoSrc : IVgvVideoSrc, IVgvPosition
     {
         /// <summary>
         /// indicates if this video source is an overlay, false=base layer (default)
@@ -255,7 +258,13 @@ namespace Video_Test_Fixture
         {   return errorString;
         }
 
+        /// <summary>
+        /// The graph
+        /// </summary>
         protected IGraphBuilder graph = null;
+        /// <summary>
+        /// The media control
+        /// </summary>
         protected IMediaControl mediaCtl = null;
         /// <summary>
         /// returns a handle to the filter graph
@@ -269,6 +278,7 @@ namespace Video_Test_Fixture
                 {   try
                     {   graph = (IGraphBuilder)new FilterGraph();
                         mediaCtl = (IMediaControl)graph;
+                        buildGraph();   // execute the derived method
                     }
                     catch (COMException ex)
                     {   MessageBox.Show("COM Error: " + ex.ToString());
@@ -280,6 +290,13 @@ namespace Video_Test_Fixture
                 return graph;
             }
         }
+        /// <summary>
+        /// Builds the graph.
+        /// 
+        /// This method must be overridden in derived classes.
+        /// </summary>
+        protected abstract void buildGraph();
+
         /// <summary>
         /// Gets the media control.
         /// </summary>
@@ -418,12 +435,10 @@ namespace Video_Test_Fixture
         /// If the video source was previously paused, it will resume from where
         /// it left off.  Otherwise, output starts from the beginning of the stream.
         /// 
-        /// This method is expected to be overridden in derived classes.
+        /// This method must be overridden in derived classes.
         /// </summary>
         /// <returns>bool, true=state changed successfully</returns>
-        public virtual bool start()
-        {   return false;
-        }
+        public abstract bool start();
 
         /// <summary>
         /// temporarily stops the video output from this source
@@ -431,22 +446,18 @@ namespace Video_Test_Fixture
         /// If start() is called after the output has been paused by this method,
         /// output will resume from where it was stopped.
         /// 
-        /// This method is expected to be overridden in derived classes.
+        /// This method must be overridden in derived classes.
         /// </summary>
         /// <returns>bool, true=state changed successfully</returns>
-        public virtual bool pause()
-        {   return false;
-        }
+        public abstract bool pause();
 
         /// <summary>
         /// stops output from this video source, closes any associated files or handles
         /// 
-        /// This method is expected to be overridden in derived classes.
+        /// This method must be overridden in derived classes.
         /// </summary>
         /// <returns>bool, true=state changed successfully</returns>
-        public virtual bool stop()
-        {   return false;
-        }
+        public abstract bool stop();
 
         // --------------------------------------------------------------------
         // overlay controls
