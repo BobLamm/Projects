@@ -10,10 +10,12 @@
 *
 *	Author:			Fred Koschara
 *	Creation Date:	December twelfth, 2016
-*	Last Modified:	April 13, 2017 @ 9:30 pm
+*	Last Modified:	April 20, 2017 @ 1:56 pm
 *
 *	Revision History:
 *	   Date		  by		Description
+*	2017/04/20	wfredk	Cfg access is protected, not private
+*	2017/04/19	wfredk	BaseVgvVideoSrc derivation -> CameraObjectVideoSrc.cs
 *	2017/04/13	wfredk	class is now derived from BaseVgvVideoSrc
 *	2017/04/13	wfredk	fields reordered for future class rearchitecting
 *	2017/03/22	wfredk	add documentation
@@ -28,20 +30,13 @@
 using System;
 using System.Data;
 using System.Net;
-//using System.Runtime.InteropServices;
-//using System.Windows.Forms;
-
-using Utility.VgvUtility;
-
-using AlaxInfoIpVideoSource;
-using DirectShowLib;
 
 namespace Video_Test_Fixture
 {
     /// <summary>
     /// provides an interface to configuration data for an individual camera
     /// </summary>
-    public class CameraObject : BaseVgvVideoSrc
+    public partial class CameraObject : BaseVgvVideoSrc
     {
         /// <summary>
         /// internal name for the camera, e.g., its physical location
@@ -68,29 +63,17 @@ namespace Video_Test_Fixture
         /// </summary>
         public String status;
 
-        // --------------------------------------------------------------------
-        // video filter graph properties, BaseVgvVideoSrc derivation
-
-        /// <summary>
-        /// bool, set if the camera is in a paused state
-        /// </summary>
-        protected bool bPaused = false;
-
         private GlobalConfig cfg = null;
-        private GlobalConfig Cfg
+        /// <summary>
+        /// accessor for global configuration visible to derived objects
+        /// </summary>
+        protected GlobalConfig Cfg
         {   get
             {   if (cfg == null)
                     cfg = GlobalConfig.Instance;
                 return cfg;
             }
         }
-
-        private IJpegVideoSourceFilter rawFilter = null;
-        protected IBaseFilter srcFilter = null;
-
-        protected IBaseFilter outFilter = null;
-
-        protected WndMonitor wndPreview = null;
 
         // ---------------------------------------------------------------------
         // class IpCameraObject
@@ -556,179 +539,6 @@ namespace Video_Test_Fixture
         /// <returns>string, camera response</returns>
         public string Pan(string pan)
         {   return PtzCommand("rpan=" + pan);
-        }
-
-        // --------------------------------------------------------------------
-        // video filter graph methods, BaseVgvVideoSrc derivation
-        // --------------------------------------------------------------------
-
-        /// <summary>
-        /// property (accessor) for this camera's source filter object
-        /// </summary>
-        public IBaseFilter SrcFilter
-        {   get
-            {   if (srcFilter == null)
-                {   if (graph != null)
-                    {   int hr = 0;
-                        string userPass = (userName != null && password != null)
-                                        ? userName + ":" + password + "@"
-                                        : "";
-                        string location = "http://" + userPass + ipAddrPort + "/axis-cgi/mjpg/video.cgi?resolution="
-                                        + scanWidth + "x" + scanLines;
-
-                        //graph builder
-                        ICaptureGraphBuilder2 pBuilder = (ICaptureGraphBuilder2)new CaptureGraphBuilder2();
-                        hr = pBuilder.SetFiltergraph(graph);
-                        VgvUtil.checkHR(hr,"Can't SetFiltergraph");
-
-                        //add Alax.Info JPEG Video Source
-                        Guid CLSID_VideoSource = new Guid("{A8DA2ECB-DEF6-414D-8CE2-E651640DBA4F}");    // IpVideoSource.dll
-                        rawFilter = (IJpegVideoSourceFilter)Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_VideoSource));
-                        srcFilter = rawFilter as IBaseFilter;
-                        hr = (graph as IFilterGraph2).AddFilter(srcFilter,"Alax.Info JPEG Video Source");
-                        VgvUtil.checkHR(hr,"Can't add Alax.Info JPEG Video Source to graph");
-
-                        rawFilter.Location = location;
-                        rawFilter.Width = scanWidth;
-                        rawFilter.Height = scanLines;
-                    }
-                }
-                return srcFilter;
-            }
-        }
-
-        public IBaseFilter InsertBridgeSink(VgvBridge bridge)
-        {   if (outFilter != null)
-                return outFilter;
-            try
-            {   outFilter = (IBaseFilter)bridge.Bridge.InsertSinkFilter(Graph);
-            }
-            catch (Exception ex)
-            {   errorStatus = VgvErrorCode.FAILED_CREATE_BRIDGE_FILTER;
-                errorString = "Create sink filter for " + cameraName + "failed: " + ex.ToString();
-                return null;
-            }
-            return outFilter;
-        }
-        public IBaseFilter OutFilter
-        {   get
-            {   return outFilter;
-            }
-        }
-
-        // --------------------------------------------------------------------
-        // query configuration
-
-        /// <summary>
-        /// returns the type of input that is configured
-        /// </summary>
-        /// <returns>string, "camera"</returns>
-        public override string getType()
-        {   return "camera";
-        }
-        /// <summary>
-        /// returns the camera name and its IP address/port
-        /// 
-        /// If no input is configured, it will be "no camera source"
-        /// </summary>
-        /// <returns>string, input name</returns>
-        public override string getId()
-        {   return cameraName + " @ " + ipAddrPort;
-        }
-
-        // --------------------------------------------------------------------
-        // operational controls
-
-        /// <summary>
-        /// opens a preview window for this video source
-        /// 
-        /// If a preview window was already opened for this video source, it is
-        /// made visible and brought to the top of the Z stack.
-        /// 
-        /// This method should be overridden in derived classes.  The derived method
-        /// should call this base implementation for the core window functionality.
-        /// </summary>
-        /// <returns>bool, true=preview opened successfully</returns>
-        public override bool preview()
-        {
-            // TODO: open the camera in a preview window
-            wndPreview = new WndMonitor(/*SrcFilter,*/this);
-            wndPreview.Show();
-
-            return base.preview();     // bring visible window to top of Z stack
-        }
-
-        /// <summary>
-        /// shows or hides the output of this video source when it's an overlay
-        /// If this video source is NOT an overlay, the returned value will always
-        /// be the same as the passed one:  "show" succeeds, "hide" fails
-        /// 
-        /// This method may be overridden in derived classes.
-        /// </summary>
-        /// <param name="show">bool, true=show the overlay, false=hide it</param>
-        /// <returns>bool, true=state changed successfully</returns>
-        public override bool show(bool show)
-        {
-            if (!bOverlay)
-                return show;
-
-            // TODO
-
-            return false;
-        }
-
-        /// <summary>
-        /// starts the output from this video source
-        /// 
-        /// If the video source was previously paused, it will resume from where
-        /// it left off.  Otherwise, output starts from the beginning of the stream.
-        /// 
-        /// This method may be overridden in derived classes.
-        /// </summary>
-        /// <returns>bool, true=state changed successfully</returns>
-        public override bool start()
-        {
-            if (bPaused)
-            {
-                // TODO
-                bPaused = false;
-            }
-            else
-            {
-                // TODO
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// temporarily stops the video output from this source
-        /// 
-        /// If start() is called after the output has been paused by this method,
-        /// output will resume from where it was stopped.
-        /// 
-        /// This method may be overridden in derived classes.
-        /// </summary>
-        /// <returns>bool, true=state changed successfully</returns>
-        public override bool pause()
-        {
-            // TODO
-            bPaused = true;
-
-            return false;
-        }
-
-        /// <summary>
-        /// stops output from this video source, closes any associated files or handles
-        /// 
-        /// This method may be overridden in derived classes.
-        /// </summary>
-        /// <returns>bool, true=state changed successfully</returns>
-        public override bool stop()
-        {
-            // TODO
-
-            return false;
         }
     }
 }
